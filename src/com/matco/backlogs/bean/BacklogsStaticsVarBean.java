@@ -46,6 +46,8 @@ public class BacklogsStaticsVarBean extends GenericBean implements Serializable 
 	private int prioridadFiltro;
 	private int origenFiltro;
 	private int auxiliarGrafica = -1;
+	
+	private int indexTablaBlm;
 
 	// id cliente
 	private Integer idClienteMatco = null;
@@ -632,6 +634,14 @@ public class BacklogsStaticsVarBean extends GenericBean implements Serializable 
 
 	public void setFechaBL2(Date fechaBL2) {
 		this.fechaBL2 = fechaBL2;
+	}
+
+	public int getIndexTablaBlm() {
+		return indexTablaBlm;
+	}
+
+	public void setIndexTablaBlm(int indexTablaBlm) {
+		this.indexTablaBlm = indexTablaBlm;
 	}
 
 }

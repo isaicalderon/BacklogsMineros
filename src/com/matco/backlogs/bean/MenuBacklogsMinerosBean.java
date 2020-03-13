@@ -182,7 +182,9 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 	}
 	
 	public void onRowSelect(SelectEvent event) {
-		System.out.println(event.getObject());
+		
+		System.out.println(seleccionBean.getIndexTablaBlm());
+		
 	}
 
 	/**
