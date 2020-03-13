@@ -292,6 +292,9 @@
 							oncomplete="document.getElementById('formListaBacklogs:link2').click(); return false;" />
 
 					</p:menubar>
+					
+					<p:remoteCommand name="displayIndex" process="@this" update="index" 
+						actionListener="#{menuBacklogsMinerosBean.displayRowIndex}"/>
 
 					<!-- TABLA DE BACKLOGS -->
 					<p:dataTable id="tablaBacklogsMineros" styleClass="myTable"
@@ -313,8 +316,8 @@
 						<p:ajax event="rowDblselect" update="tablaBacklogsMineros, growl"
 							listener="#{menuBacklogsMinerosBean.seleccionarBacklog}" />
 
-						<p:ajax event="rowSelect"
-							listener="#{menuBacklogsMinerosBean.onRowSelect(indexTablaBlm)}" />
+						<p:ajax event="rowSelect" 
+							oncomplete="displayIndex([{name:'index', value:jQuery('tr[data-rk=' + dtVar.selection + ']').attr('data-ri')}])" process="@this" />
 
 						<f:facet name="header">
 							<p:outputPanel

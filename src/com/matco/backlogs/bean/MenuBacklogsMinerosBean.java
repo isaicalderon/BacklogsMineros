@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -181,11 +183,13 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter();");
 	}
 	
-	public void onRowSelect(int index) {
-		
-		System.out.println(index);
-		//System.out.println(seleccionBean.getIndexTablaBlm());
-	
+	public void displayRowIndex() {
+	    FacesContext context = FacesContext.getCurrentInstance();
+	    Map<String, String> map = context.getExternalContext().getRequestParameterMap();
+	    String pIndex = (String) map.get("index");
+	    int index = Integer.parseInt(pIndex);
+	    
+	    System.out.println(index);
 	}
 
 	/**
