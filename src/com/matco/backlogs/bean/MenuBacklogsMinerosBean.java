@@ -127,7 +127,7 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		estadosPickList = new DualListModel<EstatusBacklogsMineros>(estatusBacklogsMinerosList,
 				estatusBacklogsMinerosListTarget);
 
-		PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter()");
+		//PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter()");
 
 		backlogsSeleccionados = new ArrayList<>();
 		backlogsNoAutorizados = new ArrayList<>();
@@ -135,15 +135,17 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		backlogsCotizados = new ArrayList<>();
 
 		obtenerCantidadBLRevisados();
-		mostrarMensajesGrid();
 		
-		/*
+		
 		if (backlogsMinerosListFiltrada != null) {
 			if (!backlogsMinerosListFiltrada.isEmpty()) {
 				obtenerBacklogs();
 			}
 		}
-		*/
+		
+		mostrarMensajesGrid();
+		
+		
 		
 	}
 
