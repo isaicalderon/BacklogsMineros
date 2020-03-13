@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+
+/*********************COLUMNAS DE GRID**********************/
+.colAlineadaCentro {
+	text-align:center;
+}
+
+.colAlineadaDerecha {
+	text-align:right;
+}
+
+.colAlineadaIzquierda {
+	text-align:left;
+}
+

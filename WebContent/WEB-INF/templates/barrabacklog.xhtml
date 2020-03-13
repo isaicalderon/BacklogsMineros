@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pv="http://primefaces.org/venture">
+	
+	<p:dataTable id="tablaBacklogsMineros" var="backlogMinero"
+		styleClass="myTable"
+		rowKey="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+		widgetVar="tablaBacklogsMineros"
+		value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado}"
+		style="margin-bottom:20px;" tableStyle="width:auto">
+		<p:column id="columnaEstatus" headerText="Estatus BL&lt;br/&gt;"
+			style="min-width:127px;text-align:center;
+							#{backlogsMinerosBean.colorCelda(backlogMinero.idEstatusBacklogsMineros.descripcionEstatusBacklog)};">
+
+			<h:outputText id="estatus"
+				value="#{backlogMinero.idEstatusBacklogsMineros.idEstatusBacklogMinero}" />
+
+		</p:column>
+		<p:column headerText="Folio BL&lt;br/&gt;" style="min-width:128px;">
+			<h:outputText id="idBacklog"
+				value="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}" />
+
+		</p:column>
+		<p:column headerText="Núm. Econ.&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="numEcono" value="#{backlogMinero.numeroEconomico}" />
+		</p:column>
+
+		<p:column headerText="Serie&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="numSerie" value="#{backlogMinero.numeroSerie}" />
+		</p:column>
+		<p:column headerText="Horómetro&lt;br/&gt;"
+			style="min-width:127px;text-align:center;">
+
+			<h:outputText id="horometro" value="#{backlogMinero.horometro}" />
+
+		</p:column>
+		<p:column headerText="Fecha Creación&lt;br/&gt;"
+			style="min-width:127px;text-align:center;">
+
+			<h:outputText id="fecha"
+				value="#{backlogsMinerosBean.darFormatoFecha(backlogMinero.fechaHoraCreacion)}">
+				<f:convertDateTime pattern="dd/MMM/yyyy" locale="es" />
+			</h:outputText>
+
+		</p:column>
+		<p:column headerText="Días activo&lt;br/&gt;"
+			style="min-width:127px;text-align:center;">
+			<h:outputText id="dias"
+				value="#{backlogsMinerosBean.obtenerDiasActivo(backlogMinero)}" />
+		</p:column>
+		<p:column headerText="Sistema&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="sistema"
+				value="#{backlogMinero.idCodigoSistema.codigosSistemasFormateado}" />
+
+		</p:column>
+		<p:column headerText="Descripción&lt;br/&gt;" style="min-width:500px;">
+
+			<h:outputText id="codigoSMCS"
+				value="#{backlogMinero.idCodigoSMCS.codigoSMCS} - #{backlogMinero.idCodigoSMCS.descripcionSMCS}" />
+
+		</p:column>
+		<p:column headerText="Sintomas&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="sintomas"
+				style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;"
+				value="#{backlogMinero.sintomasEquipo}" />
+		</p:column>
+		<p:column headerText="Prioridad&lt;br/&gt;" style="width:127px;">
+
+			<h:outputText id="prioridad"
+				value="#{backlogMinero.idPrioridadBacklog.descripcionPrioridadBacklog}"
+				style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;" />
+
+		</p:column>
+		<p:column headerText="Notas&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="notas"
+				style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;"
+				value="#{backlogMinero.comentarioBacklogMinero}" />
+		</p:column>
+		<p:column headerText="Origen&lt;br/&gt;" style="min-width:127px;">
+			<h:outputText id="origen"
+				value="#{backlogMinero.origenesBacklogsMineros.descripcionOrigen}"
+				style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;" />
+
+		</p:column>
+	</p:dataTable>
+</ui:composition>

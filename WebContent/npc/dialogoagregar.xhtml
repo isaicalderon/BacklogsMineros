@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<p:dialog header="Registro Número Parte Cliente" widgetVar="altaNPC"
+	id="altaNPC" appendTo="@(body)" dynamic="false" resizable="false"
+	modal="true" showEffect="fade" hideEffect="fade" height="auto"
+	width="550px" onShow="PF('altaNPC').initPosition()"
+	position="center center" responsive="true" closable="false">
+
+	<h:form id="formDialogoAgregar">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-7"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel for="numeroParteMatco" value="Número Parte MATCO:" />
+					<p:inputText id="numeroParteMatco" size="10"
+						value="#{administradorNumeroParteCliente.numeroParteMatco}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-7"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Número Parte Cliente:"
+						for="numeroParteCliente" />
+					<p:inputText id="numeroParteCliente" size="10"
+						value="#{administradorNumeroParteCliente.numeroParteCliente}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridUno" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-7"
+					styleClass="ui-panelgrid-blank">
+
+					<h:outputLabel for="marca" value="Marca:" />
+					<h:panelGroup id="panelMarca">
+						<p:autoComplete id="marca" minQueryLength="2" maxResults="5"
+							size="34" value="#{administradorNumeroParteCliente.idMarca}"
+							completeMethod="#{autoCompleteBean.completeMarca}"
+							placeholder="Buscar" forceSelection="true"
+							converter="marcaConverter"
+							disabled="#{administradorNumeroParteCliente.habilitarMarca}">
+							<p:ajax event="itemSelect" update="panelMarca"
+								listener="#{administradorNumeroParteCliente.deshabilitarControlesBusquedaMarca}" />
+						</p:autoComplete>
+						<p:commandButton id="botonMarca" icon="fa fa-close"
+							rendered="#{administradorNumeroParteCliente.habilitarMarca}"
+							actionListener="#{administradorNumeroParteCliente.habilitarControlesBusquedaMarca}"
+							update="panelMarca" />
+					</h:panelGroup>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridDos" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-7"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel for="cliente" value="Cliente:" />
+					<h:panelGroup id="panelCliente">
+						<p:autoComplete id="cliente" minQueryLength="4" maxResults="10"
+							placeholder="Buscar" size="34"
+							value="#{administradorNumeroParteCliente.idCliente}"
+							completeMethod="#{autoCompleteBean.completeCliente}"
+							forceSelection="true" converter="clienteConverter"
+							disabled="#{administradorNumeroParteCliente.habilitarCliente}">
+							<p:ajax event="itemSelect" update="panelCliente"
+								listener="#{administradorNumeroParteCliente.deshabilitarControlesBusquedaCliente}" />
+						</p:autoComplete>
+						<p:commandButton id="botonCliente" icon="fa fa-close"
+							rendered="#{administradorNumeroParteCliente.habilitarCliente}"
+							actionListener="#{administradorNumeroParteCliente.habilitarControlesBusquedaCliente}"
+							update="panelCliente" />
+					</h:panelGroup>
+				</p:panelGrid>
+
+
+
+				<div style="margin-top: 10px; display: block; text-align: center;">
+					<p:commandButton value="Registrar" process="@parent"
+						
+						actionListener="#{administradorNumeroParteCliente.agregarNumeroParteCliente()}"
+						update="panelCliente, panelMarca, numeroParteMatco, numeroParteCliente, :formNPC:menuBar, :formNPC:tablaNPC, growl" />
+					<p:commandButton value="Cancelar" onclick="PF('altaNPC').hide();"
+						actionListener="#{administradorNumeroParteCliente.limpiarCampos}"
+						update="panelCliente, panelMarca, numeroParteMatco, numeroParteCliente, :formNPC:menuBar, :formNPC:tablaNPC" />
+				</div>
+			</div>
+		</div>
+	</h:form>
+</p:dialog>
+</html>

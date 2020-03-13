@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.ui-panelgrid-cell {
+	padding: 0px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id="formCatInspect">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/backlogsMineros.xhtml" />
+						<p:menuitem value="Cat Inspecciones" url="#" />
+					</p:breadCrumb>
+
+					<div class="White PadWithBorder10 Wid100 MarAuto"
+						style="margin-top: 1%">
+						
+						<p:dataTable id="dtinspeccionCats" height="400" filterDelay="1000"
+							var="inspeccionCat" widgetVar="widgetTablainspeccionCats"
+							value="#{catInspectMinerosBean.inspeccionesList}"
+							selection="#{catInspectMinerosBean.catInspectEntitySeleccionada}"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							paginatorPosition="bottom" rows="10"
+							currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+							paginator="true" rowsPerPageTemplate="10,25,50,75">
+
+							<p:column style="width:16px">
+								<p:rowToggler />
+							</p:column>
+
+							<p:column headerText="Número Serie" style="width:150px;"
+								sortBy="#{inspeccionCat.serie}"
+								filterBy="#{inspeccionCat.serie}" filterMatchMode="contains">
+								<h:outputText value="#{inspeccionCat.serie}" />
+							</p:column>
+
+							<p:column headerText="Número Económico" style="width:150px;"
+								sortBy="#{inspeccionCat.numeroEconomico}"
+								filterBy="#{inspeccionCat.numeroEconomico}"
+								filterMatchMode="contains">
+								<h:outputText value="#{inspeccionCat.numeroEconomico}" />
+							</p:column>
+
+							<p:column headerText="Folio" style="width:100px;"
+								filterBy="#{inspeccionCat.folio}" filterMatchMode="contains"
+								sortBy="#{inspeccionCat.folio}">
+								<h:outputText value="#{inspeccionCat.folio}" />
+							</p:column>
+
+							<p:column headerText="Cliente" style="width:400px;"
+								sortBy="#{catInspectMinerosBean.getClienteFormateado(inspeccionCat.idCliente, inspeccionCat.razonSocialCliente)}"
+								filterBy="#{catInspectMinerosBean.getClienteFormateado(inspeccionCat.idCliente, inspeccionCat.razonSocialCliente)}"
+								filterMatchMode="contains">
+								<h:outputText
+									value="#{catInspectMinerosBean.getClienteFormateado(inspeccionCat.idCliente, inspeccionCat.razonSocialCliente)}" />
+							</p:column>
+
+							<p:column headerText="Número Alertas" style="width:100px;"
+								sortBy="#{inspeccionCat.cantidad}"
+								filterBy="#{inspeccionCat.cantidad}" filterMatchMode="contains">
+								<h:outputText value="#{inspeccionCat.cantidad}" />
+							</p:column>
+
+							<p:column headerText="Fecha" style="width:120px;"
+								filterBy="#{inspeccionCat.fechaAlerta}"
+								filterMatchMode="contains" sortBy="#{inspeccionCat.fechaAlerta}">
+								<h:outputText value="#{inspeccionCat.fechaAlerta}" />
+							</p:column>
+							
+							<p:column headerText="PDF" style="width:100px;">
+								<div align="center">
+									<p:commandButton icon="fa fa-file-pdf-o"
+										action="#{catInspectMinerosBean.prepararPDF}"
+										oncomplete="document.getElementById('formCatInspect:link').click();"
+										update="growl">
+										<f:setPropertyActionListener value="#{inspeccionCat}"
+											target="#{catInspectMinerosBean.catInspectEntitySeleccionada}" />
+									</p:commandButton>
+								</div>
+							</p:column>
+
+							<p:rowExpansion>
+								<p:dataTable var="question"
+									value="#{inspeccionCat.questInspeccionesList}">
+
+									<!-- 
+									<p:column headerText="ID Pregunta" style="width:100px;">
+										<h:outputText value="#{question.idPreguntaCat}" />
+									</p:column>
+									  -->
+
+									<p:column headerText="Acción">
+										<h:outputText value="#{question.preguntaCat}" />
+									</p:column>
+
+									<p:column headerText="Comentario de la Inspección">
+										<h:outputText value="#{question.comments}" />
+									</p:column>
+
+									<p:column headerText="Prioridad" style="width:100px;">
+										<div
+											class="#{catInspectMinerosBean.color(question.prioridad)}"
+											style="height: 2em"></div>
+										<h:outputText value="" />
+									</p:column>
+
+									<p:column headerText="IMGs" style="width:100px;">
+										<div align="center">
+											<p:panelGrid columns="1" layout="grid"
+												columnClasses="ui-grid-col-12"
+												styleClass="ui-panelgrid-blank">
+												<p:commandButton icon="fa fa-image"
+													action="#{catInspectMinerosBean.obtenerImagenQuestion(question,inspeccionCat.folio)}"
+													update="growl, questionImages, dialogoImg">
+													<f:setPropertyActionListener value="#{question}"
+														target="#{catInspectMinerosBean.questionEntitySeleccionada}" />
+												</p:commandButton>
+											</p:panelGrid>
+										</div>
+									</p:column>
+
+									<p:column headerText="Generar Backlog" style="width:120px;">
+										<div align="center">
+											<p:commandButton value='Crear' icon="fa fa-plus"
+												disabled="#{!loginBean.tienePermiso('CATINSPECT')}"
+												action="#{catInspectMinerosBean.hacerInspeccion}"
+												update="growl">
+												<f:setPropertyActionListener value="#{question}"
+													target="#{catInspectMinerosBean.questionEntitySeleccionada}" />
+											</p:commandButton>
+										</div>
+									</p:column>
+
+								</p:dataTable>
+							</p:rowExpansion>
+
+						</p:dataTable>
+						<div style="display: none">
+							<h:commandLink value="xd" id="link"
+								style="color:rgb(202,157,02);font-weight:bold;width:auto;margin-right:5px">
+								<p:fileDownload value="#{catInspectMinerosBean.streamedContent}" />
+							</h:commandLink>
+						</div>
+					</div>
+				</p:panel>
+			</h:form>
+			<ui:include src="dialogoImagenes.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

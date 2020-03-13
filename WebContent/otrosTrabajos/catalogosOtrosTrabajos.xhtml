@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<h:form id="formOtrosTrabajos">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+					<p:menuitem value="Catálogos" url="#" />
+					<p:menuitem value="Otros trabajos" url="#" />
+				</p:breadCrumb>
+				<br />
+				
+				<p:remoteCommand name="actualizaOtrosTrabajos"
+					update="formOtrosTrabajos:tablaOtrosTrabajos, formOtrosTrabajos:menuBar, growl" />
+
+				<div class="White PadWithBorder10 Wid80 MarAuto"
+					style="margin-top: 5px;">
+					<p:menubar id="menuBar">
+						<p:submenu label="Opciones"
+							rendered="#{loginBean.tienePermiso('EDIT-CATALOGOS')}">
+							<p:menuitem value="Refrescar" icon="fa fa-refresh"
+								onclick="actualizaOtrosTrabajos();" />
+							<p:menuitem value="Registrar" icon="fa fa-plus-square"
+								onclick="PF('altaOtroTrabajo').show();" />
+							<p:menuitem value="Editar" icon="fa fa-edit"
+								disabled="#{administradorOtrosTrabajosBean.habilitaModificar}"
+								onclick="PF('modificarOtroTrabajo').show();" />
+						</p:submenu>
+						<p:menuitem value="Limpiar filtros" icon="fa fa-eraser"
+							onclick="PF('tablaOtrosTrabajos').clearFilters()" />
+					</p:menubar>
+
+					<p:dataTable id="tablaOtrosTrabajos" var="otrosTrabajos"
+						styleClass="myTable"
+						selection="#{administradorOtrosTrabajosBean.otrosTrabajosSeleccionado}"
+						filteredValue="#{backlogsStaticsVarBean.otrosTrabajosListFiltrado}"
+						selectionMode="single" height="400" filterDelay="1000"
+						rowKey="#{otrosTrabajos.idOtroTrabajo}"
+						widgetVar="tablaOtrosTrabajos"
+						value="#{administradorOtrosTrabajosBean.otrosTrabajosList}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10" sortMode="multiple"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" emptyMessage="No se encontraron otros trabajos"
+						style="margin-bottom:20px;" rowsPerPageTemplate="5,10,15">
+
+						<p:ajax event="rowSelect"
+							listener="#{administradorOtrosTrabajosBean.onRowSelect}"
+							update="formOtrosTrabajos:tablaOtrosTrabajos, formOtrosTrabajos:menuBar, :formDialogoModificar:panelSerie, 
+							:formDialogoModificar:panelTecnico, :formDialogoModificar:descripcion, :formDialogoModificar:sistema" />
+
+						<p:column headerText="Serie&lt;br/&gt;"
+							sortBy="#{otrosTrabajos.numeroSerie}"
+							style="width:25px;text-align:center" filterMatchMode="contains"
+							filterStyle="width:90%;" filterBy="#{otrosTrabajos.numeroSerie}">
+							<h:outputText value="#{otrosTrabajos.numeroSerie}" />
+						</p:column>
+
+						<p:column headerText="Descripción&lt;br/&gt;"
+							sortBy="#{otrosTrabajos.descripcionOtrosTrabajos}"
+							style="width:90px;" filterMatchMode="contains"
+							filterStyle="width:90%;"
+							filterBy="#{otrosTrabajos.descripcionOtrosTrabajos}">
+							<h:outputText value="#{otrosTrabajos.descripcionOtrosTrabajos}" />
+						</p:column>
+
+						<p:column headerText="Responsable&lt;br/&gt;"
+							sortBy="#{otrosTrabajos.tecnicoFormateado}" style="width:90px;"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{administradorOtrosTrabajosBean.getTecnicoFormateado(otrosTrabajos.tecnicoResponsable.claveNomina, otrosTrabajos.tecnicoResponsable.nombre)}">
+							<h:outputText value="#{otrosTrabajos.tecnicoFormateado}" />
+						</p:column>
+
+						<p:column headerText="Sistema&lt;br/&gt;"
+							sortBy="#{otrosTrabajos.codigoFormateado}" style="width:90px;"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{administradorOtrosTrabajosBean.getCodigoSistema(otrosTrabajos)}">
+							<h:outputText value="#{otrosTrabajos.codigoFormateado}" />
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</h:form>
+		</div>
+		<ui:include src="dialogoagregar.xhtml" />
+		<ui:include src="dialogoeditar.xhtml" />
+	</ui:define>
+</ui:composition>

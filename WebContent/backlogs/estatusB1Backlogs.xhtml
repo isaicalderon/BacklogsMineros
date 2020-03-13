@@ -1,0 +1,252 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+
+		<h:form>
+			<p:remoteCommand name="onload" update="growl"
+				action="#{cambioEstatusBacklogsMineros.verificarPermiso('POR-AUTORIZAR')}"
+				autoRun="true" />
+		</h:form>
+
+		<div class="Card">
+			<h:form id="formEstatusB1Backlogs">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Cambio de estatus" url="#" />
+						<p:menuitem
+							value="#{cambioEstatusBacklogsMineros.obtenerNombreEstatus()}"
+							url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md">
+
+							<div class="ui-g-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Estatus" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Fecha Inicio:" />
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.fechaCreacion}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Folio de Backlog:" />
+										<p:inputText id="numero" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.folio}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Estatus BL:" />
+										<p:inputText id="estatus" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="color:white;width:100%;text-align:center;#{cambioEstatusBacklogsMineros.obtenerColorCelda()}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="reserva2" value="Orden de trabajo:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}" />
+										<p:inputText id="reserva2" tabindex="-1" style="width:50%;"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.numeroReserva}"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Autorizó*:" />
+										<p:inputText id="autorizo"
+											value="#{cambioEstatusBacklogsMineros.autorizadoPor}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="area" value="Área*:" />
+										<p:inputText id="area"
+											value="#{cambioEstatusBacklogsMineros.area}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="reserva" value="Número de reserva*:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 6}" />
+										<p:inputText id="reserva"
+											value="#{cambioEstatusBacklogsMineros.numeroReserva}"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 6}" />
+									</p:panelGrid>
+									<!-- 
+									<p:panelGrid columns="2" layout="grid" 
+										columnClasses="ui-grid-col-4, ui-grid-col-7"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="fechaEjecutar" render="false" 
+											value="Fecha para ejecutar BL:" />
+										<p:calendar id="fechaEjecutar" pattern="dd/MMM/yyyy"
+											locale="es" render="false" 
+											value="#{cambioEstatusBacklogsMineros.fechaEjecutar}" />
+									</p:panelGrid>
+									 -->
+								</p:fieldset>
+							</div>
+
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<ui:include src="/WEB-INF/templates/infobacklog.xhtml" />
+								</p:fieldset>
+							</div>
+
+							<!-- PARTES REQUERIDAS -->
+							<div class="ui-g-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Partes Requeridas" style="margin-top:10px">
+									<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+										layout="grid" columnClasses="ui-grid-col-12"
+										styleClass="ui-panelgrid-blank">
+
+										<p:dataTable id="partesRequeridas" var="partes"
+											value="#{cambioEstatusBacklogsMineros.backlogsMinerosDetalleRefaList}"
+											editable="false" widgetVar="cellPartesRequeridas"
+											emptyMessage="No se han agregado partes requeridas">
+
+											<p:column headerText="CANTIDAD"
+												style="width:70px;text-align:center;">
+												<h:outputText value="#{partes.cantidad}" />
+											</p:column>
+											<p:column headerText="NÚM. PARTE"
+												style="width:80px;text-align:center;}">
+												<h:outputText value="#{partes.numeroParte}" />
+											</p:column>
+											<p:column headerText="DESCRIPCIÓN" style="width:170px;}">
+												<h:outputText value="#{partes.descripcionMayuscula}" />
+											</p:column>
+											<p:column headerText="OBSERVACIONES" style="width:25%;">
+												<h:outputText value="#{partes.observacionesMayuscula}" />
+											</p:column>
+											<p:column headerText="PRECIO UNITARIO (USD)"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.precioFormateado}" />
+											</p:column>
+											<p:column headerText="SUBTOTAL"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.subTotalFormateado}" />
+											</p:column>
+										</p:dataTable>
+									</p:panelGrid>
+									<div class="ui-g-12">
+										<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+											columnClasses="ui-grid-col-3, ui-grid-col-9"
+											styleClass="ui-panelgrid-blank"
+											style='text-aling:right;float:right'>
+											<h:outputText for="totalTablaRefacciones"
+												style="font-weight:bold" value="Total:" />
+											<p:inputText id="totalTablaRefacciones" disabled="true"
+												style="font-weight:bold;font-size:14pt;text-align:right"
+												value="#{cambioEstatusBacklogsMineros.totalFormateado}" />
+										</p:panelGrid>
+									</div>
+								</p:fieldset>
+							</div>
+
+							<div class="ui-g-6 ui-lg-6 ui-md-6 ui-fluid">
+								<p:fieldset legend="Imágenes" id="imagenesCargadas"
+									styleClass="fieldset-auto-width">
+									<p:panelGrid id="panelesImagenes" columns="1" layout="grid"
+										columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+
+										<p:galleria id="galeria"
+											value="#{cambioEstatusBacklogsMineros.listaImagenes}"
+											var="image"
+											rendered="#{cambioEstatusBacklogsMineros.renderGaleria}"
+											style="width:100%;#{cambioEstatusBacklogsMineros.mostrarGaleria}"
+											panelWidth="450" panelHeight="250" showCaption="true">
+											<p:graphicImage value="#{image}" title=" " alt=" "
+												style="width:100%" />
+										</p:galleria>
+									</p:panelGrid>
+									<p:commandButton id="botonImg" value="Ver/Ocultar imagenes"
+										update="galeria,growl"
+										actionListener="#{cambioEstatusBacklogsMineros.listarImagenes()}"
+										style="width:100%;" />
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Regresar" action="backlogsLista" />
+
+						<p:commandButton value="Generar Solicitud" ajax="true"
+							onclick="PrimeFaces.monitorDownload(start, stop);">
+							<p:fileDownload
+								value='#{cambioEstatusBacklogsMineros.obtenerExcelReporte("Solicitud")}' />
+						</p:commandButton>
+
+						<p:commandButton value="Generar Solicitud sin imágenes"
+							ajax="true" onclick="PrimeFaces.monitorDownload(start, stop);">
+							<p:fileDownload
+								value='#{cambioEstatusBacklogsMineros.obtenerExcelReporte("solicitud")}' />
+						</p:commandButton>
+
+						<p:commandButton
+							actionListener="#{cambioEstatusBacklogsMineros.obtenerReporte()}"
+							value='Reporte de Autorización' />
+
+						<p:commandButton value="No Autorizado"
+							actionListener="#{cambioEstatusBacklogsMineros.denegarAutorizacion}"
+							action="#{cambioEstatusBacklogsMineros.redireccionarPagina}"
+							rendered="#{loginBean.tienePermiso('ESTATUS B1-A')}" />
+
+						<p:commandButton value="Autorizado" update="growl"
+							actionListener="#{cambioEstatusBacklogsMineros.completarAutorizacion}"
+							rendered="#{loginBean.tienePermiso('ESTATUS B1-C')}" />
+					</div>
+				</p:panel>
+			</h:form>
+			<ui:include src="dialogs/dialogoCancelar.xhtml" />
+		</div>
+
+		<script>
+			function abrirTab(){
+				var url = "#{cambioEstatusBacklogsMineros.urlReporte}";
+				var win = window.open(url, '_blank');
+				win.focus();
+			}
+		</script>
+
+	</ui:define>
+</ui:composition>

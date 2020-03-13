@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Inicio de Sesión</title>
+	<ui:insert name="head" />
+</h:head>
+
+<h:body style="overflow:hidden;">
+	<h:form>
+		<p:focus />
+		<div class="Wid30 MarAuto WidAutoOnMobile LoginContainer">
+			<h:graphicImage name="images/matcocat.png" id="logo"
+				library="venture-layout" class="login-logo" />
+
+			<div class="Card ui-fluid ShadowEffect LoginBox">
+				<div class="Wid100 FontLatoRegular White Fs18 login-text"
+					style="margin: 2rem 0px;">Administración y Seguimiento de Backlogs</div>
+
+				<div class="Container100">
+					<div class="Container10" style="margin-top: 1.25rem;">
+						<i class=" icon-user Fs30 White"></i>
+					</div>
+					<div class="Container90">
+						<p:inputText placeholder="Usuario" value="#{loginBean.username}"
+							class="loginInput"
+							style="padding:15px !important; color:white !important" />
+					</div>
+				</div>
+				<div class="Container100">
+					<div class="Container10" style="margin-top: 1.25rem;">
+						<i class=" icon-lock Fs30 White"></i>
+					</div>
+					<div class="Container90">
+						<p:password placeholder="Contraseña" value="#{loginBean.password}"
+							class="loginInput"
+							style="padding:15px !important; color:white !important" />
+					</div>
+				</div>
+
+				<div class="EmptyBox20"></div>
+				<div class="Container100">
+					<p:commandButton value="Ingresar" styleClass=""
+						action="#{loginBean.login}" update="msgs" />
+				</div>
+				<div class="Container100">
+					<p:messages id="msgs" showDetail="true" autoUpdate="true"
+						closable="true" />
+				</div>
+
+			</div>
+
+			<div class="EmptyBox20"></div>
+			<div class="Wid100 FontLatoRegular Fs12 TransparentWhite login-text">
+				<i class="fa fa-copyright DispInlBlock"></i> 
+				<p:outputLabel value="#{footerBean.actualYear}" class="Fs12 TransparentWhite login-text"/> - Empresas MATCO,
+				S.A. de C.V. <br />Todos los Derechos Reservados.
+			</div>
+		</div>
+
+
+		<style>
+.ui-button-text, .ui-button-text-only .ui-button-text {
+	padding: 15px !important;
+	transition: none !important;
+}
+</style>
+
+		<h:outputStylesheet name="css/core-layout.css"
+			library="venture-layout" />
+		<h:outputStylesheet name="css/font-awesome.css"
+			library="venture-layout" />
+		<h:outputStylesheet name="css/animate.css" library="venture-layout" />
+		<h:outputStylesheet name="css/venture-layout.css"
+			library="venture-layout" />
+		<h:outputStylesheet name="css/venture-font.css"
+			library="venture-layout" />
+	</h:form>
+</h:body>
+
+</html>

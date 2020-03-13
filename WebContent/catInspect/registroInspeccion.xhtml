@@ -1,0 +1,579 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.ui-fluid .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger .ui-icon
+	{
+	margin-top: -7px !important;
+}
+
+.ui-fluid .ui-fileupload .ui-button {
+	width: 100% !important;
+}
+
+.subirListado .ui-fileupload-filename {
+	display: none;
+}
+
+.subirListado  .ui-fileupload-files {
+	display: none;
+}
+
+.subirListado  .ui-fileupload-buttonbar {
+	padding: 0 !important;
+}
+
+.subirListado  .ui-fileupload-content {
+	display: none;
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60% !important;;
+	max-width: 100% !important;;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id="formRegistroBacklogs" enctype="multipart/form-data">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Registro de backlogs" url="#" />
+					</p:breadCrumb>
+
+					<ui:param name="backlog"
+						value="#{agregarCatInspeccionBean.backlogEntity}" />
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md-12">
+							<p:menubar style="margin-top:1%;" id="menuBar"
+								widgetVar="menuBar">
+								<p:menuitem value="Usar Backlog Estándar" icon="fa fa-copy"
+									actionListener="#{agregarCatInspeccionBean.activarDialogoBLEST()}" />
+								<p:menuitem value="Limpiar campos" icon="fa fa-trash-o"
+									actionListener="#{agregarCatInspeccionBean.limpiarCamposCI()}"
+									update=":formRegistroBacklogs:field1, :formRegistroBacklogs:field2,
+										:formRegistroBacklogs:field3" />
+							</p:menubar>
+
+							<!-- BACKLOGS -->
+							<div class="ui-g-12 ui-md-12 ui-lg-7 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px" id='field1'>
+									<!-- FOLIO -->
+									<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Folio inspección:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{backlog.idInspeccion}" />
+									</p:panelGrid>
+
+									<!-- SUCURSAL
+									<p:panelGrid id="panelGridMenosUno" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank"
+										rendered="#{agregarBacklogsMinerosBean.obtenerSucursalCorrespondiente()==null}">
+										<h:outputText value="Sucursal:" />
+										<p:selectOneMenu autowidth="false" style="width:80%;"
+											value="#{backlogsStaticsVarBean.sucursalFiltro}" update="serie">
+											<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItem itemLabel="6 - CANANEA" itemValue="#{6}" />
+											<f:selectItem itemLabel="13 - CABORCA" itemValue="#{13}" />
+											<p:ajax event="itemSelect" update="formRegistroBacklogs"
+												listener="#{agregarBacklogsMinerosBean.listarMaquinariaDtoBacklogsMineros()}" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+									 -->
+
+									<!-- SERIE, NUM ECONO Y HOROMETRO -->
+									<p:panelGrid id="panelGridUno" columns="4" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+
+										<h:outputText value="Número de serie:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{backlog.numeroSerie}" />
+
+										<h:outputText for="numeroEconomico" value="Número Económico:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{backlog.numeroEconomico}" />
+									</p:panelGrid>
+
+									<!-- HOROMETRO -->
+									<p:panelGrid id="panelGridHoro" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Horómetro:" />
+										<p:inputNumber id="horometro" value="#{backlog.horometro}"
+											inputStyle="text-align: right;width: 100%;"
+											maxValue="999999999" decimalPlaces="0" />
+									</p:panelGrid>
+
+									<!-- ORIGEN BL, LUGAR GEN -->
+									<p:panelGrid id="panelGridDos" columns="4" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="origenBacklogMinero"
+											value="Origen del BL*:" />
+										<p:selectOneMenu id="origenBacklogMinero" style="width:100%;"
+											value="#{backlog.origenesBacklogsMineros.idOrigenBacklogMinero}"
+											disabled="true" readonly="true">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems var="origenes"
+												value="#{agregarCatInspeccionBean.origenesBacklogsMinerosList}"
+												itemLabel="#{origenes.descripcionOrigen}"
+												itemValue="#{origenes.idOrigenBacklogMinero}" />
+										</p:selectOneMenu>
+
+										<h:outputText for="lugarOrigenBacklogMinero"
+											value="Lugar de generación:" />
+										<p:selectOneMenu id="lugarOrigenBacklogMinero"
+											style="width:100%;"
+											value="#{backlog.lugaresOrigenesBacklogsMineros.idLugarOrigenBacklogMinero}">
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.lugaresOrigenBacklogsMinerosList}"
+												var="lugares" itemLabel="#{lugares.descripcionLugarOrigen}"
+												itemValue="#{lugares.idLugarOrigenBacklogMinero}" />
+										</p:selectOneMenu>
+
+									</p:panelGrid>
+
+									<!-- PRIO  -->
+									<p:panelGrid id="panelGridDosX" columns="4" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="prioridadBacklogsMineros"
+											value="Prioridad*:" />
+										<p:selectOneMenu id="prioridadBacklogsMineros"
+											style="width:100%;"
+											value="#{backlog.idPrioridadBacklog.idPrioridadBacklogMinero}">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.prioridadesBacklogsMinerosList}"
+												var="prioridades"
+												itemLabel="#{prioridades.descripcionPrioridadBacklog}"
+												itemValue="#{prioridades.idPrioridadBacklogMinero}" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+									<!-- SISTEMA -->
+									<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-10"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="sistema" value="Sistema*:" />
+										<p:selectOneMenu id="sistema" style="width:100%;"
+											value="#{backlog.idCodigoSistema.codigoSistema}">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.codigosSistemasList}"
+												var="sistemas"
+												itemLabel="#{sistemas.getCodigosSistemasGrid()}"
+												itemValue="#{sistemas.codigoSistema}" />
+										</p:selectOneMenu>
+
+									</p:panelGrid>
+
+									<!-- LADO COMPONENTE -->
+									<p:panelGrid id="panelGridLC" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="ladoComponente" value="Lado componente*:" />
+										<p:selectOneMenu id="ladoComponente" style="width:100%;"
+											value="#{backlog.ladoComponenteOb.codigoLDC}" filter="true"
+											filterMatchMode="contains">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.ladoComponenteList}"
+												var="componentes"
+												itemLabel="#{componentes.ladoComponenteFormateado}"
+												itemValue="#{componentes.codigoLDC}" />
+										</p:selectOneMenu>
+
+									</p:panelGrid>
+
+									<!-- COD SINTOMAS -->
+									<p:panelGrid id="panelGridCodSintom" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+
+										<h:outputText for="codSintomas" value="Código de sintomas*:" />
+										<p:selectOneMenu id="codSintomas" style="width:100%;"
+											value="#{backlog.sintoma.idCodigoSintoma}" filter="true"
+											filterMatchMode="contains">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.sintomasList}"
+												var="sintoma" itemLabel="#{sintoma.sintomaFormateado}"
+												itemValue="#{sintoma.idCodigoSintoma}" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+									<!-- SINTOMAS -->
+									<p:panelGrid id="panelGridsintom" columns="2" layout="grid"
+										style="margin-bottom: 5%"
+										columnClasses="ui-grid-col-2, ui-grid-col-10"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="accion" value="Sintomas*:" />
+										<p:inputTextarea id="accion" maxlength="32700" rows="2"
+											autoResize="true" style="width:100%;"
+											value="#{backlog.sintomasEquipo}" />
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+
+							<!-- CODIGO TRABAJO -->
+							<div class="ui-g-12 ui-md-12 ui-lg-5 ui-fluid"
+								style="margin-top: 10px">
+								<p:fieldset legend="Trabajo" id='field2'>
+									<p:panelGrid id="panelGridCuatro" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="codigoTrabajo" value="Código de trabajo*:" />
+										<h:panelGroup>
+											<p:autoComplete id="codigoTrabajo" minQueryLength="2"
+												value="#{backlog.codigoTrabajoDescripcion}"
+												completeMethod="#{autoCompleteBean.completeCodigoTrabajo}"
+												forceSelection="true"
+												disabled="#{agregarCatInspeccionBean.habilitaCodigoTrabajo}"
+												style="width:85%;">
+												<p:ajax event="itemSelect"
+													update="codigoTrabajo, botonCodigoTrabajo"
+													listener="#{agregarCatInspeccionBean.cambiarCodigoTrabajo}" />
+											</p:autoComplete>
+											
+											<p:commandButton id="botonCodigoTrabajo" icon="fa fa-close"
+												style="margin-left:1%"
+												disabled="#{!agregarCatInspeccionBean.habilitaCodigoTrabajo}"
+												actionListener="#{agregarCatInspeccionBean.habilitarCodigoTrabajo()}"
+												update="panelGridCuatro" />
+										</h:panelGroup>
+									</p:panelGrid>
+									
+									<!-- ACCIÓN -->
+									<p:panelGrid id="panelGridCincoX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="accionEquipo" value="Acción:" />
+										<p:inputTextarea id="accionEquipo" rows="2" cols="20"
+											style="width:80%;" value="#{backlog.accionEquipo}"
+											maxlength="200" autoResize="true" />
+									</p:panelGrid>
+									<!-- HMQUINAS, HHOMBRE-->
+									<p:panelGrid id="panelGridSeis" columns="4" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-3, ui-grid-col-2, ui-grid-col-3"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="horasMaquina" value="Horas Máquina:" />
+										<p:inputNumber id="horasMaquina"
+											inputStyle="text-align: right;width: 80%;" maxValue="99999.9"
+											decimalPlaces="1" minValue="0"
+											value="#{backlog.horasMaquinaEstimadas}" />
+
+										<h:outputText for="horasHombre" value="Horas Hombre:" />
+										<p:inputNumber id="horasHombre"
+											inputStyle="text-align: right;width: 100%;"
+											maxValue="99999.9" decimalPlaces="1" minValue="0"
+											value="#{backlog.horasHombreEstimadas}" />
+									</p:panelGrid>
+
+									<!--CARGO-->
+									<p:panelGrid id="panelGridSeisX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="cargo" value="Cargo*:" />
+										<p:selectOneMenu id="cargo"
+											value="#{backlog.idCargoTrabajo.idCargoTrabajo}">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.cargosTrabajosList}"
+												var="cargos" itemLabel="#{cargos.descripcionCargoTrabajo}"
+												itemValue="#{cargos.idCargoTrabajo}" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+
+									<!-- NOTAS SOBRE BL -->
+									<p:panelGrid id="panelGridOcho" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Notas sobre el BL:" />
+										<p:inputTextarea rows="2" cols="20"
+											value="#{backlog.comentarioBacklogMinero}" />
+									</p:panelGrid>
+
+									<!-- REQUERIDO POR -->
+									<p:panelGrid id="panelGridNueveX3" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="requerido" value="Requerido por*:" />
+										<p:inputText id="requerido" value="#{backlog.solicitadoPor}" />
+									</p:panelGrid>
+
+									<!-- RIESGOS -->
+									<p:panelGrid id="panelGridRiesgo" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="riesgoTrabajo" value="Riesgo trabajo*:" />
+										<p:selectCheckboxMenu id="riesgoTrabajo" style="width:100%;"
+											value="#{backlog.idCodigoRiesgoList}" filter="true"
+											multiple="true" filterMatchMode="contains"
+											label="Seleccione los riesgos">
+											<f:selectItems
+												value="#{agregarCatInspeccionBean.riesgosTabajosList}"
+												var="riesgo" itemLabel="#{riesgo.riesgoFormateado}"
+												itemValue="#{riesgo.idCodigoRiesgo}" />
+										</p:selectCheckboxMenu>
+									</p:panelGrid>
+
+									<!-- TIPO DE TRABAJO-->
+									<p:panelGrid id="panelGridNueveX2" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Tipo de trabajo*:" />
+										<p:selectOneMenu id="tipoTrabajo"
+											value="#{backlog.tipoTrabajo}" panelStyle="width:auto;"
+											filter="true" filterMatchMode="contains">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems value="#{backlog.TIPOS_DE_TRABAJO}" />
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+									<!-- OTROS -->
+									<p:panelGrid id="panelGridNuevex1" columns="2" layout="grid"
+										columnClasses="ui-grid-col-4,ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="otros" value="Otros Materiales/Equipo:" />
+										<p:inputTextarea id="otros" maxlength="32700" rows="1"
+											autoResize="true" value="#{backlog.otrosMateriales}" />
+									</p:panelGrid>
+
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g">
+						<!-- PARTES REQUERIDAS -->
+						<div class="ui-g-12 ui-md-12 ui-fluid">
+							<p:fieldset legend="Partes Requeridas" style="margin-top:10px"
+								id='field3'>
+								<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+									layout="grid" columnClasses="ui-grid-col-12"
+									styleClass="ui-panelgrid-blank">
+									<p:dataTable id="partesRequeridas" var="partes"
+										value="#{backlog.listaRefacciones}"
+										emptyMessage="No se han agregado partes requeridas"
+										editable="true" widgetVar="cellPartesRequeridas">
+
+										<p:ajax event="rowEdit"
+											listener="#{agregarCatInspeccionBean.onRowEdit}"
+											update="growl, partesRequeridas, :formRegistroBacklogs:totalTablaRefacciones" />
+
+										<p:column headerText="CANTIDAD*"
+											style="width:80px;text-align:center;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.cantidad}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputNumber value="#{partes.cantidad}" minValue="0"
+														maxValue="999" decimalPlaces="0" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="NÚM. PARTE*"
+											style="width:80px;text-align:center;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.numeroParte}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.numeroParte}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="DESCRIPCIÓN*"
+											style="width:110px;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.descripcionMayuscula}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.descripcionParte}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="OBSERVACIONES" style="width:110px;">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.observacionesMayuscula}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.observaciones}"
+														style="width:100%" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="PRECIO UNITARIO*"
+											style="width:70px;text-align:right">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.precioFormateado}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputNumber value="#{partes.precio}" style="width:100%"
+														minValue="0" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="SUBTOTAL"
+											style="width:70px;text-align:right">
+											<h:outputText value="#{partes.subTotalFormateado}" />
+										</p:column>
+
+										<p:column headerText="EDITAR" style="width:15px">
+											<p:rowEditor />
+										</p:column>
+
+										<p:column headerText="BORRAR"
+											style="width:20px;text-align:center;">
+											<p:selectBooleanCheckbox value="partes" style="height:25px;">
+												<p:ajax event="change"
+													listener="#{agregarCatInspeccionBean.actualizarSeleccion(partes)}">
+												</p:ajax>
+											</p:selectBooleanCheckbox>
+										</p:column>
+
+									</p:dataTable>
+								</p:panelGrid>
+
+								<div class="ui-g-12">
+									<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank"
+										style='text-aling:right;float:right'>
+										<h:outputText for="totalTablaRefacciones"
+											style="font-weight:bold" value="Total:" />
+										<p:inputText id="totalTablaRefacciones" disabled="true"
+											style="font-weight:bold;font-size:14pt;text-align:right"
+											value="#{agregarCatInspeccionBean.totalFormateado}" />
+									</p:panelGrid>
+								</div>
+
+								<div class="ui-g-12 ui-lg-12">
+									<div class="ui-g">
+										<div class="ui-g-12 ui-md-12 ui-lg-4"></div>
+										<div class="ui-g-12 ui-md-12 ui-lg-4"></div>
+										<div class="ui-g-12 ui-md-12 ui-lg-4">
+											<div class='ui-g'>
+												<div class="ui-g-4">
+													<p:commandButton icon="fa fa-minus-square" value="Borrar"
+														actionListener="#{agregarCatInspeccionBean.borrarFilasPartes}"
+														update="panelGridPartesRequeridas, :formRegistroBacklogs:totalTablaRefacciones" />
+												</div>
+												<div class="ui-g-4">
+													<p:commandButton icon="fa fa-plus-square" value="Agregar"
+														actionListener="#{agregarCatInspeccionBean.agregarFilaPartesRequeridas}"
+														update="panelGridPartesRequeridas" />
+												</div>
+												<div class="ui-g-4">
+													<p:fileUpload styleClass="subirListado"
+														fileUploadListener="#{agregarCatInspeccionBean.subirListado}"
+														allowTypes="/(\.|\/)(xls|xlsx)$/" sequential="true"
+														update="growl, panelGridPartesRequeridas, partesRequeridas, :formRegistroBacklogs:totalTablaRefacciones"
+														auto="true" skinSimple="true" mode="advanced"
+														label="Cargar" process="@form" style="width:100%" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+							</p:fieldset>
+						</div>
+
+						<!-- IMAGENES -->
+						<div class="ui-g-12 ui-md-6 ui-lg-6 ui-fluid">
+							<p:fieldset legend="Imágenes" id="imagenesCargadas"
+								styleClass="fieldset-auto-width">
+								<p:panelGrid id="panelesImagenes" columns="1" layout="grid"
+									columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+									<p:galleria
+										value="#{agregarCatInspeccionBean.listaImagenesDto}"
+										var="image" autoPlay="false" effectSpeed="1400"
+										transitionInterval="1000" showCaption="false" panelWidth="400"
+										panelHeight="400">
+										<h:graphicImage width="100%" height="100%"
+											value="#{image.rutaImagenTemp}" />
+									</p:galleria>
+								</p:panelGrid>
+
+								<div class='ui-12' style='margin-top: 0.5%;'>
+									<div class='ui-g'>
+										<div class='ui-g-12 ui-lg-6'>
+											<p:fileUpload
+												fileUploadListener="#{agregarCatInspeccionBean.upload}"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/" skinSimple="true"
+												mode="advanced" id="botonSubirImagenes"
+												update="botonBorrarImagenes, imagenesCargadas"
+												sequential="true" multiple="true" label="Cargar"
+												uploadLabel="Subir" cancelLabel="Cancelar"
+												sizeLimit="100000000" dragDropSupport="true"
+												fileLimitMessage="Excedio el número máximo de archivos permitidos."
+												invalidFileMessage="Tipo de archivo inválido."
+												immediate="true" auto="true">
+											</p:fileUpload>
+										</div>
+										<div class='ui-g-12 ui-lg-6'>
+											<p:commandButton id="botonBorrarImagenes" value="Borrar"
+												icon="fa fa-minus-square"
+												update="botonBorrarImagenes, growl, imagenesCargadas"
+												actionListener="#{agregarCatInspeccionBean.borrarImagenes}"
+												style='margin-top:2px' />
+										</div>
+									</div>
+								</div>
+							</p:fieldset>
+						</div>
+					</div>
+
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Cancelar" action="catInspect"
+							icon="fa fa-close" />
+						<p:commandButton id="botonGuardar" value="Generar BL"
+							icon="fa fa-save" process="@form"
+							action="#{agregarCatInspeccionBean.agregarInspeccion}"
+							update="growl, partesRequeridas, formRegistroBacklogs, botonBorrarImagenes, botonSubirImagenes" />
+					</div>
+				</p:panel>
+			</h:form>
+		</div>
+
+		<ui:include src="../backlogs/dialogs/dialogoBlEstandar.xhtml" />
+
+	</ui:define>
+</ui:composition>

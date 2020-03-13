@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="CARGAR DE EXCEL" widgetVar="cargarExcel"
+	id="cargarExcel" appendTo="@(body)" dynamic="false" resizable="false"
+	modal="true" showEffect="fade" hideEffect="fade" height="auto"
+	width="90%" position="center center"
+	onShow="PF('cargarExcel').initPosition()" responsive="true">
+
+	<h:form id="formExcel">
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+			<div class="Card">
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+					<p:dataTable id="tableListaExcel" height="400" rows="5"
+						value="#{administradorNumeroParteCliente.numeroParteClientesExcelList}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" rowsPerPageTemplate="5,10,15" var="npc">
+
+						<p:column headerText="Número parte cliente"
+							style="text-align:center;">
+							<h:outputText value="#{npc.numeroParteCliente}" />
+						</p:column>
+
+						<p:column headerText="Número parte MATCO Excel"
+							style="text-align:center;">
+							<h:outputText
+								value="#{npc.numeroParteClientesKey.numeroParteMatco}" />
+						</p:column>
+
+						<p:column headerText="Número parte MATCO actual"
+							style="text-align:center;">
+							<h:outputText value="#{npc.numeroParteMatcoActual}" />
+						</p:column>
+
+						<p:column headerText="Cliente" style="text-align:center;">
+							<div
+								class="#{npc.isMalIdCliente() == false ? 'addNPC': 'warnNPC'}"
+								style="padding: 1% 2%">
+								<h:outputText id="idcliente"
+									value="#{npc.numeroParteClientesKey.idCliente.clienteRazonSocialGrid}" />
+							</div>
+							<p:tooltip rendered="#{npc.isMalIdCliente() == true}"
+								for="idcliente" position="top"
+								value="El Cliente ingresado no corresponde al Cliente que se encuentra en el sistema.
+									Es posible que no se realice el cambio de esta celda." />
+						</p:column>
+
+						<p:column headerText="Marca" style="text-align:center;">
+							<div class="#{npc.isMalIdMarca() == false ? 'addNPC': 'warnNPC'}" style="padding: 1% 2%">
+								<h:outputText id="idmarca"
+									value="#{npc.numeroParteClientesKey.idMarca.marcaDescripcionGrid}" />
+							</div>
+							<p:tooltip rendered="#{npc.isMalIdMarca() == true}" for="idmarca"
+								position="top"
+								value="La Marca ingresado no corresponde a la Marca que se encuentra en el sistema.
+									Es posible que no se realice el cambio de esta celda."/>
+						</p:column>
+
+					</p:dataTable>
+				</div>
+
+				<div align="right" class="ui-g-12">
+					<p:commandButton value="Cancelar" icon="fa fa-close"
+						actionListener="#{administradorNumeroParteCliente.limpiarListaExcel}"
+						onclick="PF('cargarExcel').hide()" />
+
+					<p:commandButton value="Subir cambios" icon="fa fa-check"
+						process="@parent"
+						actionListener="#{administradorNumeroParteCliente.subirCambiosExcel}"
+						update="growl :formNPC:tablaNPC" />
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Cotizar Refacciones" widgetVar="dialogoAtoB2"
+	id="dialogoAtoB2" appendTo="@(body)" dynamic="false"
+	position="center center" modal="true" showEffect="fade"
+	hideEffect="fade" height="auto" resizable="false" width="400px"
+	closable="false" responsive="true"
+	onShow="PF('dialogoAtoB2').initPosition()">
+
+	<h:form>
+		<ui:param name="listaBacklogs"
+			value="#{menuBacklogsMinerosBean.backlogsSeleccionadosTrabajo}" />
+
+		<p:panelGrid id="panelGridPartesRequeridas" columns="1" layout="grid"
+			columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+			<p:dataTable id="backLogsSeleccionados" var="bl"
+				value="#{listaBacklogs}"
+				emptyMessage="No se han Backlogs seleccionados." editable="false"
+				widgetVar="cellPartesRequeridas" scrollable="true"
+				scrollHeight="100">
+
+				<p:column headerText="BL" style="width:70px;text-align:center;">
+					<h:outputText
+						value="#{bl.backlogsMinerosKey.backlogMineroAlmacenFormateado}" />
+				</p:column>
+			</p:dataTable>
+		</p:panelGrid>
+
+		<div style="text-align: center">
+			<p:commandButton value="Cotizar Refacciones" style="width:50%;"
+				update="growl"
+				actionListener="#{menuBacklogsMinerosBean.cambioAtoB2Multiple}" />
+
+			<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+				update=":formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox"
+				action="#{menuBacklogsMinerosBean.limpiarSeleccion}" />
+		</div>
+
+	</h:form>
+</p:dialog>
+</html>

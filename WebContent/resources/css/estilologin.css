@@ -1,0 +1,168 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background: #000000 !important;
+	color: #ffffff !important;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+/*****************ENCABEZADO*******************************/
+
+
+.tituloAplicacion {
+	font-size: 30px !important;
+	text-align: right;
+	position: absolute;
+	right: 20px;
+	top: -19px;
+}
+
+.usuarioAplicacion {
+	font-size: 11px;
+	position: absolute;
+	color: #FFFFFF;
+	text-align: right;
+	right: 20px;
+	top: 56px;
+}
+
+#usuarioAplicacion a:LINK,#usuarioAplicacion a:VISITED {
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+#usuarioAplicacion a:HOVER {
+	text-decoration: underline;
+	font-size: 10px;
+}
+
+.logoMatco {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	width: 245px;
+	height: 66px;
+}
+/****************************************************/
+
+.ui-inputfield {
+	font-weight: normal !important;
+	color: #000000 !important;
+}
+
+.imgFondo{
+	width: 100%!important;
+}
+/*Color panel general*/
+.ui-widget-content {
+	color: white!important;
+	border: 0px solid #8E846B!important;
+	background: none!important;
+}
+/*Encabezado de dialogo login*/
+.ui-widget-header {
+	border: 0px!important;
+	background: none!important;
+	color: white;
+	font-weight: bold;
+	border-image: initial;
+}
+.ui-dialog .ui-dialog-titlebar {
+	padding: 0em 1em!important;
+}
+.ui-panel .ui-panel-content {
+	border: 0;
+	background: none!important;
+	padding: 0.0em 0em;
+	border-image: initial;
+}
+.ui-dialog .ui-dialog-content {
+	padding: 0em 0em!important;
+}
+/***************************************/
+.dialogoFondo {
+	height: 175px!important;
+	width: 325px!important;
+	position: absolute;
+	border: 0px!important;	
+	border-radius: 0px !important;
+	background: #000000!important;	
+	-moz-opacity: 0.8; 
+	opacity:0.8;	
+	filter: alpha(opacity=80);
+	left:50%!important; 
+	top:250px!important;	
+	margin-left: -162px!important;
+	z-index:0!important;	
+}
+.dialogoFormulario {
+	height: 140px!important;
+	width: 265px!important;
+	position: absolute;
+	border: 0px!important;
+	border-radius: 0px !important;
+	background: none!important;
+	color: #FFFFFF!important;
+	left:50%!important;
+	top:275px!important;
+	margin-left: -132px!important;
+			
+}
+.pnlfondo{	
+	width: 100%!important;
+	border-radius: 0px !important;
+	margin-bottom: 0!important;	
+	background-color:none!important;
+	width: 100%!important;
+	z-index: 1!important;
+	overflow: hidden!important;
+	padding-left: 0px;
+    padding-right: 0px;	
+}
+.pnlmenu{
+	width: 100%!important;
+	border-radius: 0px !important;
+	background: #FFFFFF!important;
+	height: 25px;
+	margin-bottom: 0!important;	
+	filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#FFFFFF', startColorstr='#E5E5E5', gradientType='0')!important;
+	background-image: -moz-linear-gradient(#E5E5E5, #FFFFFF)!important;
+	background: -webkit-gradient(linear, center top, center bottom, from(#E5E5E5), to(#FFFFFF))!important; 
+	position:relative!important;
+	background-color:white!important;
+	width: 100%!important;
+	z-index: 6!important;
+	overflow: hidden!important;	
+	
+}
+.ui-growl .ui-widget-content{	
+	background: #FFFFFF !important;
+	color: red!important;
+	opacity:0.8;
+	border: 0 !important;
+	border-radius: 4px !important;	
+}
+.ui-growl {
+	position: absolute;
+	width: 329px !important;
+	left:50% !important;
+	margin-left: -164px!important;
+	top:400px!important; 
+}
+
+.ui-growl-title{
+	width: 315px !important;
+	margin-left: -25px !important;
+	margin-top: 10px !important;
+}
+
+/*modal*/
+.ui-widget-overlay {
+	background: none!important;
+}
+.panel{
+	width: 100%!important;
+}
+

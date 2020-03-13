@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- LAYOUT TOPBAR COVER -->
+	<div id="layout-topbar-cover">
+		<div id="layout-topbar-row">
+			<div id="layout-topbar-left">
+				<a id="mobile-menu-btn" class="topbar-link Animated03"><i
+					class="fa fa-navicon"></i></a>
+				<p:commandLink id="logo" action="backlogsLista">
+					<h:graphicImage name="images/matcocat.png" id="logo-img"
+						library="venture-layout" />
+				</p:commandLink>
+			</div>
+
+			<div id="layout-topbar-right">
+				<ui:include src="topmenu.xhtml" />
+				<div class="CaterpillarCorporateYellow AppName Fright">Administración
+					y Seguimiento de Backlogs</div>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

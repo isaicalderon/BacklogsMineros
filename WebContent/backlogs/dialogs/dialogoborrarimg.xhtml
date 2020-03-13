@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Borrar imágenes" widgetVar="dialogBorrarImg"
+	id="dialogBorrarImg" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="70%" position="center center"
+	onShow="PF('dialogBorrarImg').initPosition()" responsive="true">
+
+	<h:form id="formBorrarImgs">
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+			<div class="Card">
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+					<p:dataTable id="tableBorrarImg" var="imagen"
+						value="#{agregarBacklogsMinerosBean.listaImagenesDto}"
+						emptyMessage="No existen imágenes en este Backlog"
+						selection="#{agregarBacklogsMinerosBean.imagenesSeleccionadasList}"
+						scrollable="true" rowKey="#{imagen.nombre}">
+						<p:column selectionMode="multiple"
+							style="width:25px;text-align:center" />
+						<p:column headerText="NOMBRE IMAGEN" style="text-align:center;">
+							<h:outputText value="#{imagen.nombre}" />
+						</p:column>
+						<p:column headerText="RUTA REAL IMAGEN" style="text-align:center;">
+							<h:outputText value="#{imagen.rutaImagenReal}" />
+						</p:column>
+						<p:column headerText="IMAGEN" style="text-align:center">
+							<h:graphicImage value="#{imagen.rutaImagen}" width="80"
+								height="90" title="#{imagen.nombre}" alt="sin imagen" />
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div align="right" class="ui-g-12">
+
+					<p:selectBooleanCheckbox id='checkImg' style="float:left"
+						value="#{agregarBacklogsMinerosBean.conservarImagenes}"
+						itemLabel="Conservar imágenes seleccionadas"/>
+					<p:tooltip id="toolTipHelp" for="checkImg" value="Conserva las imágenes en el disco duro. No se mostraran como parte del Backlog" position="top"/>
+					
+					<p:commandButton icon="fa fa-trash" value="Borrar"
+						update="growl, tableBorrarImg, 
+							:formRegistroBacklogs:idGaleria"
+						actionListener="#{agregarBacklogsMinerosBean.borrarImagenesDB}">
+						<p:confirm header="CONFIRMACIÓN"
+							message="¿Realmente desea borrar las imágenes seleccionadas?"
+							icon="fa fa-warning" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Si" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+					</p:confirmDialog>
+
+					<p:commandButton value="Cerrar" update="tableBorrarImg"
+						icon='fa fa-close'
+						actionListener="#{agregarBacklogsMinerosBean.limpiarSeleccionImg}"
+						onclick="PF('dialogBorrarImg').hide()" />
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

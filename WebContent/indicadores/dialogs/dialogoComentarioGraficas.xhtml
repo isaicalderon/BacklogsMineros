@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Agregar Comentario" widgetVar="graficComment"
+	id="graficComment" appendTo="@(body)" dynamic="false"
+	position="center center" modal="true" showEffect="fade"
+	hideEffect="fade" height="auto" resizable="false" width="400px"
+	closable="false" responsive="true"
+	onShow="PF('graficComment').initPosition()">
+
+	<h:form id="formAddComent">
+
+		<div class='ui-g'>
+			<div class='ui-g-12'>
+				<p:outputLabel value="Añade un comentario a esta grafica: " />
+				<p:inputTextarea id='comentario' rows="5" counter="display" style="width:90%"
+					value="#{genericGraficBean.comentarioGrafica}" maxlength="255"
+					counterTemplate="{0} caracteres restantes" />
+				<br />
+				<h:outputText id="display" />
+			</div>
+		</div>
+
+
+		<div style="text-align: center">
+			<p:commandButton value="Aceptar" icon="fa fa-comment"
+				update="growl, comentario"
+				actionListener="#{genericGraficBean.agregarComentario(backlogsStaticsVarBean.auxiliarGrafica)}"
+				onclick="PF('graficComment').hide()" />
+
+			<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+				onclick="PF('graficComment').hide()" />
+
+		</div>
+	</h:form>
+
+</p:dialog>
+</html>

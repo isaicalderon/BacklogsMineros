@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<p:dialog header="Cotizar" widgetVar="dialogocotizar"
+	id="dialogocotizar" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="70%" closable="false" position="center center"
+	onShow="PF('dialogocotizar').initPosition()" responsive="true">
+
+	<h:form id="formDialogoCotizar">
+
+		<ui:param name="backlog"
+			value="#{backlogsMinerosBean.backlogMineroSeleccionado}" />
+
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+			<div class="Card">
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+					<p:dataTable id="partesRequeridas" var="partes"
+						value="#{backlog.listaRefacciones}"
+						emptyMessage="No se han agregado partes requeridas"
+						editable="true" editMode="cell" widgetVar="cellPartesRequeridas"
+						scrollHeight="200" scrollable="true">
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<div align="left">
+									<p:inputText readonly="true" disabled="true"
+										style="border:0px;color:black;background-color: transparent;font-weight: bold"
+										value="#{backlog.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+										id="folio" />
+								</div>
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="CANTIDAD*"
+							style="width:20%;text-align:center;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{partes.cantidad}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputNumber value="#{partes.cantidad}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="NÚM. PARTE*"
+							style="width:30%;text-align:center;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{partes.numeroParte}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{partes.numeroParte}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="DESCRIPCIÓN*"
+							style="width:80%;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:inputTextarea cols="25" disabled="true" maxlength="32700"
+										autoResize="true" rows="2"
+										style="border:0px;background-color: transparent;color:black;"
+										value="#{partes.descripcionMayuscula}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputTextarea cols="25" maxlength="32700" autoResize="true"
+										rows="2" value="#{partes.descripcionParte}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="OBSERVACIONES" style="width:60%;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:inputTextarea cols="25" disabled="true" maxlength="32700"
+										autoResize="true" rows="2"
+										style="border:0px;background-color: transparent;color:black;"
+										value="#{partes.observacionesMayuscula}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputTextarea cols="25" maxlength="32700" autoResize="true"
+										rows="2" value="#{partes.observaciones}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="PRECIO UNITARIO"
+							style="width:25%;text-align:right">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{partes.precioFormateado}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputNumber value="#{partes.precio}" decimalPlaces="2"
+										minValue="0" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="SUBTOTAL" style="width:20%;text-align:right">
+							<h:outputText value="#{partes.subTotalFormateado}" />
+						</p:column>
+
+						<p:column style="width:20%">
+							<p:rowEditor />
+						</p:column>
+
+					</p:dataTable>
+
+					<div class="ui-g-12">
+						<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+							columnClasses="ui-grid-col-3, ui-grid-col-9"
+							styleClass="ui-panelgrid-blank"
+							style='text-aling:right;float:right'>
+							<h:outputText for="totalTablaRefacciones"
+								style="font-weight:bold" value="Total:" />
+							<p:inputText id="totalTablaRefacciones" disabled="true"
+								style="font-weight:bold;font-size:14pt;"
+								value="#{backlogsMinerosBean.totalFormateado}" />
+						</p:panelGrid>
+					</div>
+
+					<div class="ui-g-12" align="left">
+						<h:outputText value="Número cotización: "
+							style="border:0px;color:black" />
+						<p:inputMask value="#{backlog.numeroCotizacion}"
+							mask="QT-9999999999" />
+
+						<p:commandButton style="margin-left:1%;" value="Cotizar"
+							actionListener="#{backlogsMinerosBean.cotizar(backlog)}"
+							update="partesRequeridas, growl" />
+							
+						<p:commandButton value="Omitir"
+							actionListener="#{backlogsMinerosBean.omitirBacklog()}"
+							update="partesRequeridas, growl" />
+					</div>
+
+					<div class="ui-g-12" style="text-align: center">
+						<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+							update=":formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox"
+							action="#{backlogsMinerosBean.limpiarSeleccion}" />
+					</div>
+
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

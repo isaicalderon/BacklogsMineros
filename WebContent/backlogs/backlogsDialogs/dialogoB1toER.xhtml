@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Autorizar" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	closable="false" position="center center" height="auto" width="1000"
+	onShow="PF('dialogoB1toER').initPosition()" responsive="true"
+	widgetVar="dialogoB1toER" id="dialogoB1toER">
+
+	<h:form>
+		<ui:param name="listaBacklogs"
+			value="#{menuBacklogsMinerosBean.backlogsSeleccionadosTrabajo}" />
+
+		<p:panelGrid id="panelGridPartesRequeridas" columns="1" layout="grid"
+			columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+			<p:dataTable id="tablaAutorizar" var="backlog"
+				value="#{listaBacklogs}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				paginatorPosition="bottom" rows="5"
+				currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+				paginator="true" emptyMessage="No hay backlogs B1 seleccionados"
+				rowsPerPageTemplate="5,10,15" scrollable="true" scrollHeight="200">
+
+				<p:column headerText="Folio" width="120">
+					<p:outputLabel
+						value="#{backlog.backlogsMinerosKey.backlogMineroAlmacenFormateado}" />
+				</p:column>
+
+				<p:column headerText="Autorizó" width="120">
+					<p:inputTextarea cols="14" maxlength="32700" autoResize="true"
+						rows="1"
+						style="border:0px;background-color: transparent;color:black;"
+						value="#{backlog.autorizadoPor}"
+						disabled="#{menuBacklogsMinerosBean.deshabilitarFila(backlog)}"
+						rendered="#{menuBacklogsMinerosBean.renderFila(backlog)}" />
+				</p:column>
+
+				<p:column headerText="Área" width="120">
+					<p:inputTextarea cols="14" maxlength="32700" autoResize="true"
+						rows="1"
+						style="border:0px;background-color: transparent;color:black;"
+						value="#{backlog.area}"
+						disabled="#{menuBacklogsMinerosBean.deshabilitarFila(backlog)}"
+						rendered="#{menuBacklogsMinerosBean.renderFila(backlog)}" />
+				</p:column>
+
+				<p:column headerText="Número de reserva" width="140"
+					rendered="#{menuBacklogsMinerosBean.obtenerSucursalFiltro() == 6}">
+					<p:inputTextarea cols="17" maxlength="32700" autoResize="true"
+						rows="1"
+						style="border:0px;background-color: transparent;color:black;"
+						value="#{backlog.numeroReserva}"
+						disabled="#{menuBacklogsMinerosBean.deshabilitarFila(backlog)}"
+						rendered="#{menuBacklogsMinerosBean.renderFila(backlog)}" />
+				</p:column>
+
+				<p:column headerText="Autorizar" width="90"
+					rendered="#{loginBean.tienePermiso('ESTATUS B1-C')}">
+					<div style="text-align: center">
+						<p:commandButton value="Autorizar"
+							disabled="#{menuBacklogsMinerosBean.deshabilitarFila(backlog)}"
+							rendered="#{menuBacklogsMinerosBean.renderFila(backlog)}"
+							actionListener="#{menuBacklogsMinerosBean.dialogoB1toER_autorizar(backlog)}"
+							update="tablaAutorizar,growl,:formListaBacklogs:tablaBacklogsMineros" />
+					</div>
+				</p:column>
+				<p:column headerText="No autorizar" width="90"
+					rendered="#{loginBean.tienePermiso('ESTATUS B1-A')}">
+					<div style="text-align: center">
+						<p:commandButton value="No Autorizar"
+							disabled="#{menuBacklogsMinerosBean.deshabilitarFila(backlog)}"
+							rendered="#{menuBacklogsMinerosBean.renderBotonNoAutorizar(backlog)}"
+							actionListener="#{menuBacklogsMinerosBean.noAutorizar(backlog)}"
+							update="tablaAutorizar,growl,:formListaBacklogs:tablaBacklogsMineros" />
+					</div>
+				</p:column>
+			</p:dataTable>
+		</p:panelGrid>
+
+		<div class="ui-g-12" style="text-align: right">
+			<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+				update=":formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox, growl"
+				action="#{menuBacklogsMinerosBean.limpiarSeleccion}" />
+		</div>
+	</h:form>
+</p:dialog>
+</html>

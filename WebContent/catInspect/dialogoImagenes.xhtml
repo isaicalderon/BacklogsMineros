@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<style>
+.imageGalleria{
+	width: 100% !important; 
+	height: 15em !important;
+}
+
+.overScroll{
+	overflow: scroll !important;
+	height: 30em !important;
+	width: auto !important;
+}
+
+.imageRelative {
+	/* 	position: initial !important; */
+	/* 	width: inherit !important; */
+	/* 	height: auto !important; */
+	
+}
+
+.ui-galleria-panel-wrapper {
+	/*height: auto !important;*/
+	
+}
+
+.ui-galleria-panel {
+	/*position: relative !important;*/
+	/*height: auto !important;*/
+	
+}
+
+.ui-galleria-filmstrip-wrapper {
+	opacity: 1 !important;
+	/*height: auto !important;*/
+}
+</style>
+
+<p:dialog id='dialogoImg'
+	header="#{catInspectMinerosBean.questionEntitySeleccionada.folio}"
+	widgetVar="dialogoImagenes" appendTo="@(body)" dynamic="true"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="660px" responsive="true" position="center center"
+	onShow="PF('dialogoImagenes').initPosition()">
+
+	<ui:param name="question"
+		value="#{catInspectMinerosBean.questionEntitySeleccionada}" />
+
+	<h:outputText value="#{question.preguntaCat}"
+		style="font-weight: bold;font-size:9pt" />
+	<br />
+	<h:outputText value="#{question.comments}" style="font-size:9pt" />
+	<br />
+
+	<p:galleria id='questionImages' value="#{question.imagenes}" 
+		var="image" showCaption="false" autoPlay="false" panelHeight="400"   panelWidth="600">
+		<h:graphicImage width="100%" height="100%" 
+			value="data:#{image.typeOfMedia};base64, #{image.imgBase64}"/>
+	</p:galleria>
+	
+
+	<!-- 
+	<p:imageSwitch id='questionImages' effect="wipe" widgetVar="switcher"
+		slideshowAuto="false" styleClass="overScroll">
+		<ui:repeat value="#{question.imagenes}" var="image"
+			id="fadeEffectImages">
+			<h:graphicImage value="data:#{image.typeOfMedia};base64, #{image.imgBase64}"  id="image"
+				styleClass="imageRelative"/>
+		</ui:repeat>
+		
+	</p:imageSwitch>
+	
+	<p:commandButton type="button" onclick="PF('switcher').previous();"
+		icon="fa fa-chevron-left" id="prev" style="margin-bottom: 5px"
+		update='dialogoImg' />
+	<p:commandButton type="button" onclick="PF('switcher').next();"
+		icon="fa fa-chevron-right" id="next" style="margin-bottom: 5px"
+		update="dialogoImg" />
+	-->
+	
+</p:dialog>
+
+</html>

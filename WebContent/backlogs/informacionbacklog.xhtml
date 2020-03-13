@@ -1,0 +1,323 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.subirListado .ui-fileupload-filename {
+	display: none;
+}
+
+.subirListado  .ui-fileupload-files {
+	display: none;
+}
+
+.subirListado  .ui-fileupload-buttonbar {
+	padding: 0 !important;
+}
+
+.subirListado  .ui-fileupload-content {
+	display: none;
+}
+
+fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id="formRegistroBacklogs">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Información de Backlog" url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md-12">
+							<!-- BACKLOGS -->
+							<div class="ui-g-12 ui-md-12 ui-lg-127 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<!-- FOLIO -->
+									<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Folio:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.folio}" />
+									</p:panelGrid>
+
+									<!-- SERIE, NUM ECO Y HOROMETRO -->
+									<p:panelGrid id="panelGridUno" columns="4" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+
+										<h:outputText value="Número de serie:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.serie}" />
+
+										<h:outputText for="numeroEconomico" value="Número Económico:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.backlogMineroSeleccionado.numeroEconomico}" />
+
+									</p:panelGrid>
+
+									<!-- HOROMETRO -->
+									<p:panelGrid id="panelGridHorometro" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Horómetro:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.horometro}" />
+									</p:panelGrid>
+
+									<!-- ORIGEN BL, LUGAR GEN-->
+									<p:panelGrid id="panelGridDos" columns="4" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Origen del BL:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.origen}" />
+										<h:outputText value="Lugar de generación:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.generacion}" />
+									</p:panelGrid>
+
+									<!-- PRIO -->
+									<p:panelGrid id="panelGridDosX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Prioridad:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.prioridad}" />
+									</p:panelGrid>
+
+									<!-- SISTEMA-->
+									<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-10"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Sistema:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.sistema}" />
+									</p:panelGrid>
+
+									<!--  LADO COMPONENTE -->
+									<p:panelGrid id="panelGridLD" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Lado componente:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.ladoComponente.ladoComponenteFormateado}" />
+									</p:panelGrid>
+
+									<!-- CODIGO SINTOMA -->
+									<p:panelGrid id="panelGridCodSin" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Código sintoma:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.sintomasObject.sintomaFormateado}" />
+									</p:panelGrid>
+
+									<!-- SINTOMAS -->
+									<p:panelGrid id="panelGridCinco" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-10"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Sintomas:" />
+										<p:inputTextarea id="accion" maxlength="32700" rows="2"
+											autoResize="true" readonly="true" disabled="true"
+											value="#{informacionBacklogsMinerosBean.sintomas}" />
+									</p:panelGrid>
+
+									<!-- CODIGO TRABAJO -->
+									<p:panelGrid id="panelGridCuatro" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Código de trabajo:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.codigoTrabajo}" />
+									</p:panelGrid>
+
+									<!-- ACCIÓN -->
+									<p:panelGrid id="panelGridCincoX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-10"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="accionEquipo" value="Acción:" />
+										<p:inputTextarea id="accionEquipo" rows="3" cols="33"
+											disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.backlogMineroSeleccionado.accionEquipo}"
+											maxlength="200" autoResize="true" />
+									</p:panelGrid>
+
+									<!-- HMQUINAS, HHOMBRE-->
+									<p:panelGrid id="panelGridSeis" columns="6" layout="grid"
+										columnClasses="ui-grid-col-2,ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Horas Máquina:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.horasMaquina}" />
+										<h:outputText value="Horas Hombre:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.horasHombre}" />
+									</p:panelGrid>
+
+									<!--CARGO-->
+									<p:panelGrid id="panelGridSeisX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Cargo:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.cargo}" />
+									</p:panelGrid>
+
+									<!-- NOTAS SOBRE BL -->
+									<p:panelGrid id="panelGridOcho" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Notas sobre el BL:" />
+										<p:inputTextarea disabled="true" readonly="true" rows="2"
+											value="#{informacionBacklogsMinerosBean.notas}" />
+									</p:panelGrid>
+
+									<!-- REQUERIDO POR -->
+									<p:panelGrid id="panelGridNueveX3" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Requerido por:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.requerido}" />
+									</p:panelGrid>
+
+									<!-- RIESGOS DE TRABAJO -->
+									<p:panelGrid id="panelGridRiesgos" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-8"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Riesgos trabajo:" />
+										<p:dataList
+											emptyMessage="No se han agregado riesgos de trabajo"
+											value="#{cambioEstatusBacklogsMineros.riesgosTabajosList}"
+											var="riesgo" type="unordered">
+											<f:facet name="header">Riesgos</f:facet>
+									        	[#{riesgo.idCodigoRiesgo}] - #{riesgo.descripcionRiesgo}
+									    	</p:dataList>
+									</p:panelGrid>
+
+									<!-- TIPO DE TRABAJO-->
+									<p:panelGrid id="panelGridNueveX2" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Tipo de trabajo:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{informacionBacklogsMinerosBean.tipoTrabajo}" />
+									</p:panelGrid>
+
+									<!-- OTROS -->
+									<p:panelGrid id="panelGridNuevex1" columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText for="otros" value="Otros Materiales/Equipo:" />
+										<p:inputTextarea id="otros" maxlength="32700" rows="1"
+											cols="50" style="resize: none" autoResize="false"
+											disabled="true"
+											value="#{informacionBacklogsMinerosBean.otrosMateriales}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Orden de trabajo:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}" />
+										<p:outputLabel value="Número de reserva:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 6}" />
+										<p:inputText id="reserva2" tabindex="-1" style="width:50%;"
+											value="#{informacionBacklogsMinerosBean.numeroReserva}"
+											disabled="true" readonly="true" />
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md-12">
+							<!-- PARTES REQUERIDAS -->
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Partes Requeridas" style="margin-top:10px">
+									<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+										layout="grid" columnClasses="ui-grid-col-12"
+										styleClass="ui-panelgrid-blank">
+										<p:dataTable id="partesRequeridas" var="partes"
+											value="#{informacionBacklogsMinerosBean.backlogsMinerosDetalleRefaList}"
+											emptyMessage="No se han agregado partes requeridas"
+											editable="false" widgetVar="cellPartesRequeridas">
+
+											<p:column headerText="CANTIDAD"
+												style="width:70px;text-align:center;">
+												<h:outputText value="#{partes.cantidad}" />
+											</p:column>
+											<p:column headerText="NÚM. PARTE"
+												style="width:80px;text-align:center;}">
+												<h:outputText value="#{partes.numeroParte}" />
+											</p:column>
+											<p:column headerText="DESCRIPCIÓN" style="width:170px;}">
+												<h:outputText value="#{partes.descripcionMayuscula}" />
+											</p:column>
+											<p:column headerText="OBSERVACIONES" style="width:25%;">
+												<h:outputText value="#{partes.observacionesMayuscula}" />
+											</p:column>
+											<p:column headerText="PRECIO UNITARIO (USD)"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.precioFormateado}" />
+											</p:column>
+											<p:column headerText="SUBTOTAL"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.subTotalFormateado}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:panelGrid>
+									<div class="ui-g-12">
+										<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+											columnClasses="ui-grid-col-3, ui-grid-col-9"
+											styleClass="ui-panelgrid-blank"
+											style='text-aling:right;float:right'>
+											<h:outputText for="totalTablaRefacciones"
+												style="font-weight:bold" value="Total:" />
+											<p:inputText id="totalTablaRefacciones" disabled="true"
+												style="font-weight:bold;font-size:14pt;text-align: right;"
+												value="#{informacionBacklogsMinerosBean.totalFormateado}" />
+										</p:panelGrid>
+									</div>
+								</p:fieldset>
+							</div>
+						</div>
+						
+					</div>
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Regresar" action="backlogsLista"
+							icon="fa fa-close" />
+					</div>
+				</p:panel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

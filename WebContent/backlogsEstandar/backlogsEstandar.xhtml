@@ -1,0 +1,290 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.ui-datatable-scrollable-header-box table thead tr th,
+	.ui-datatable-scrollable-footer-box table tfoot tr td {
+	/* border-width: 1px; */
+	/* border-right: solid 1px #d1d1d1; */
+	/* font-size: 14px; */
+	/* background-color: #ececec; */
+	color: #525252;
+	background-color: rgba(40, 40, 40, 0.05) !important;
+	border: solid 1px #d1d1d1 !important;
+	outline: none;
+	padding: 6px;
+	font-family: 'poppinsregular';
+	font-size: 12px;
+}
+
+.ui-panelgrid-cell {
+	padding: 0px !important;
+}
+
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	/*margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;*/
+	
+}
+
+.ui-fieldset-legend {
+	/*padding: 5px 5px !important;*/
+	
+}
+</style>
+		<div class="Card">
+			<h:form id="formBLEST">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/backlogsMineros.xhtml" />
+					<p:menuitem value="Backlogs Estándar" url="#" />
+				</p:breadCrumb>
+				<br />
+				<p:menubar id="menuBar">
+					<p:submenu label="Opciones">
+						<p:menuitem value="Registrar" icon="fa fa-plus-square"
+							action="backlogEstandarRegistro" />
+						<p:menuitem value="Editar" icon="fa fa-edit"
+							action="backlogEstandarRegistro"
+							disabled="#{not backlogEstandarBean.selectedBacklog}" />
+						<p:menuitem value="Refrescar" icon="fa fa-refresh" onclick="" />
+
+					</p:submenu>
+					<p:menuitem value="Limpiar filtros" icon="fa fa-eraser"
+						onclick="PF('tablaBLEST').clearFilters()" />
+				</p:menubar>
+
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+
+					<p:dataTable id='tablaBLEST' var="backlogEstandar"
+						scrollable="true" scrollWidth="100%" widgetVar="widgetTablaBlest"
+						emptyMessage="No se han agregado Backlogs Estándar."
+						selection="#{backlogsStaticsVarBean.backlogEstandarSelected}"
+						selectionMode="single" rowKey="#{backlogEstandar}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" rowsPerPageTemplate="10,25,50,75"
+						value="#{backlogEstandarBean.backglosEstandarList}">
+
+						<p:ajax event="rowSelect"
+							listener="#{backlogEstandarBean.onRowSelectBLEST}"
+							update=":formBLEST:menuBar" />
+
+						<p:ajax event="rowDblselect" update="growl"
+							listener="#{backlogEstandarBean.usarBacklog}" />
+
+						<!-- 
+						<p:column headerText="Usar Backlog" style="width:97px">
+							<p:commandButton value="Usar" icon="fa fa-mail-reply" />
+						</p:column>
+						 -->
+
+						<p:column headerText="Descripción" style="width:250px"
+							filterBy="#{backlogEstandar.descripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.descripcion}">
+							<h:outputText value="#{backlogEstandar.descripcion}" />
+						</p:column>
+
+						<p:column headerText="Origen del BL" style="width:180px"
+							filterBy="#{backlogEstandar.origenBlDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.origenBlDescripcion}">
+							<h:outputText value="#{backlogEstandar.origenBlDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Lugar de generación" style="width:200px"
+							filterBy="#{backlogEstandar.lugarOrigenDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.lugarOrigenDescripcion}">
+							<h:outputText value="#{backlogEstandar.lugarOrigenDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Proriedad" style="width:150px"
+							filterBy="#{backlogEstandar.proridadDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.proridadDescripcion}">
+							<h:outputText value="#{backlogEstandar.proridadDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Sistema" style="width:260px"
+							filterBy="#{backlogEstandar.codigosSistemas}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.codigosSistemas}">
+							<h:outputText
+								value="#{backlogEstandar.codigosSistemas} - #{backlogEstandar.codigoSistemaDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Lado componente" style="width:250px"
+							filterBy="#{backlogEstandar.ladoComponente.codigoLDC}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.ladoComponente.codigoLDC}">
+							<h:outputText
+								value="#{backlogEstandar.ladoComponente.ladoComponenteFormateado}" />
+						</p:column>
+
+						<p:column headerText="Código Sintoma" style="width:250px"
+							filterBy="#{backlogEstandar.sintoma.idCodigoSintoma}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.sintoma.idCodigoSintoma}">
+							<h:outputText
+								value="#{backlogEstandar.sintoma.sintomaFormateado}" />
+						</p:column>
+
+						<p:column headerText="Sintomas" style="width:250px"
+							filterBy="#{backlogEstandar.sintomasEquipo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.sintomasEquipo}">
+							<h:outputText value="#{backlogEstandar.sintomasEquipo}" />
+						</p:column>
+
+						<p:column headerText="Código de trabajo" style="width:300px"
+							filterBy="#{backlogEstandar.codigoTrabajoDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.codigoTrabajoDescripcion}">
+							<h:outputText value="#{backlogEstandar.codigoTrabajoDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Acción" style="width:250px"
+							filterBy="#{backlogEstandar.accionEquipo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.accionEquipo}">
+							<h:outputText value="#{backlogEstandar.accionEquipo}" />
+						</p:column>
+
+						<p:column headerText="Horas Máquina" style="width:150px"
+							filterBy="#{backlogEstandar.horasMaquinaEstimadas}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.horasMaquinaEstimadas}">
+							<h:outputText value="#{backlogEstandar.horasMaquinaEstimadas}" />
+						</p:column>
+
+						<p:column headerText="Horas Hombre" style="width:150px"
+							filterBy="#{backlogEstandar.horasHombreEstimadas}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.horasHombreEstimadas}">
+							<h:outputText value="#{backlogEstandar.horasHombreEstimadas}" />
+						</p:column>
+
+						<p:column headerText="Cargo" style="width:300px"
+							filterBy="#{backlogEstandar.cargoTrabajo.idCargoTrabajo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.cargoTrabajo.idCargoTrabajo}">
+							<h:outputText
+								value="#{backlogEstandar.cargoTrabajo.cargoTrabajoFormateado}" />
+						</p:column>
+
+						<p:column headerText="Tipo trabajo" style="width:250px"
+							filterBy="#{backlogEstandar.tipoTrabajo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.tipoTrabajo}">
+							<h:outputText value="#{backlogEstandar.tipoTrabajo}" />
+						</p:column>
+
+						<p:column headerText="Riesgos" style="width:140px">
+							<p:commandButton value="Ver riesgos" icon="fa fa-asterisk"
+								update=":formBLEST:detalleRiesgos"
+								oncomplete="PF('riesgos').show('#{component.clientId}')">
+								<f:setPropertyActionListener value="#{backlogEstandar}"
+									target="#{backlogEstandarBean.backlogEstandarSeleccionado}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Refacciones" style="width:170px">
+							<p:commandButton icon="fa fa-gears" value="Ver refacciones"
+								update=":formBLEST:partesRequeridas :formBLEST:totalTablaRefaccionesSeleccion"
+								oncomplete="PF('overlayRefa').show('#{component.clientId}')">
+								<f:setPropertyActionListener value="#{backlogEstandar}"
+									target="#{backlogEstandarBean.backlogEstandarSeleccionado}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:overlayPanel widgetVar="riesgos" showEffect="fade"
+						hideEffect="fade" dismissable="false" showCloseIcon="true">
+						<p:outputPanel id="detalleRiesgos" style="text-align:left;">
+							<p:panelGrid id="panelGridRiesgos" columns="1" layout="grid"
+								columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+								<p:dataList emptyMessage="No se han agregado riesgos de trabajo"
+									value="#{backlogEstandarBean.backlogEstandarSeleccionado.riesgosList}"
+									var="riesgo" type="unordered">
+									<f:facet name="header">Riesgos</f:facet>
+						        	[#{riesgo.idCodigoRiesgo}] - #{riesgo.descripcionRiesgo}
+						    	</p:dataList>
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:overlayPanel>
+
+					<p:dialog header="Refacciones" widgetVar="overlayRefa"
+						showEffect="fade" modal="true" hideEffect="fade"
+						appendTo="@(body)" dynamic="false" resizable="false" width="70%"
+						position="center center" responsive="true">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-fluid">
+								<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+									layout="grid" columnClasses="ui-grid-col-12"
+									styleClass="ui-panelgrid-blank">
+									<p:dataTable id="partesRequeridas" var="partes"
+										value="#{backlogEstandarBean.backlogEstandarSeleccionado.listaRefacciones}"
+										emptyMessage="No se han agregado partes requeridas"
+										editable="false" widgetVar="cellPartesRequeridas" rows="10"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										paginatorPosition="bottom"
+										currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+										paginator="true" rowsPerPageTemplate="5,10">
+										<p:column headerText="CANTIDAD"
+											style="width:80px;text-align:center;">
+											<h:outputText value="#{partes.cantidad}" />
+										</p:column>
+										<p:column headerText="NÚM. PARTE"
+											style="width:auto;text-align:center;}">
+											<h:outputText value="#{partes.numeroParte}" />
+										</p:column>
+										<p:column headerText="DESCRIPCIÓN" style="width:auto;}">
+											<h:outputText value="#{partes.descripcionMayuscula}" />
+										</p:column>
+										<p:column headerText="OBSERVACIONES" style="width:auto;">
+											<h:outputText value="#{partes.observacionesMayuscula}" />
+										</p:column>
+										<p:column headerText="PRECIO UNITARIO (USD)"
+											style="width:auto;text-align:right">
+											<h:outputText value="#{partes.precioFormateado}" />
+										</p:column>
+										<p:column headerText="SUBTOTAL"
+											style="width:auto;text-align:right">
+											<h:outputText value="#{partes.subTotalFormateado}" />
+										</p:column>
+									</p:dataTable>
+								</p:panelGrid>
+								<div class="ui-g-12">
+									<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank"
+										style='text-aling:right;float:right'>
+										<h:outputText for="totalTablaRefaccionesSeleccion"
+											style="font-weight:bold" value="Total:" />
+										<p:inputText id="totalTablaRefaccionesSeleccion"
+											disabled="true" style="font-weight:bold;font-size:14pt;"
+											value="#{backlogEstandarBean.backlogEstandarSeleccionado.getTotalRefaccionBLSeleccionado()}" />
+									</p:panelGrid>
+								</div>
+							</div>
+						</div>
+					</p:dialog>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

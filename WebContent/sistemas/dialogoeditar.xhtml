@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Editar Sistema" widgetVar="modificarSistema"
+	id="modificarSistema" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="40%" closable="false" responsive="true"
+	onShow="PF('modificarSistema').initPosition()" position="center center">
+
+	<h:form id="formDialogoModificar">
+		<div class="ui-g">
+			<div class="ui-g-12">
+
+				<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Código:" for="codigoSistema" />
+					<p:inputNumber disabled="true" id="codigoSistema"
+						value="#{administradorCodigosSistemasBean.codigo}" maxValue="9999"
+						decimalPlaces="0" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridUno" columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Descripción:" for="@next" />
+					<p:inputTextarea maxlength="32700" autoResize="true" 
+						id="descripcion" style="width:95%"
+						value="#{administradorCodigosSistemasBean.descripcion}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridDos" columns="2" layout="grid"
+					columnClasses="ui-grid-col-2, ui-grid-col-10"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Sistema: " for="@next" />
+					<p:inputTextarea id="sistema" maxlength="32700" autoResize="true"
+						style="width:95%"
+					 	value="#{administradorCodigosSistemasBean.sistema}" />
+				</p:panelGrid>
+
+				<div style="width: 100%; margin-top: 10px;">
+					<div style="margin-top: 10px; display: block; text-align: right;">
+
+						<p:commandButton value="Cancelar" icon="fa fa-remove"
+							onclick="PF('modificarSistema').hide()"
+							update=":formSistemas:tablaSistemas, :formSistemas:menuBar"
+							actionListener="#{administradorCodigosSistemasBean.limpiarCampos}" />
+
+						<p:commandButton value="Editar" icon="fa fa-check"
+							process="@parent"
+							actionListener="#{administradorCodigosSistemasBean.modificarCodigosSistemas}"
+							update="codigoSistema, descripcion, sistema, :formSistemas:tablaSistemas, :formSistemas:menuBar growl" />
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</h:form>
+</p:dialog>
+
+</html>

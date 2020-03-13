@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+				<p:menuitem value="Indicadores" url="#" />
+			</p:breadCrumb>
+			
+			<div class='White PadWithBorder10 Wid80 ui-fluid'
+				style="margin: auto">
+
+				<ui:include src="graficas/graficaAdminBL.xhtml" />
+
+				<ui:include src="graficas/graficaEstatusBL.xhtml" />
+
+				<ui:include src="graficas/graficaMayor30Dias.xhtml" />
+
+				<ui:include src="graficas/graficaPendientesBL.xhtml" />
+				
+				<ui:include src="graficas/graficaPorcentajeBL.xhtml" />
+ 
+				<ui:include src="graficas/graficaHorasHyM.xhtml" />
+
+				<ui:include src="graficas/graficaTiempoEstimadoBL.xhtml" />
+
+				<ui:include src="graficas/graficaGeneradosAreaBL.xhtml" />
+
+				<ui:include src="graficas/graficaGeneradosSMCS.xhtml" />
+
+			</div>
+
+			<script>
+				PF('adminBL').unselect(0);
+				PF('estatusBL').unselect(0);
+				PF('mayor30BL').unselect(0);
+				PF('pendientesBL').unselect(0);
+				PF('porcentajeBL').unselect(0);
+				PF('horasHyMBL').unselect(0);
+				PF('tiempoEstimadoBL').unselect(0);
+				PF('generadosAreaBL').unselect(0);
+				PF('generadosSMCSBL').unselect(0);
+							
+				function chartExtender() {
+					this.cfg.seriesDefaults = {
+						renderer : $.jqplot.BarRenderer,
+						rendererOptions : {
+							seriesColors : [ '#00B050', '#00B050',
+									'#00B050', '#FFFF00', '#D30000',
+									'#D30000', '#D30000', '#D30000',
+									'#D30000', '#D30000', '#D30000',
+									'#D30000', '#D30000', '#D30000' ],
+							varyBarColor : true
+						}
+					}
+				}
+			</script>
+		</div>
+
+		<ui:include src="dialogs/dialogoComentarioGraficas.xhtml" />
+
+	</ui:define>
+</ui:composition>

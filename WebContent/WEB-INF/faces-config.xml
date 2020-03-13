@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<component>
+		<component-type>org.primefaces.component.VentureMenu</component-type>
+		<component-class>org.primefaces.venture.component.menu.VentureMenu</component-class>
+	</component>
+	
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>menuBacklogs</from-outcome>
+			<to-view-id>/backlogs/backlogsMineros.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>backlogsLista</from-outcome>
+			<to-view-id>/backlogs/backlogsMineros.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	
+		<navigation-case>
+			<from-outcome>backlogEstandar</from-outcome>
+			<to-view-id>/backlogsEstandar/backlogsEstandar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>backlogEstandarRegistro</from-outcome>
+			<to-view-id>/backlogsEstandar/registroBacklogsEstandar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cancelado</from-outcome>
+			<to-view-id>/backlogs/estatusCancelado.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>estatusEsperaDeRefacciones</from-outcome>
+			<to-view-id>/backlogs/estatusEsperaDeRefacciones.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>estatusPospuesto</from-outcome>
+			<to-view-id>/backlogs/estatusPospuesto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>estatusCreado</from-outcome>
+			<to-view-id>/backlogs/estatusBacklogs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>estatusB2</from-outcome>
+			<to-view-id>/backlogs/estatusB2Backlogs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>estatusC</from-outcome>
+			<to-view-id>/backlogs/estatusCBacklogs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosManoDeObra</from-outcome>
+			<to-view-id>/manodeobra/catalogosManoDeObra.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>backlogsRegistro</from-outcome>
+			<to-view-id>/backlogs/registroBacklogs.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>editarbacklog</from-outcome>
+			<to-view-id>/backlogs/editarbacklog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>informacionbacklog</from-outcome>
+			<to-view-id>/backlogs/informacionbacklog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosSistemas</from-outcome>
+			<to-view-id>/sistemas/catalogosSistemas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosCodigosSMCS</from-outcome>
+			<to-view-id>/codigosSMCS/catalogosCodigosSMCS.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosMetricas</from-outcome>
+			<to-view-id>/metricas/catalogosMetricas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosOtrosTrabajos</from-outcome>
+			<to-view-id>/otrosTrabajos/catalogosOtrosTrabajos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catalogosNumParteCliente</from-outcome>
+			<to-view-id>/npc/catalogoNPC.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>sosResultados</from-outcome>
+			<to-view-id>/sos/sosResultados.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresTodos</from-outcome>
+			<to-view-id>/indicadores/indicadoresTodos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>templateGrafica</from-outcome>
+			<to-view-id>/indicadores/templateGrafica.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>comentariosGraficas</from-outcome>
+			<to-view-id>/indicadores/comentariosIndicadores.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+
+		<navigation-case>
+			<from-outcome>indicadoresDisponibilidad</from-outcome>
+			<to-view-id>/graficas/graficadisponibilidad.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresGraficaTotal</from-outcome>
+			<to-view-id>/graficas/graficatotalbl.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresGraficaBL</from-outcome>
+			<to-view-id>/graficas/graficabl.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresGraficaBLPendientes</from-outcome>
+			<to-view-id>/graficas/graficamodeloblpendientes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresEstatusBL</from-outcome>
+			<to-view-id>/graficas/graficaestatusbl.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>indicadoresGraficaETTR</from-outcome>
+			<to-view-id>/graficas/graficaettr.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>catInspect</from-outcome>
+			<to-view-id>/catInspect/catInspectMineros.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>capturarBL</from-outcome>
+			<to-view-id>/catInspect/capturarBL.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>registroInspeccion</from-outcome>
+			<to-view-id>/catInspect/registroInspeccion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>reporteAutorizacion</from-outcome>
+			<to-view-id>localhost:8085/BacklogsMinerosReportes/servlet/BacklogsMineroServlet</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>no</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/login/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<factory>
+		<exception-handler-factory>com.matco.backlogs.controller.ViewExpiredExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+
+</faces-config>

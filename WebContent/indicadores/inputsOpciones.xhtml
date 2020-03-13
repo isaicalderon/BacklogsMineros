@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<h:form id='formOpciones'>
+
+		<p:panelGrid columns="4" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+
+			<p:outputLabel value="Número Serie: " />
+			<p:selectOneMenu id='numSerie'
+				value="#{genericGraficBean.maquinaria}" panelStyle="width:auto;"
+				filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{backlogsStaticsVarBean.maquinariaDtoList}"
+					var="maquinaria" itemLabel="#{maquinaria.serie}"
+					itemValue="#{maquinaria.serie}" />
+				<p:ajax event="itemSelect" update="numEcono, modelo"
+					listener="#{genericGraficBean.seleccionNumSerie()}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="Número Económico: " />
+			<p:selectOneMenu id='numEcono'
+				value="#{genericGraficBean.numEconomico}" panelStyle="width:auto;"
+				filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{backlogsStaticsVarBean.numeroEconomicoList}"
+					var="maquinaria" itemLabel="#{maquinaria}"
+					itemValue="#{maquinaria}" />
+				<p:ajax event="itemSelect" update="numSerie, modelo"
+					listener="#{genericGraficBean.seleccionNumEconomico()}" />
+			</p:selectOneMenu>
+		</p:panelGrid>
+
+		<p:panelGrid columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+
+			<p:outputLabel value="Modelo:" />
+
+			<p:selectOneMenu id='modelo' value="#{genericGraficBean.modelo}"
+				style="width:100%;" filter="true" filterMatchMode="contains">
+
+				<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{backlogsStaticsVarBean.modeloList}"
+					var="modelo" itemLabel="#{modelo.modeloDescripcionGrid}"
+					itemValue="#{modelo.modeloKey.modelo}" />
+
+				<p:ajax event="itemSelect" update="numSerie, numEcono"
+					listener="#{genericGraficBean.seleccionModelo}" />
+
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+
+		<!-- FECHAS -->
+		<p:panelGrid id="panelGridUno" columns="6" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2"
+			styleClass="ui-panelgrid-blank">
+
+			<h:outputText value="Fecha inicial:" />
+			<p:selectOneMenu id="mes1"
+				value="#{genericGraficBean.mesSeleccionado1}" dynamic="true">
+				<f:selectItem itemLabel="Mes: " itemValue="" />
+				<f:selectItems value="#{genericGraficBean.getMeses()}" />
+			</p:selectOneMenu>
+
+			<p:selectOneMenu id="year1"
+				value="#{genericGraficBean.anioSeleccionadoString1}" dynamic="true"
+				style="width:100%">
+				<f:selectItem itemLabel="Año: " itemValue="" />
+				<f:selectItems value="#{genericGraficBean.getANIOS()}" />
+			</p:selectOneMenu>
+
+
+			<h:outputText value="Fecha final: " />
+			<p:selectOneMenu id="mes2"
+				value="#{genericGraficBean.mesSeleccionado2}" dynamic="true">
+				<f:selectItem itemLabel="Mes: " itemValue="" />
+				<f:selectItems value="#{genericGraficBean.getMeses()}" />
+			</p:selectOneMenu>
+
+			<p:selectOneMenu id="year2"
+				value="#{genericGraficBean.anioSeleccionadoString2}" dynamic="true">
+				<f:selectItem itemLabel="Año: " itemValue="" />
+				<f:selectItems value="#{genericGraficBean.getANIOS()}" />
+			</p:selectOneMenu>
+
+
+		</p:panelGrid>
+
+	</h:form>
+
+</ui:composition>

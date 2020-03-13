@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="ALTA DE CARGO DE MANO DE OBRA"
+	widgetVar="altaCargo" id="altaCargo" appendTo="@(body)"
+	dynamic="false" resizable="false" modal="true" showEffect="fade"
+	hideEffect="fade" height="100px" width="400px" closable="false">
+
+	<h:form id="formDialogoAgregar">
+		<p:panelGrid columns="2">
+			<h:outputLabel for="cargo" value="Cargo a:" />
+			<p:inputText id="cargo" style="width:100%;" value="#{administradorCargosTrabajoBean.descripcion}" />
+		</p:panelGrid>
+		<div style="width: 100%; margin-top: 10px;">
+			<div style="margin-top: 10px; display: block; text-align: center;">
+				<p:commandButton value="Registrar"
+					process="@parent"
+					actionListener="#{administradorCargosTrabajoBean.agregarCargosTrabajo}"
+					update="cargo, :formCargos:tablaCargos, growl, :formCargos:menuBar" />
+				<p:commandButton value="Cancelar" actionListener="#{administradorCargosTrabajoBean.limpiarCamposDialogo}"
+					onclick="PF('altaCargo').hide()" update="cargo"/>
+			</div>
+		</div>
+	</h:form>
+</p:dialog>
+
+</html>

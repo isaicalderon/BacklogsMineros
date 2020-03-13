@@ -1,0 +1,287 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id="formEstatusCBacklogs">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Cambio de estatus" url="#" />
+						<p:menuitem
+							value="#{cambioEstatusBacklogsMineros.obtenerNombreEstatus()}"
+							url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md">
+
+							<!-- ESTATUS -->
+							<div class="ui-g-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Estatus" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="fecha" value="Fecha Inicio:" />
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.fechaCreacion}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Folio de Backlog:" />
+										<p:inputText id="numero" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.folio}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Estatus BL:" />
+										<p:inputText id="estatus" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="color:white;width:100%;text-align:center;#{cambioEstatusBacklogsMineros.obtenerColorCelda()}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Orden de trabajo:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}" />
+										<p:outputLabel value="Número de reserva:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 6}" />
+										<p:inputText id="reserva2" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.numeroReserva}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Comentario: "
+											rendered="#{cambioEstatusBacklogsMineros.mostrarComentario()}" />
+										<p:inputText readonly="true"
+											value="#{cambioEstatusBacklogsMineros.obtenerComentario()}"
+											rendered="#{cambioEstatusBacklogsMineros.mostrarComentario()}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="3" layout="grid"
+										columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-1"
+										styleClass="ui-panelgrid-blank">
+
+										<p:outputLabel for="fechaEjecutar" render="false"
+											value="Fecha para ejecutar Backlog*:" />
+
+										<p:calendar id="fechaEjecutar" locale="es"
+											value="#{cambioEstatusBacklogsMineros.fechaEjecutar}"
+											disabled="#{cambioEstatusBacklogsMineros.fechaEjecutarProgramada}" />
+
+										<p:commandButton icon="fa fa-check" update="growl"
+											disabled="#{cambioEstatusBacklogsMineros.fechaEjecutarProgramada}"
+											action="#{cambioEstatusBacklogsMineros.programarParaEjecutar}"
+											style="margin-right:20px;" title="Icon Only" />
+									</p:panelGrid>
+
+									<p:fieldset style="border:none;padding:0"
+										rendered="#{cambioEstatusBacklogsMineros.fechaEjecutarProgramada}">
+
+										<p:panelGrid columns="2" layout="grid" rendered="false"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="supervisor" value="Supervisor a cargo*:" />
+											<p:inputText id="supervisor"
+												value="#{cambioEstatusBacklogsMineros.supervisorACargo}" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="responsable" value="Técnico Ejecutor: " />
+											<p:autoComplete id="responsable" minQueryLength="4"
+												placeholder="Buscar" maxResults="10"
+												value="#{cambioEstatusBacklogsMineros.tecnicoEjecutor}"
+												completeMethod="#{autoCompleteBean.completeTecnico}"
+												converter="tecnicoConverter" forceSelection="true">
+											</p:autoComplete>
+
+										</p:panelGrid>
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="horasHombre" value="Horas Hombre*:" />
+											<p:inputNumber id="horasHombre"
+												inputStyle="text-align: right;" maxValue="99999.9"
+												decimalPlaces="1"
+												value="#{cambioEstatusBacklogsMineros.horasHombre}" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="horasMaquina" value="Horas Máquina*:" />
+											<p:inputNumber id="horasMaquina"
+												inputStyle="text-align: right;" maxValue="99999.9"
+												decimalPlaces="1"
+												value="#{cambioEstatusBacklogsMineros.horasMaquina}" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="aprobado" value="Aprobado por*:" />
+											<p:inputText id="aprobado"
+												value="#{cambioEstatusBacklogsMineros.aprobadoPor}" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="trabajoRealizado"
+												value="Trabajo realizado*:" />
+											<p:inputTextarea id="trabajoRealizado" rows="3"
+												value="#{cambioEstatusBacklogsMineros.trabajoRealizado}" />
+										</p:panelGrid>
+
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel for="fechaEjecutado" render="false"
+												value="Fecha ejecución del Backlog*:" />
+											<p:calendar id="fechaEjecutado" locale="es" render="false"
+												value="#{cambioEstatusBacklogsMineros.fechaEjecucion}" />
+										</p:panelGrid>
+									</p:fieldset>
+								</p:fieldset>
+							</div>
+
+							<!-- BACKLOG -->
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<ui:include src="/WEB-INF/templates/infobacklog.xhtml" />
+								</p:fieldset>
+							</div>
+
+							<!-- PARTES REQUERIDAS -->
+							<div class="ui-g-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Partes Requeridas" style="margin-top:10px">
+									<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+										layout="grid" columnClasses="ui-grid-col-12"
+										styleClass="ui-panelgrid-blank">
+										<p:dataTable id="partesRequeridas" var="partes"
+											value="#{cambioEstatusBacklogsMineros.backlogsMinerosDetalleRefaList}"
+											emptyMessage="No se han agregado partes requeridas"
+											editable="false" widgetVar="cellPartesRequeridas">
+
+											<p:column headerText="CANTIDAD"
+												style="width:70px;text-align:center;">
+												<h:outputText value="#{partes.cantidad}" />
+											</p:column>
+											<p:column headerText="NÚM. PARTE"
+												style="width:80px;text-align:center;}">
+												<h:outputText value="#{partes.numeroParte}" />
+											</p:column>
+											<p:column headerText="DESCRIPCIÓN" style="width:170px;}">
+												<h:outputText value="#{partes.descripcionMayuscula}" />
+											</p:column>
+											<p:column headerText="OBSERVACIONES" style="width:25%px;">
+												<h:outputText value="#{partes.observacionesMayuscula}" />
+											</p:column>
+											<p:column headerText="PRECIO UNITARIO (USD)"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.precioFormateado}" />
+											</p:column>
+											<p:column headerText="SUBTOTAL"
+												style="width:10%;text-align:right">
+												<h:outputText value="#{partes.subTotalFormateado}" />
+											</p:column>
+										</p:dataTable>
+									</p:panelGrid>
+									<div class="ui-g-12">
+										<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+											columnClasses="ui-grid-col-3, ui-grid-col-9"
+											styleClass="ui-panelgrid-blank"
+											style='text-aling:right;float:right'>
+											<h:outputText for="totalTablaRefacciones"
+												style="font-weight:bold" value="Total:" />
+											<p:inputText id="totalTablaRefacciones" disabled="true"
+												style="font-weight:bold;font-size:14pt;text-align:right"
+												value="#{cambioEstatusBacklogsMineros.totalFormateado}" />
+										</p:panelGrid>
+									</div>
+								</p:fieldset>
+							</div>
+
+							<!-- IMAGENES -->
+							<div class="ui-g-6 ui-lg-6 ui-fluid">
+								<p:fieldset legend="Imágenes" id="imagenesCargadas"
+									styleClass="fieldset-auto-width">
+									<p:panelGrid id="panelesImagenes" columns="1" layout="grid"
+										columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+										<p:galleria id="galeria"
+											value="#{cambioEstatusBacklogsMineros.listaImagenes}"
+											var="image"
+											rendered="#{cambioEstatusBacklogsMineros.renderGaleria}"
+											style="width:100%;#{cambioEstatusBacklogsMineros.mostrarGaleria}"
+											panelWidth="450" panelHeight="250" showCaption="true">
+											<p:graphicImage value="#{image}" title=" " alt=" "
+												style="width:100%" />
+										</p:galleria>
+										<p:commandButton id="botonImg" value="Ver/Ocultar imagenes"
+											update="galeria,growl"
+											actionListener="#{cambioEstatusBacklogsMineros.listarImagenes()}"
+											style="width:100%" />
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Regresar" action="backlogsLista" />
+						<p:commandButton value="Pospuesto"
+							onclick="PF('dialogoPospuesto').show();" />
+						<p:commandButton value="No ejecutado"
+							onclick="PF('dialogocomentario').show();"
+							rendered='#{cambioEstatusBacklogsMineros.tienePermiso("ESTATUS C-D")}' />
+						<p:commandButton value="Ejecutado" update="growl"
+							action="#{cambioEstatusBacklogsMineros.redireccionarPagina}"
+							actionListener="#{cambioEstatusBacklogsMineros.mandarParaEjecutar}"
+							disabled="#{not cambioEstatusBacklogsMineros.fechaEjecutarProgramada}"
+							rendered='#{cambioEstatusBacklogsMineros.tienePermiso("ESTATUS C-D")}' />
+
+					</div>
+				</p:panel>
+			</h:form>
+			<ui:include src="dialogs/dialogocomentario.xhtml" />
+			<ui:include src="dialogs/dialogoPospuesto.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

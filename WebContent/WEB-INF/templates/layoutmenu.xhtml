@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pv="http://primefaces.org/venture">
+
+	<h:form id="menuform">
+		<pv:menu>
+			<p:submenu label="BACKLOGS">
+
+				<p:menuitem value="FILTRO DE BACKLOGS" immediate="true"
+					action="menuBacklogs" />
+
+				<p:menuitem value="BACKLOGS ESTÁNDAR" immediate="true"
+					rendered="#{loginBean.tienePermiso('BL-ESTANDAR')}"
+					action="backlogEstandar" />
+
+			</p:submenu>
+
+			<p:submenu label="CATÁLOGOS"
+				rendered="#{loginBean.tienePermiso('CATALOGOS')}">
+				<p:menuitem value="SISTEMAS" immediate="true"
+					action="catalogosSistemas" />
+				<p:menuitem value="CÓDIGOS TRABAJO" immediate="true"
+					action="catalogosCodigosSMCS" />
+				<p:menuitem value="OTROS TRABAJOS" immediate="true"
+					action="catalogosOtrosTrabajos" />
+				<p:menuitem value="MANO DE OBRA" immediate="true"
+					action="catalogosManoDeObra" />
+				<p:menuitem value="NÚMERO PARTE CLIENTE" immediate="true"
+					action="catalogosNumParteCliente" />
+			</p:submenu>
+
+			<p:menuitem value="CAT INSPECT" immediate="true"
+				rendered="#{loginBean.tienePermiso('VER-CATINSPECT')||loginBean.tienePermiso('CATINSPECT')}"
+				action="catInspect" />
+
+			<p:submenu label="SOS"
+				rendered="#{loginBean.tienePermiso('VER-SOS')||loginBean.tienePermiso('SOS')}"
+				disabled="#{backlogsStaticsVarBean.sucursalFiltro == null}">
+				<p:menuitem value="VISUALIZAR RESULTADOS" immediate="true"
+					action="sosResultados"
+					itemDisabled="#{backlogsStaticsVarBean.sucursalFiltro == null}" />
+			</p:submenu>
+
+			<p:submenu label="INDICADORES"
+				rendered="#{loginBean.tienePermiso('INDICADORES')}"
+				itemDisabled="#{backlogsStaticsVarBean.sucursalFiltro == null}">
+
+				<p:menuitem value="TODAS LAS GRÁFICAS" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(0)}"
+					action="indicadoresTodos" />
+
+				<p:menuitem value="GRÁFICA TOTAL BL" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(1)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA ESTATUS DE BACKLOGS" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(2)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA BL > 30" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(3)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA BL PENDIENTES" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(4)}"
+					action="templateGrafica" />
+
+				<p:menuitem
+					value="GRÁFICA PORCENTAJE GENERADOS/EJECUTADOS/PENDIENTES"
+					immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(5)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA TIEMPO ESTIMADO REPARACIÓN"
+					immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(6)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA LABOR ESTIMADO REPARACIÓN"
+					immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(7)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA BL GENERADOS POR ÁREA" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(8)}"
+					action="templateGrafica" />
+
+				<p:menuitem value="GRÁFICA GENERADOS POR SMCS" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(9)}"
+					action="templateGrafica" />
+					
+				<p:menuitem value="COMENTARIOS DE GRÁFICAS" immediate="true"
+					actionListener="#{genericGraficBean.seleccionarGrafica(-1)}"
+					action="comentariosGraficas" />
+					
+			</p:submenu>
+
+		</pv:menu>
+	</h:form>
+	
+	<p:growl id="growl" showDetail="true" showSummary="true" sticky="false" life="3000" />
+
+</ui:composition>

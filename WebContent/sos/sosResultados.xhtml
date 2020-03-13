@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<h:form id="formMuestrasSOS">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+					<p:menuitem value="SOS" url="#" />
+					<p:menuitem value="Lista de Salud" url="#" />
+				</p:breadCrumb>
+
+				<div class="White PadWithBorder10 Wid100 MarAuto"
+					style="margin-top: 1%">
+					<p:menubar id="menuBar" widgetVar="menuBar"
+						rendered="#{loginBean.tienePermiso('REGISTROBACKLOGS') and loginBean.tienePermiso('SOS')}">
+						<p:menuitem value="Generar Backlogs" icon="fa fa-plus"
+							action="backlogsRegistro" ajax="false" />
+					</p:menubar>
+
+					<p:dataTable id="gridMuestras" var="getMueSosDto" height="400"
+						filterDelay="1000"
+						filteredValue="#{backlogsStaticsVarBean.muestrasSOSListFiltrado}"
+						rowKey="#{getMueSosDto.numeroMuestraMatco}"
+						widgetVar="gridMuestras"
+						value="#{muestrasSOSBean.muestrasSOSList}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="50"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" emptyMessage="No se encontraron muestras"
+						rowsPerPageTemplate="25,50,75"
+						selection="#{backlogsStaticsVarBean.muestrasSeleccionadas}"
+						sortMode="multiple" selectionMode="multiple">
+
+						<p:ajax event="rowDblselect"
+							update=":formMuestrasSOS:gridMuestras" />
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<div align="left">
+									<p:selectOneMenu value="#{backlogsStaticsVarBean.sucursalFiltro}"
+										update=":formMuestrasSOS:gridMuestras">
+
+										<f:selectItem itemLabel="6 - CANANEA" itemValue="#{6}" />
+										<f:selectItem itemLabel="13 - CABORCA" itemValue="#{13}" />
+										<p:ajax event="itemSelect" update="gridMuestras"
+											listener="#{muestrasSOSBean.obtenerMuestras()}" />
+									</p:selectOneMenu>
+								</div>
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="Fecha Proceso"
+							sortBy="#{getMueSosDto.fechaProcesado}"
+							style="width:90px;#{muestrasSOSBean.colorCelda(getMueSosDto.diasSinAtencion)}"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{getMueSosDto.fechaProcesado}"
+							filterFunction="#{muestrasSOSBean.filterByDate}">
+							<f:facet name="filter">
+								<p:calendar pattern="dd/MMM/yyyy" size="9" locale="es">
+									<p:ajax event="dateSelect"
+										oncomplete="PF('gridMuestras').filter()" />
+								</p:calendar>
+							</f:facet>
+							<h:outputText id="fechaProcesado"
+								value="#{getMueSosDto.fechaProcesado}">
+								<f:convertDateTime pattern="dd/MMM/yyyy" locale="es" />
+							</h:outputText>
+						</p:column>
+
+
+						<p:column filterBy="#{getMueSosDto.numeroMuestraMatco}"
+							style="width:120px;" headerText="No. Control"
+							sortBy="#{getMueSosDto.numeroMuestraMatco}"
+							filterMatchMode="contains" filterEvent="enter"
+							filterStyle="width:90%;">
+
+							<h:outputText id="numeroMuestraMatco"
+								value="#{getMueSosDto.numeroMuestraMatco}" />
+						</p:column>
+
+						<p:column
+							filterBy="#{muestrasSOSBean.obtenerClienteFormateado(getMueSosDto.cliente, getMueSosDto.razonSocial)}"
+							headerText="Cliente" filterStyle="width:90%;"
+							style="width:240px;"
+							sortBy="#{getMueSosDto.cliente} - #{getMueSosDto.razonSocial}"
+							filterMatchMode="contains" filterEvent="enter">
+							<h:outputText id="cliente"
+								value="#{muestrasSOSBean.obtenerClienteFormateado(getMueSosDto.cliente, getMueSosDto.razonSocial)}" />
+						</p:column>
+
+						<p:column filterBy="#{getMueSosDto.numeroEconomico}"
+							filterStyle="width:90%;" style="width:90px;"
+							headerText="No. Eco."
+							sortBy="#{getMueSosDto.numeroEconomico}"
+							filterMatchMode="contains" filterEvent="enter">
+							<h:outputText id="numeroEconomico"
+								value="#{getMueSosDto.numeroEconomico}" />
+						</p:column>
+
+						<p:column filterBy="#{getMueSosDto.numeroSerie}"
+							filterStyle="width:90%;" style="width:80px;"
+							headerText="Serie"
+							sortBy="#{getMueSosDto.numeroSerie}" filterMatchMode="contains"
+							filterEvent="enter">
+							<h:outputText id="numeroSerie"
+								value="#{getMueSosDto.numeroSerie}" />
+						</p:column>
+
+						<p:column filterBy="#{getMueSosDto.descripcionCompartimento}"
+							style="width:100px;" headerText="Compartimento"
+							sortBy="#{getMueSosDto.descripcionCompartimento}"
+							filterMatchMode="contains" filterEvent="enter"
+							filterStyle="width:90%;">
+							<h:outputText id="descripcionCompartimento"
+								value="#{getMueSosDto.descripcionCompartimento}" />
+						</p:column>
+
+						<!-- 
+						<p:column filterBy="#{getMueSosDto.descripcionMuestra}"
+							style="width:300px;" headerText="Interpretación&lt;br/&gt;"
+							filterStyle="width:90%;"
+							sortBy="#{getMueSosDto.descripcionMuestra}"
+							filterMatchMode="contains" filterEvent="enter">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('gridMuestras').filter()"
+									autoWidth="false" style="width:250px;height:30px">
+									<f:selectItem itemLabel="Todas" itemValue="#{null}" />
+									<f:selectItems
+										value="#{muestrasSOSBean.descripcionesAnormalidades}" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText id="descripcionesAnormalidades"
+								value="#{getMueSosDto.descripcionMuestra}" />
+						</p:column>
+
+						<p:column filterBy="#{getMueSosDto.diasSinAtencion}"
+							style="width:100px;" headerText="Días Sin Atención"
+							filterStyle="width:90%;" sortBy="#{getMueSosDto.diasSinAtencion}"
+							filterFunction="#{muestrasSOSBean.filtroDias}"
+							filterMatchMode="contains" filterEvent="enter">
+							<div style="float: right">
+								<h:outputText id="diasSinAtencion"
+									value="#{getMueSosDto.diasSinAtencion}" />
+							</div>
+						</p:column>
+						 -->
+					</p:dataTable>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

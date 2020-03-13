@@ -1,0 +1,277 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id="formEstatusB2Backlogs">
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/backlogsMineros.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Cambio de estatus" url="#" />
+						<p:menuitem value="Por Cotizar" url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md">
+
+							<div class="ui-g-12 ui-lg-6 ui-fluid">
+								<p:fieldset legend="Estatus" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-6"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="fecha" value="Fecha Inicio:" />
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.fechaCreacion}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-6"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="numero" value="Folio de Backlog:" />
+										<p:inputText id="numero" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.folio}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-6"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="estatus" value="Estatus BL:" />
+										<p:inputText id="estatus" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="color:black;width:100%;text-align:center;#{cambioEstatusBacklogsMineros.obtenerColorCelda()}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-6"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="reserva" value="Orden de trabajo:"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}" />
+										<p:inputText id="reserva" tabindex="-1" style="width:50%;"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.numeroReserva}"
+											rendered="#{cambioEstatusBacklogsMineros.obtenerSucursalFiltro() == 13}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+
+								</p:fieldset>
+							</div>
+
+							<div class="ui-g-12 ui-lg-6 ui-fluid">
+								<p:fieldset legend="Cotización" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-6"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel for="numeroCotizacion"
+											value="Num. de cotización:" />
+										<p:inputMask id="numeroCotizacion"
+											value="#{cambioEstatusBacklogsMineros.numeroCotizacion}"
+											mask="#{cambioEstatusBacklogsMineros.getMascaraCotizacion()}">
+											<p:ajax event="blur" update="numeroCotizacion"
+												listener="#{cambioEstatusBacklogsMineros.formatearCotizacion}" />
+										</p:inputMask>
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<ui:include src="/WEB-INF/templates/infobacklog.xhtml" />
+								</p:fieldset>
+							</div>
+
+							<!-- PARTES REQUERIDAS -->
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								<p:fieldset legend="Partes Requeridas" style="margin-top:10px">
+									<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+										layout="grid" columnClasses="ui-grid-col-12"
+										styleClass="ui-panelgrid-blank">
+										<p:dataTable id="partesRequeridas" var="partes"
+											value="#{cambioEstatusBacklogsMineros.backlogsMinerosDetalleRefaList}"
+											emptyMessage="No hay registros de partes requeridas"
+											editable="true" widgetVar="cellPartesRequeridas">
+
+											<p:ajax event="rowEdit"
+												listener="#{cambioEstatusBacklogsMineros.onRowEdit}"
+												update="growl partesRequeridas :formEstatusB2Backlogs:totalTablaRefacciones" />
+
+											<p:column headerText="CANTIDAD"
+												style="width:70px;text-align:center">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{partes.cantidad}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputNumber value="#{partes.cantidad}" minValue="0"
+															maxValue="999" decimalPlaces="0" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+
+											<p:column headerText="NÚM. PARTE"
+												style="width:80px;text-align:center">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{partes.numeroParte}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputText value="#{partes.numeroParte}" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+
+											<p:column headerText="DESCRIPCIÓN" style="width:170px;">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{partes.descripcionMayuscula}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputText value="#{partes.descripcionParte}" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+
+											<p:column headerText="OBSERVACIONES" style="width:170px;">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{partes.observacionesMayuscula}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputText value="#{partes.observaciones}"
+															style="width:100%" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+
+											<p:column headerText="PRECIO UNITARIO (USD)"
+												style="width:80px;text-align:right">
+												<p:cellEditor>
+													<f:facet name="output">
+														<h:outputText value="#{partes.precioFormateado}" />
+													</f:facet>
+													<f:facet name="input">
+														<p:inputNumber value="#{partes.precio}" decimalPlaces="2"
+															minValue="0" />
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+											<p:column headerText="SUBTOTAL"
+												style="width:80px;text-align:right">
+												<h:outputText value="#{partes.subTotalFormateado}" />
+											</p:column>
+
+											<p:column style="width:20px">
+												<p:rowEditor />
+											</p:column>
+
+										</p:dataTable>
+									</p:panelGrid>
+									<div class="ui-g-12">
+										<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+											columnClasses="ui-grid-col-3, ui-grid-col-9"
+											styleClass="ui-panelgrid-blank"
+											style='text-aling:right;float:right'>
+											<h:outputText for="totalTablaRefacciones"
+												style="font-weight:bold" value="Total:" />
+											<p:inputText id="totalTablaRefacciones" disabled="true"
+												style="font-weight:bold;font-size:14pt;text-align:right"
+												value="#{cambioEstatusBacklogsMineros.totalFormateado}" />
+										</p:panelGrid>
+									</div>
+								</p:fieldset>
+							</div>
+
+							<div class="ui-g-6 ui-lg-5 ui-md-7 ui-fluid">
+								<p:fieldset legend="Imágenes" id="imagenesCargadas"
+									styleClass="fieldset-auto-width">
+
+									<p:panelGrid id="panelesImagenes" columns="1" layout="grid"
+										columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+										<p:galleria id="galeria"
+											value="#{cambioEstatusBacklogsMineros.listaImagenes}"
+											var="image"
+											rendered="#{cambioEstatusBacklogsMineros.renderGaleria}"
+											style="width:100%;#{cambioEstatusBacklogsMineros.mostrarGaleria}"
+											panelWidth="450" panelHeight="250" showCaption="true">
+											<p:graphicImage value="#{image}" title=" " alt=" "
+												style="width:100%" />
+										</p:galleria>
+
+										<p:commandButton id="botonImg" value="Ver/Ocultar imagenes"
+											update="galeria,growl"
+											actionListener="#{cambioEstatusBacklogsMineros.listarImagenes()}"
+											style="width:100%;" />
+									</p:panelGrid>
+
+								</p:fieldset>
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Regresar" action="backlogsLista" />
+						
+						<p:commandButton value="Enviar a Revisar"
+							disabled="#{cambioEstatusBacklogsMineros.btnRevision}"
+							rendered="#{loginBean.tienePermiso('REVISAR-BL')}"
+							onclick="PF('dlg2').show();" />
+							
+						<p:commandButton value="Cotización completa" update="growl"
+							disabled="#{cambioEstatusBacklogsMineros.btnRevision}"
+							actionListener="#{cambioEstatusBacklogsMineros.mandarParaCotizacionCompletada}"
+							ajax="false"
+							rendered="#{loginBean.tienePermiso('ESTATUS B2-B1')}" />
+							
+						<p:commandButton value="Continuar con error" rendered="false"
+							action="#{cambioEstatusBacklogsMineros.redireccionarPagina}" />
+					</div>
+				</p:panel>
+			</h:form>
+
+			<p:dialog header="DETALLES" widgetVar="dlg2" modal="true"
+				resizable="false" height="140">
+				<h:form id='detallesForm'>
+					<h:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-4, ui-grid-col-8"
+						styleClass="ui-panelgrid-blank">
+						<h:outputLabel for="desc"
+							value="Ingresa los detalles de la revisión: " />
+						<p:inputTextarea rows="3" cols="40" id="desc" required="true"
+							value="#{cambioEstatusBacklogsMineros.detalleRevision}" />
+						<f:facet name="footer">
+							<p:commandButton value="Enviar" update="growl" process="@parent"
+								action="#{cambioEstatusBacklogsMineros.revisarCotizacion}"
+								onclick="PF('dlg2').hide()" />
+						</f:facet>
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+			
+		</div>
+	</ui:define>
+</ui:composition>

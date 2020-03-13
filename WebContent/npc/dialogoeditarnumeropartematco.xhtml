@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<p:dialog header="EDITAR NÚMERO PARTE MATCO"
+	widgetVar="editarNumeroParteMatco" id="editarNumeroParteMatco"
+	appendTo="@(body)" dynamic="false" resizable="false" modal="true"
+	showEffect="fade" hideEffect="fade" height="240px" width="500px"
+	closable="false">
+
+	<h:form id="formDialogoModificarNumeroParteMatco">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel for="numeroParteMatco" value="Número Parte MATCO" />
+					<p:inputText id="numeroParteMatco" size="10" 
+						value="#{administradorNumeroParteCliente.numeroParteMatco}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Número Parte Cliente" />
+					<p:inputText size="10" readonly="true" disabled="true"
+						value="#{administradorNumeroParteCliente.numeroParteCliente}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridUno" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Marca:" />
+					<p:inputText readonly="true" disabled="true" size="34"
+						value="#{administradorNumeroParteCliente.idMarca.marcaDescripcionGrid}" />
+				</p:panelGrid>
+				<p:panelGrid id="panelGridDos" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel value="Cliente:" />
+					<p:inputText readonly="true" disabled="true" size="34"
+						value="#{administradorNumeroParteCliente.idCliente.clienteRazonSocialGrid}" />
+				</p:panelGrid>
+
+
+				<div style="margin-top: 10px; display: block; text-align: center;">
+					<p:commandButton value="Editar" process="@parent"
+						actionListener="#{administradorNumeroParteCliente.editarNumeroParteMatco()}"
+						update=":formNPC:menuBar, :formNPC:tablaNPC, growl, altaNPC" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('editarNumeroParteMatco').hide();"
+						actionListener="#{administradorNumeroParteCliente.limpiarCampos}"
+						update=":formNPC:menuBar, :formNPC:tablaNPC, altaNPC" />
+				</div>
+			</div>
+		</div>
+	</h:form>
+</p:dialog>
+
+</html>

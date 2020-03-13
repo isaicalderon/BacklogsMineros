@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Cancelar backlog" widgetVar="dialogoCancelar"
+	id="dialogoCancelar" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="140px" width="550px" closable="true">
+	<h:form>
+		<h:panelGrid columns="2" layout="grid"
+			columnClasses="ui-grid-col-4, ui-grid-col-8"
+			styleClass="ui-panelgrid-blank">
+			<p:outputLabel for="comentario" value="Comentario:" />
+			<p:inputTextarea rows="3" cols="40" id="comentario"
+				value="#{backlogsMinerosBean.comentarioCancelado}" />
+			<f:facet name="footer">
+				<div style='margin-top: 10px'>
+					<p:commandButton value="Confirmar"
+						action="#{backlogsMinerosBean.cancelarBacklog()}" />
+					<p:commandButton value="Cerrar"
+						onclick="PF('dialogoCancelar'.hide();" />
+				</div>
+			</f:facet>
+		</h:panelGrid>
+	</h:form>
+
+</p:dialog>
+</html>

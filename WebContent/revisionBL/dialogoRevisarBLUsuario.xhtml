@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="BACKLOGS REVISADOS" widgetVar="revisarBLUsuario"
+	id="revisarBLUsuario" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	width="800px" closable="false" position="center center" height="400px"
+	onShow="PF('revisarBLUsuario').initPosition()" responsive="true">
+	<h:form id="formRevisarBLUsuario">
+
+		<p:panelGrid id="gridRevisarBLUsuario" columns="1" layout="grid"
+			columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+			<p:dataTable var="revision"
+				value="#{menuBacklogsMinerosBean.revisionCreadorBacklogsList}"
+				tableStyle="width:100%">
+				<p:column headerText="Folio BL" style="min-width: 140px">
+					<h:outputText value="#{revision.getBacklogMineroAlmacenFormateado()}" />
+				</p:column>
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{revision.usuarioSolicitante}" />
+				</p:column>
+				<p:column headerText="Descripción">
+					<h:outputText value="#{revision.comentariosSolicitante}" />
+				</p:column>
+				<p:column>
+					<div align="center">
+						<p:commandButton value="Editar"
+						 	action="#{genericBacklogBean.editarBacklogPorRevision}">
+						 	<f:setPropertyActionListener value="#{revision}" target="#{genericBacklogBean.revisionSeleccionada}" />
+						 </p:commandButton>
+					</div>
+				</p:column>
+				<!--  				
+				<p:rowExpansion>
+					<p:panelGrid columns="1" columnClasses="label, value">
+						<p:dataTable 
+							emptyMessage="No existen revisiones." editable="true"
+							widgetVar="cellPartesRequeridas" scrollable="true"
+							scrollHeight="100" var='subRev'
+							value="#{revision}">
+							<p:column headerText="Descripción">
+								<h:outputText value="#{subRev.comentariosSolicitante}" />
+							</p:column>
+							<p:column headerText="" >
+								<div align="center">
+									<p:commandButton value="Envíar" />
+								</div>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
+				</p:rowExpansion>
+				 -->
+
+			</p:dataTable>
+			<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+				onclick="PF('revisarBLUsuario').hide()" />
+		</p:panelGrid>
+	</h:form>
+</p:dialog>
+</html>

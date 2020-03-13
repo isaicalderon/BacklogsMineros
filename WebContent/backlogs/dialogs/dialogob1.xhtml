@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Generar Reportes" widgetVar="dialogob1" id="dialogob1"
+	appendTo="@(body)" dynamic="false" position="center center"
+	modal="true" showEffect="fade" hideEffect="fade" height="auto"
+	resizable="false" width="800px" closable="false" responsive="true"
+	onShow="PF('dialogob1').initPosition()">
+
+
+	<h:form id="formb1">
+		<ui:param name="listaBacklogs"
+			value="#{menuBacklogsMinerosBean.backlogsSeleccionados}" />
+
+		<p:panelGrid id="panelGridPartesRequeridas" columns="1" layout="grid"
+			columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank">
+			<p:dataTable id="backLogsSeleccionados" var="bl"
+				value="#{listaBacklogs}"
+				emptyMessage="No se han seleccionados Backlogs en estado POR AUTORIZAR."
+				editable="false" widgetVar="cellPartesRequeridas" scrollable="true"
+				scrollHeight="100">
+				<p:column headerText="BACKLOGS"
+					style="width:70px;text-align:center;">
+					<h:outputText
+						value="#{bl.backlogsMinerosKey.backlogMineroAlmacenFormateado}" />
+				</p:column>
+			</p:dataTable>
+		</p:panelGrid>
+
+		<div style="text-align: center">
+			<p:commandButton value="Reporte Servicio" id="servicio"
+				update="growl" style="width:auto;"
+				onclick="PrimeFaces.monitorDownload(start, stop);">
+				<p:fileDownload
+					value="#{menuBacklogsMinerosBean.obtenerExcelReporte('Servicio')}" />
+			</p:commandButton>
+			<p:commandButton value="Reporte Solicitud" update="growl"
+				style="width:auto"
+				onclick="PrimeFaces.monitorDownload(start, stop);">
+				<p:fileDownload
+					value="#{menuBacklogsMinerosBean.obtenerExcelReporte('Solicitud')}" />
+			</p:commandButton>
+			<p:commandButton value="Reporte Solicitud sin Imagenes"
+				update="growl" style="width:auto"
+				onclick="PrimeFaces.monitorDownload(start, stop);">
+				<p:fileDownload
+					value="#{menuBacklogsMinerosBean.obtenerExcelReporte('solicitud')}" />
+			</p:commandButton>
+		</div>
+
+		<div class="ui-g-12" style="text-align: right">
+			<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+				update=":formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox, growl"
+				action="#{menuBacklogsMinerosBean.limpiarSeleccion}" />
+		</div>
+
+	</h:form>
+</p:dialog>
+</html>

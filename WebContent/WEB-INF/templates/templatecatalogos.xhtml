@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<p:panel style="border:0px;padding:0px;min-height:400px">
+
+			<div style="top: 0; right: 0; margin-top: -50px">
+				<ui:insert name="cuerpoCatalogos" />
+			</div>
+
+		</p:panel>
+	</ui:define>
+
+</ui:composition>
+
+</html>

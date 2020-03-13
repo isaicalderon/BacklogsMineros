@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+ 
+ 	<display-name>Backlogs</display-name>
+ 	<welcome-file-list>
+		<welcome-file>/login/login.xhtml</welcome-file>
+    </welcome-file-list>
+ 	
+     <context-param>
+    	<param-name>modulo</param-name>
+    	<param-value>AMCE</param-value>
+    </context-param>
+   
+     <context-param>
+    	<param-name>sistema</param-name>
+    	<param-value>SERVICE</param-value>
+    </context-param>
+    
+	<context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+ 	
+ 	<context-param>
+		<param-name>controlaccesos_wshost</param-name>
+		<param-value>webservices1.inside.matco.com.mx</param-value>
+	</context-param>
+	
+	<!-- increase buffer size to avoid JSF1095 errors -->
+	<context-param>
+	    <param-name>javax.faces.FACELETS_BUFFER_SIZE</param-name>
+	    <param-value>131072</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>controlaccesos_wsport</param-name>
+		<param-value>80</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>controlaccesos_wsport1</param-name>
+		<param-value>8081</param-value>
+	</context-param>
+    
+    <context-param>
+    	<param-name>rutaImagenesBacklogsMineros</param-name>
+    	<param-value>/u01/backlogsTEST/archivos/imagenes/</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>rutaLogoBuenavista</param-name>
+    	<param-value>/u01/backlogsTEST/imagenes/buenavista.png</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>rutaCartasServicio</param-name>
+    	<param-value>/u01/backlogsTEST/archivos/cartasservicio/</param-value>
+    </context-param>
+
+    <context-param>
+    	<param-name>servletImagenes</param-name>
+    	<param-value>/backlogsTEST/images/ImageServlet?ruta=</param-value>
+    </context-param>
+    
+     <context-param>
+    	<param-name>rutaArchivosTemporales</param-name>
+    	<param-value>/u01/wildfly/wildfly-8.2.0.Final</param-value>
+    </context-param>
+ 
+    <context-param>
+    	<param-name>admintx_amce3</param-name>
+    	<param-value>admintx_amce3_itest.properties</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>admintx_matco</param-name>
+    	<param-value>admintx_matco_itest.properties</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>admintx_servicio</param-name>
+    	<param-value>admintx_servicio_itest.properties</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>admintx_interfacescatinspect</param-name>
+    	<param-value>admintx_interfacescatinspect_itest.properties</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>venture</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/primefaces-venture.taglib.xml</param-value>
+    </context-param>
+    
+    <context-param>
+		<param-name>server_url_services</param-name>
+		<param-value>10.10.10.98:9090</param-value>
+	</context-param>
+    
+    <servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+    
+	<filter>
+		<filter-name>FiltroSesion</filter-name>
+		<filter-class>com.matco.backlogs.controller.FiltroSeguridad</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FiltroSesion</filter-name>
+		<url-pattern>/faces/backlogs/*</url-pattern>
+		<url-pattern>/faces/backlogsEstandar/*</url-pattern>
+		<url-pattern>/faces/catInspect/*</url-pattern>
+		<url-pattern>/faces/codigosSMCS/*</url-pattern>
+		<url-pattern>/faces/comunicacion/*</url-pattern>
+		<url-pattern>/faces/graficas/*</url-pattern>
+		<url-pattern>/faces/indicadores/*</url-pattern>
+		<url-pattern>/faces/manodeobra/*</url-pattern>
+		<url-pattern>/faces/metricas/*</url-pattern>
+		<url-pattern>/faces/npc/*</url-pattern>
+		<url-pattern>/faces/otrosTrabajos/*</url-pattern>
+		<url-pattern>/faces/sistemas/*</url-pattern>
+		<url-pattern>/faces/sos/*</url-pattern>
+	</filter-mapping>
+	
+    <session-config>
+        <session-timeout>
+            120
+        </session-timeout>
+    </session-config>
+
+    <filter>
+   		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+   		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+   		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+  		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+    
+    <servlet>
+		<servlet-name>log4j-init</servlet-name>
+		<servlet-class>com.matco.backlogs.controller.Log4jInit</servlet-class>
+		<init-param>
+			<param-name>log4j-init-file</param-name>
+			<param-value>log4j_amce3.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+    
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/font-sfnt</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/font-woff2</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>eot?#iefix</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg#exosemibold</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg#exobolditalic</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg#exomedium</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg#exoregular</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg#fontawesomeregular</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+  
+</web-app>

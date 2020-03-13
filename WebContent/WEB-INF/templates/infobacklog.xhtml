@@ -1,0 +1,189 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pv="http://primefaces.org/venture">
+
+	<p:panel style="border:0px;padding:0px;min-height:400px">
+
+		<!-- SERIE, NUM ECONO Y HOROMETRO -->
+		<p:panelGrid id="panelGridUno" columns="4" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+
+			<h:outputText value="Número de serie:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.numeroSerie}" />
+			
+			<h:outputText for="numeroEconomico" value="Número Económico:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.numeroEconomico}" />
+		</p:panelGrid>
+		
+		<!-- HOROMETRO -->
+		<p:panelGrid id="panelGridHoro" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Horómetro:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.horometro}" />
+		</p:panelGrid>
+
+		<!-- ORIGEN BL Y LUGAR GEN-->
+		<p:panelGrid id="panelGridDosx" columns="4" layout="grid"
+			columnClasses="ui-grid-col-2,ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Origen del BL:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.origenesBacklogsMineros.descripcionOrigen}" />
+
+			<h:outputText value="Lugar de generación:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.lugaresOrigenesBacklogsMineros.descripcionLugarOrigen}" />
+
+		</p:panelGrid>
+
+		<!-- PRIORIDAD -->
+		<p:panelGrid id="panelGridDos" columns="4" layout="grid"
+			columnClasses="ui-grid-col-2,ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Prioridad:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idPrioridadBacklog.descripcionPrioridadBacklog}" />
+		</p:panelGrid>
+
+		<!-- -SISTEMA -->
+		<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-6"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Sistema:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idCodigoSistema.codigosSistemasFormateado} - #{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idCodigoSistema.descripcionCodigoSistema}" />
+
+		</p:panelGrid>
+
+		<!-- LADO COMPONENTES -->
+		<p:panelGrid id="panelGridTresX" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Lado componente:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.ladoComponente.ladoComponenteFormateado}" />
+		</p:panelGrid>
+
+		<!-- CODIGO SINTOMA -->
+		<p:panelGrid id="panelGridCodSin" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+
+			<h:outputText value="Código sintoma:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.sintomasObject.sintomaFormateado}" />
+		</p:panelGrid>
+
+		<!--- SINTOMAS -->
+		<p:panelGrid id="panelGridCinco" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-6"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Sintomas:" />
+			<p:inputTextarea disabled="true" readonly="true" rows='2'
+				autoResize="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.sintomasEquipo}" />
+		</p:panelGrid>
+
+		<!-- -CODIGO DE TRABAJO -->
+		<p:panelGrid id="panelGridCuatro" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Código de trabajo:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idCodigoSMCS.IDCodigosSMCSFormateado} - #{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idCodigoSMCS.descripcionSMCS}" />
+		</p:panelGrid>
+
+		<!-- ACCIÓN -->
+		<p:panelGrid id="panelGridCincoX" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-6"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText for="accionEquipo" value="Acción:" />
+			<p:inputTextarea id="accionEquipo" rows="3" cols="33" disabled="true"
+				readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.accionEquipo}"
+				maxlength="200" autoResize="true" />
+		</p:panelGrid>
+
+
+		<!-- -HORAS MAQUINA Y HORAS HOMBRE -->
+		<p:panelGrid id="panelGridSeisx" columns="4" layout="grid"
+			columnClasses="ui-grid-col-2,ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Horas Máquina:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.horasMaquinaEstimadas}" />
+			<h:outputText value="Horas Hombre:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.horasHombreEstimadas}" />
+		</p:panelGrid>
+
+		<!-- CARGO -->
+		<p:panelGrid id="panelGridSeis" columns="4" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Cargo:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idCargoTrabajo.descripcionCargoTrabajo}" />
+		</p:panelGrid>
+
+		<!-- NOTAS SOBRE BL -->
+		<p:panelGrid id="panelGridOcho" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-6"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Notas sobre el BL:" />
+			<p:inputTextarea rows="2" cols="20" disabled="true" readonly="true"
+				autoResize="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.comentarioBacklogMinero}" />
+		</p:panelGrid>
+
+		<!-- REQUERIDO POR -->
+		<p:panelGrid id="panelGridNueveX3" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Requerido por:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.solicitadoPor}" />
+		</p:panelGrid>
+		
+		<!-- RIESGOS DE TRABAJO -->
+		<p:panelGrid id="panelGridRiesgos" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-6"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Riesgos trabajo:" />
+			<p:dataList emptyMessage="No se han agregado riesgos de trabajo"
+				value="#{cambioEstatusBacklogsMineros.riesgosTabajosList}" 
+				var="riesgo" type="unordered">
+				<f:facet name="header">Riesgos</f:facet>
+	        	[#{riesgo.idCodigoRiesgo}] - #{riesgo.descripcionRiesgo}
+	    	</p:dataList>
+		</p:panelGrid>
+
+		<!-- TIPO DE TRABAJO-->
+		<p:panelGrid id="panelGridNueveX2" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Tipo de trabajo:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.tipoTrabajo}" />
+		</p:panelGrid>
+
+		<!-- OTROS -->
+		<p:panelGrid id="panelGridNuevex1" columns="2" layout="grid"
+			columnClasses="ui-grid-col-2, ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+			<h:outputText value="Otros Materiales/Equipo:" />
+			<p:inputText disabled="true" readonly="true"
+				value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.otrosMateriales}" />
+		</p:panelGrid>
+
+
+	</p:panel>
+</ui:composition>

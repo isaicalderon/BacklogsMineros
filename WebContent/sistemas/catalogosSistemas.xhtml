@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<h:form id="formSistemas">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+					<p:menuitem value="Catálogos" url="#" />
+					<p:menuitem value="Sistemas" url="#" />
+				</p:breadCrumb>
+				
+				<br />
+				
+				<p:remoteCommand name="actualizaSistemas"
+					update="formSistemas:tablaSistemas, formSistemas:menuBar, growl" />
+					
+				<div class="White PadWithBorder10 Wid60 MarAuto">
+					<p:menubar id="menuBar">
+						<p:submenu label="Opciones"
+							rendered="#{loginBean.tienePermiso('EDIT-CATALOGOS')}">
+							<p:menuitem value="Refrescar" icon="fa fa-refresh"
+								onclick="actualizaSistemas();" />
+							<p:menuitem value="Agregar" icon="fa fa-plus-square"
+								onclick="PF('altaSistema').show();" />
+							<p:menuitem value="Editar" icon="fa fa-edit"
+								disabled="#{administradorCodigosSistemasBean.habilitaModificar}"
+								onclick="PF('modificarSistema').show();" />
+						</p:submenu>
+						<p:menuitem value="Limpiar filtros" icon="fa fa-eraser"
+							onclick="PF('tablaSistemas').clearFilters()" />
+					</p:menubar>
+
+
+					<p:dataTable id="tablaSistemas" var="sistemas" styleClass="myTable"
+						selection="#{administradorCodigosSistemasBean.codigosSistemasSeleccionado}"
+						value="#{administradorCodigosSistemasBean.codigosSistemasList}"
+						filteredValue="#{backlogsStaticsVarBean.codigosSistemasListFiltrado}"
+						selectionMode="single" height="400" filterDelay="1000"
+						rowKey="#{sistemas.codigosSistemasFormateado}"
+						widgetVar="tablaSistemas"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10" sortMode="multiple"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" emptyMessage="No se encontraron codigos sistemas"
+						style="margin-bottom:20px;" rowsPerPageTemplate="5,10,15">
+
+						<p:ajax event="rowSelect"
+							listener="#{administradorCodigosSistemasBean.onRowSelect}"
+							update="formSistemas:tablaSistemas, formSistemas:menuBar, :formDialogoModificar" />
+
+						<p:column headerText="Código"
+							sortBy="#{sistemas.codigosSistemasFormateado}"
+							style="width:10px;text-align:center" filterMatchMode="contains"
+							filterStyle="width:90%;"
+							filterBy="#{sistemas.codigosSistemasFormateado}">
+							<h:outputText value="#{sistemas.codigosSistemasFormateado}" />
+						</p:column>
+
+						<p:column headerText="Descripción Sistema"
+							sortBy="#{sistemas.descripcionCodigoSistema}" style="width:90px;"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{sistemas.descripcionCodigoSistema}">
+							<h:outputText value="#{sistemas.descripcionCodigoSistema}" />
+						</p:column>
+
+						<p:column headerText="Sistema" sortBy="#{sistemas.sistema}"
+							style="width:50px;" filterMatchMode="contains"
+							filterStyle="width:50%;" filterBy="#{sistemas.sistema}">
+							<h:outputText value="#{sistemas.sistema}" />
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</h:form>
+			<ui:include src="dialogoagregar.xhtml" />
+			<ui:include src="dialogoeditar.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

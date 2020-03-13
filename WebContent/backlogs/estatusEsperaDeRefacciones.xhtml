@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form id='formRefacciones'>
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/backlogsMineros.xhtml" />
+						<p:menuitem value="Backlogs" url="/backlogs/backlogsMineros.xhtml" />
+						<p:menuitem value="Espera de Refacciones" url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md">
+							<div class="ui-g-12 ui-md-12 ui-lg-5 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-7"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Fecha Inicio:" />
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.fechaHoraCreacion}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-7"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Folio de Backlog:" />
+										<p:inputText disabled="true" readonly="true"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-7"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Estatus BL:" />
+										<p:inputText id="estatus" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="color:white;width:100%;text-align:center;#{cambioEstatusBacklogsMineros.obtenerColorCelda()}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+
+							<!-- PARTES REQUERIDAS -->
+							<div class="ui-g-12 ui-md-12 ui-fluid">
+								<p:fieldset legend="Partes Requeridas" style="margin-top:10px">
+									<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+										layout="grid" columnClasses="ui-grid-col-12"
+										styleClass="ui-panelgrid-blank">
+										<p:dataTable id="partesRequeridas" var="partes"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.listaRefacciones}"
+											emptyMessage="#{agregarBacklogsMinerosBean.habilitaNumSerie == true ? 'Seleccione un número de serie primero.' : 'No se han agregado partes requeridas'}"
+											editable="true" widgetVar="cellPartesRequeridas">
+
+											<p:ajax event="rowEdit"
+												listener="#{cambioEstatusBacklogsMineros.onRowEditER}"
+												update="growl, partesRequeridas, :formRefacciones:btnSurtir" />
+
+											<p:column headerText="NÚM. PARTE*"
+												style="width:50px;text-align:center;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+												<h:outputText value="#{partes.numeroParte}" />
+											</p:column>
+
+											<p:column headerText="DESCRIPCIÓN*"
+												style="width:110px;#{partes.camposFaltantes == true ? 'background-color:#FF6961' : ' '}">
+												<h:outputText value="#{partes.descripcionMayuscula}" />
+											</p:column>
+
+											<p:column headerText="OBSERVACIONES" style="width:110px;">
+												<h:outputText value="#{partes.observacionesMayuscula}" />
+											</p:column>
+
+											<p:column headerText="FECHA LLEGADA ESTIMADA"
+												style="width:50px;text-align:center">
+												<p:cellEditor>
+													<f:facet name="output">
+														<p:calendar size="12" locale="es" 
+															value="#{partes.fechaLlegadaEstimada}" disabled='true' readonly="true" />
+													</f:facet>
+													<f:facet name="input">
+														<p:calendar size="12" locale="es"
+															value="#{partes.fechaLlegadaEstimada}"/>
+													</f:facet>
+												</p:cellEditor>
+											</p:column>
+
+											<p:column headerText="SURTIDO"
+												style="width:16px;text-align:center">
+												<div align="center">
+													<p:cellEditor>
+														<f:facet name="output">
+															<p:selectBooleanCheckbox value="#{partes.surtido}" disabled='true' />
+														</f:facet>
+														<f:facet name="input">
+															<p:selectBooleanCheckbox value="#{partes.surtido}" />
+														</f:facet>
+													</p:cellEditor>
+												</div>
+											</p:column>
+
+											<p:column style="width:10px">
+												<p:rowEditor />
+											</p:column>
+
+										</p:dataTable>
+									</p:panelGrid>
+								
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="ui-g-12" align="right">
+						
+						<p:commandButton value="Regresar" action="backlogsLista" />
+						<p:commandButton id='btnSurtir' value="Por Ejecutar" update="growl" 
+							disabled="#{cambioEstatusBacklogsMineros.isPiezasSurtidas()}"
+							action="#{cambioEstatusBacklogsMineros.porEjecutar}" />
+					</div>
+				</p:panel>
+			</h:form>
+			<ui:include src="dialogs/dialogoCancelar.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

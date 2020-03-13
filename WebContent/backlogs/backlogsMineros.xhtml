@@ -1,0 +1,521 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+
+		<style>
+.cotizar-multiple:hover {
+	background-color: rgb(255, 251, 0) !important;
+}
+
+.pasar-cotizacion-multiple:hover {
+	background-color: rgb(173, 56, 57) !important;
+	color: white !important;
+}
+
+.b1-multiple:hover {
+	background-color: rgb(16, 48, 90) !important;
+	color: white !important;
+}
+
+.genReport:hover, .genExc:hover {
+	background-color: rgb(255, 191, 24) !important;
+	color: white !important;
+}
+
+.revisarBL0 {
+	background-color: green !important;
+	color: white !important;
+}
+
+.revisarBL1 {
+	background-color: red !important;
+	color: white !important;
+}
+
+.cancelarBL:hover {
+	background-color: gray !important;
+	color: white !important;
+}
+
+.historialBL:hover {
+	background-color: rgb(0, 193, 150) !important;
+	/* 	color: white !important; */
+}
+
+.formatoCeldas {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre;
+}
+
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60% !important;;
+	max-width: 100% !important;;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+
+.ui-fluid .ui-selectcheckboxmenu
+.ui-selectcheckboxmenu-trigger .ui-icon {
+	margin-top: -7px !important;
+}
+</style>
+
+		<div class="Card">
+			<h:form id="formListaBacklogs">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/backlogsMineros.xhtml" />
+					<p:menuitem value="Backlogs" url="#" />
+					<p:menuitem value="Backlogs Mineros" url="#" />
+				</p:breadCrumb>
+
+				<div style="display: none">
+					<h:commandLink value="Descargar Tabla" id="link"
+						style="color:rgb(202,157,02);font-weight:bold;width:auto;margin-right:5px"
+						actionListener="#{genericBacklogBean.invertirRenderTooltip()}">
+						<p:dataExporter type="xls" target="tablaBacklogsMineros"
+							fileName="lista_Backlogs" pageOnly="false" />
+					</h:commandLink>
+					<h:commandLink value="Descargar Tabla2" id="link2">
+						<p:dataExporter type="xls" target="tablaBitacora"
+							fileName="historial_bitacora" pageOnly="false" />
+					</h:commandLink>
+				</div>
+
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+					<p:accordionPanel id='buscarBL' style='margin-top: 10px'
+						widgetVar="buscarBL">
+						<p:tab title='Filtros'>
+							<p:pickList id="pickListEst" style='margin-top:10px'
+								value="#{menuBacklogsMinerosBean.estadosPickList}" var="estados"
+								itemValue="#{estados}"
+								itemLabel="#{estados.idEstatusBacklogMineroNoCode}"
+								showSourceControls="false" showTargetControls="false"
+								showSourceFilter="true" showTargetFilter="true"
+								showCheckbox="true" filterMatchMode="contains"
+								converter="EstadosConverter" responsive="true">
+
+								<f:facet name="sourceCaption">Estados</f:facet>
+								<f:facet name="targetCaption">Estados Seleccionados</f:facet>
+
+								<p:ajax event="transfer"
+									listener="#{menuBacklogsMinerosBean.onTransfer}" />
+
+								<p:column
+									style="width:10%;#{menuBacklogsMinerosBean.colorCelda(estados.idEstatusBacklogMineroNoCode)}">
+								</p:column>
+
+								<p:column style="width:85%;">
+									<h:outputText value="#{estados.idEstatusBacklogMineroNoCode}"
+										style='margin-left:5px;' />
+								</p:column>
+							</p:pickList>
+
+							<div class="ui-g-12 ui-lg-12 ui-fluid">
+								<div class="ui-g" style='margin-top: 10px'>
+									<div class='ui-g-12 ui-lg-6'>
+
+										<p:panelGrid columns="4" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+
+											<p:outputLabel value="Número Serie: " />
+											<p:selectOneMenu id='numSerie'
+												value="#{backlogsStaticsVarBean.numeroSerie}"
+												panelStyle="width:auto;" filter="true"
+												filterMatchMode="contains">
+												<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems
+													value="#{backlogsStaticsVarBean.maquinariaDtoList}"
+													var="maquinaria" itemLabel="#{maquinaria.serie}"
+													itemValue="#{maquinaria.serie}" />
+												<p:ajax event="itemSelect" update="numEcono, modelo"
+													listener="#{menuBacklogsMinerosBean.seleccionNumSerie()}" />
+											</p:selectOneMenu>
+
+											<p:outputLabel value="Número Económico: " />
+											<p:selectOneMenu id='numEcono'
+												value="#{backlogsStaticsVarBean.numeroEconomico}"
+												panelStyle="width:auto;" filter="true"
+												filterMatchMode="contains">
+												<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems
+													value="#{backlogsStaticsVarBean.numeroEconomicoList}"
+													var="maquinaria" itemLabel="#{maquinaria}"
+													itemValue="#{maquinaria}" />
+												<p:ajax event="itemSelect" update="numSerie, modelo"
+													listener="#{menuBacklogsMinerosBean.seleccionNumEconomico()}" />
+											</p:selectOneMenu>
+										</p:panelGrid>
+
+										<p:panelGrid columns="4" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<p:outputLabel value="Modelo:" />
+											<p:selectOneMenu id='modelo'
+												value="#{backlogsStaticsVarBean.modelo}" style="width:100%;"
+												filter="true" filterMatchMode="contains">
+												<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems value="#{backlogsStaticsVarBean.modeloList}"
+													var="modelo" itemLabel="#{modelo.modeloDescripcionGrid}"
+													itemValue="#{modelo.modeloKey.modelo}" />
+												<p:ajax event="itemSelect" update="numSerie, numEcono"
+													listener="#{menuBacklogsMinerosBean.seleccionModelo}" />
+											</p:selectOneMenu>
+
+											<p:outputLabel value="Sucursal: " />
+											<p:selectOneMenu id='suc' autowidth="false"
+												style="width:auto;margin-right:5px"
+												value="#{backlogsStaticsVarBean.sucursalFiltro}"
+												rendered="#{loginBean.tienePermiso('CAMBIAR-SUC')}">
+												<f:selectItem itemLabel="6 - CANANEA" itemValue="#{6}" />
+												<f:selectItem itemLabel="13 - CABORCA" itemValue="#{13}" />
+
+												<p:ajax event="itemSelect" update="numSerie, numEcono"
+													listener="#{menuBacklogsMinerosBean.obtenerMaquinariaNueva(backlogsStaticsVarBean.sucursalFiltro)}" />
+
+											</p:selectOneMenu>
+
+										</p:panelGrid>
+
+										<!-- FECHAS -->
+										<p:panelGrid id="panelGridUno" columns="4" layout="grid"
+											columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4"
+											styleClass="ui-panelgrid-blank">
+											<h:outputText value="Fecha inicial:" />
+											<p:calendar id="fechaBL1" pattern="dd/MM/yyyy" locale="es"
+												navigator="true" value="#{backlogsStaticsVarBean.fechaBL1}" />
+											<h:outputText value="Fecha final: " />
+											<p:calendar id="fechaBL2" pattern="dd/MM/yyyy" locale="es"
+												navigator="true" value="#{backlogsStaticsVarBean.fechaBL2}" />
+										</p:panelGrid>
+										<div class='ui-g'>
+											<div class='ui-g-6 ui-lg-4'>
+												<p:commandButton value="Buscar" icon='fa fa-search'
+													oncomplete="PF('buscarBL').unselect(0)"
+													style='width:50%;margin-top:10px'
+													update="growl, :formListaBacklogs:tablaBacklogsMineros"
+													actionListener="#{menuBacklogsMinerosBean.obtenerBacklogs()}" />
+											</div>
+											<div class='ui-g-6 ui-lg-4'></div>
+											<div class='ui-g-6 ui-lg-4'></div>
+										</div>
+									</div>
+									<div class='ui-g-12 ui-lg-6'></div>
+								</div>
+							</div>
+						</p:tab>
+					</p:accordionPanel>
+
+					<p:menubar style="margin-top: 1%;" id="menuBar" widgetVar="menuBar">
+						<p:submenu label="Opciones">
+
+							<p:menuitem value='Registrar' icon='fa fa-plus'
+								actionListener="#{backlogsStaticsVarBean.desseleccionarBacklog()}"
+								action="backlogsRegistro"
+								rendered="#{loginBean.tienePermiso('REGISTROBACKLOGS') || loginBean.tienePermiso('VER-REGISTROBACKLOGS')}" />
+
+							<p:menuitem value="Consultar" icon="fa fa-fw fa-search"
+								update="growl" />
+						</p:submenu>
+
+						<p:menuitem value="Limpiar filtros" icon="fa fa-trash"
+							actionListener="#{backlogsStaticsVarBean.limpiarFiltrosTablaBacklogs()}"
+							update="tablaBacklogsMineros" />
+
+						<p:menuitem value="Pasar a cotizar" update="dialogoAtoB2 growl"
+							styleClass="pasar-cotizacion-multiple"
+							action="#{menuBacklogsMinerosBean.contextMenu_verificarPasarCotizar()}"
+							rendered="#{loginBean.tienePermiso('ESTATUS A-B2') || loginBean.tienePermiso('ESTATUS A-M')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Cotizar Backlogs" styleClass="cotizar-multiple"
+							update="tablaBacklogsMineros growl dialogoB2toB1"
+							action='#{menuBacklogsMinerosBean.contextMenu_verificarSeleccionadosCotizar()}'
+							rendered="#{loginBean.tienePermiso('ESTATUS B2-B1')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Autorizar Backlogs" styleClass="b1-multiple"
+							update="tablaBacklogsMineros growl dialogoB1toER"
+							action='#{menuBacklogsMinerosBean.contextMenu_verificarSeleccionadosAutorizar()}'
+							rendered="#{loginBean.tienePermiso('ESTATUS B1-C')||loginBean.tienePermiso('ESTATUS B1-A')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Generar Reporte" styleClass="genReport"
+							update="tablaBacklogsMineros, dialogob1, growl"
+							action="#{menuBacklogsMinerosBean.contextMenu_verificarAutorizadosReporte()}"
+							icon="fa fa-file-excel-o" />
+
+						<p:menuitem value="Generar Excel" icon="fa fa-file-excel-o"
+							styleClass="genExc" update="tablaBacklogsMineros"
+							actionListener="#{menuBacklogsMinerosBean.obtenerRefaccionesAllBacklogs()}"
+							oncomplete="document.getElementById('formListaBacklogs:link').click(); return false;" />
+
+						<p:menuitem
+							styleClass="#{menuBacklogsMinerosBean.obtenerEstiloPorRevisar()}"
+							value="BL por revisar #{menuBacklogsMinerosBean.contBlCreador}"
+							icon="fa fa-calendar" oncomplete="PF('revisarBLUsuario').show()"
+							update="formRevisarBLUsuario,revisarBLUsuario,formRevisarBLAdmin,revisarBLAdmin,growl" />
+
+						<p:menuitem
+							styleClass="#{menuBacklogsMinerosBean.obtenerEstiloARevisar()}"
+							value="BL a revisar #{menuBacklogsMinerosBean.contBlSolicitante}"
+							icon="fa fa-calendar" oncomplete="PF('revisarBLAdmin').show();"
+							update="formRevisarBLUsuario,revisarBLUsuario,formRevisarBLAdmin,revisarBLAdmin,growl" />
+
+						<p:menuitem value="Cancelar Backlogs" icon="fa fa-ban"
+							styleClass="cancelarBL"
+							action="#{menuBacklogsMinerosBean.abrirDialogoCancelar}"
+							update="growl" />
+
+						<p:menuitem value="Historial de Backlogs" styleClass="historialBL"
+							rendered="#{loginBean.tienePermiso('HISTORIAL_BL')}"
+							actionListener="#{menuBacklogsMinerosBean.obtenerHistorialBitacora()}"
+							update="tablaBitacora, growl" icon="fa fa-archive"
+							oncomplete="document.getElementById('formListaBacklogs:link2').click(); return false;" />
+
+					</p:menubar>
+
+					<!-- TABLA DE BACKLOGS -->
+					<p:dataTable id="tablaBacklogsMineros" styleClass="myTable"
+						value="#{menuBacklogsMinerosBean.backlogsMinerosListFiltrada}"
+						widgetVar="tablaBacklogsMineros" var="backlogMinero"
+						filteredValue="#{filtrosBean.backlogsMinerosListFiltrado}"
+						selection="#{backlogsStaticsVarBean.backlogsMinerosSeleccionado}"
+						selectionMode="single" height="400" filterDelay="1000"
+						rowKey="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10" sortMode="multiple"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						emptyMessage="No se encontraron backlogs mineros."
+						style='margin-top:10px' paginator="true"
+						rowsPerPageTemplate="5,10,15" tableStyle="width:auto;"
+						scrollWidth="1400">
+
+						<p:ajax event="rowDblselect" update="tablaBacklogsMineros, growl"
+							listener="#{menuBacklogsMinerosBean.seleccionarBacklog}" />
+
+						<f:facet name="header">
+							<p:outputPanel
+								style="float: left;width: 65%;text-align: left;padding: 2px 7px;">
+								<p:selectCheckboxMenu id="menuCol"
+									value="#{configuracionColumnasBean.columnasSeleccionadas}"
+									label="Ocultar columnas" filter="true"
+									filterMatchMode="startsWith" panelStyle="width:250px;">
+									<f:selectItems value="#{configuracionColumnasBean.columnas}" />
+									<p:ajax event="change" update="tablaBacklogsMineros "
+										listener="#{configuracionColumnasBean.actualizarColumnas}" />
+									<p:ajax event="toggleSelect" update="tablaBacklogsMineros"
+										listener="#{configuracionColumnasBean.actualizarColumnas}" />
+								</p:selectCheckboxMenu>
+							</p:outputPanel>
+							<p:outputPanel>
+								<p:inputText style="width:150px" placeholder="N. parte MATCO..."
+									value="#{menuBacklogsMinerosBean.numeroMatco}">
+									<p:ajax event="blur"
+										listener="#{menuBacklogsMinerosBean.filtrarPorNPM}"
+										update="tablaBacklogsMineros, growl" />
+								</p:inputText>
+								<p:inputText id="globalFilter"
+									onblur="PF('tablaBacklogsMineros').filter()"
+									style="width:150px" placeholder="Buscar en tabla..." />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column id="ColumnaCargaRapida" exportable="false"
+							style="width:50px;text-align:center;#{configuracionColumnasBean.mostrarSeleccionar}">
+							<f:facet name="header">
+								<p:selectBooleanCheckbox
+									value='#{menuBacklogsMinerosBean.allCheckBacklogs}'>
+									<p:ajax
+										update="tablaBacklogsMineros, dialogoAtoB2, dialogob1,dialogoB1toER"
+										event="change"
+										listener="#{menuBacklogsMinerosBean.seleccionarTodosCheckBox()}" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+
+							<p:selectBooleanCheckbox id="checkbox"
+								value="#{backlogMinero.checkSeleccionado}"
+								style="#{genericBacklogBean.mostrarCheckBox(backlogMinero.idEstatusBacklogsMineros.descripcionEstatusBacklog)}">
+								<p:ajax event="change"
+									update="dialogoAtoB2, dialogob1, dialogoB1toER"
+									listener="#{menuBacklogsMinerosBean.actualizarSeleccion(backlogMinero)}">
+								</p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+
+						<ui:include src="/WEB-INF/templates/columnasTablaBLTemplate.xhtml" />
+
+						<p:column headerText="Refacciones" exportable="false"
+							style="min-width: 165px;#{configuracionColumnasBean.mostrarPartes}">
+							<p:commandButton icon="fa fa-gears" value="Ver refacciones"
+								action="#{menuBacklogsMinerosBean.obtenerRefaccionesBacklogSeleccionado()}"
+								update=":formListaBacklogs:partesRequeridas :formListaBacklogs:totalTablaRefaccionesSeleccion"
+								oncomplete="PF('overlayRefa').show('#{component.clientId}')">
+								<f:setPropertyActionListener value="#{backlogMinero}"
+									target="#{backlogsStaticsVarBean.backlogsMinerosSeleccionado}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<p:dataTable id="tablaBitacora" var="bitacora" rendered="false"
+						value="#{menuBacklogsMinerosBean.bitacoraList}">
+						<p:column headerText="ID BACKLOG">
+							<h:outputText
+								value="#{bitacora.backlogsMinerosBitacoraEstatusKey.keyBacklogMinero.backlogMineroAlmacenFormateado}" />
+						</p:column>
+						<p:column headerText="Almacen">
+							<h:outputText
+								value="#{bitacora.backlogsMinerosBitacoraEstatusKey.keyBacklogMinero.idAlmacen.almacen}" />
+						</p:column>
+						<p:column headerText="Estatus">
+							<h:outputText value="#{bitacora.idEstatusBLMnoCode}" />
+						</p:column>
+						<p:column headerText="Fecha inicio estatus">
+							<h:outputText
+								value="#{bitacora.backlogsMinerosBitacoraEstatusKey.fechaInicioEstatus}" />
+						</p:column>
+						<p:column headerText="Fecha final estatus">
+							<h:outputText value="#{bitacora.fechaFinalEstatus}" />
+						</p:column>
+						<p:column headerText="Usuario inicial">
+							<h:outputText value="#{bitacora.usuarioEstatusInicio}" />
+						</p:column>
+						<p:column headerText="Usuario final">
+							<h:outputText value="#{bitacora.usuarioEstatusFinal}" />
+						</p:column>
+					</p:dataTable>
+
+					<p:contextMenu for="tablaBacklogsMineros">
+						<p:menuitem value="Editar Backlog" update="tablaBacklogsMineros"
+							action="#{genericBacklogBean.redireccionarEditar()}"
+							disabled="#{not loginBean.tienePermiso('REGISTROBACKLOGS')}"
+							icon="fa fa-edit" />
+
+						<p:menuitem value="Limpiar Filtros" update="tablaBacklogsMineros"
+							actionListener="#{backlogsStaticsVarBean.limpiarFiltrosTablaBacklogs()}"
+							icon="fa fa-trash" />
+
+						<p:menuitem value="Pasar a cotizar" update="dialogoAtoB2 growl"
+							action="#{menuBacklogsMinerosBean.contextMenu_verificarPasarCotizar()}"
+							rendered="#{loginBean.tienePermiso('ESTATUS A-B2') || loginBean.tienePermiso('ESTATUS A-M')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Cotizar Backlogs"
+							update="tablaBacklogsMineros growl dialogoB2toB1"
+							action='#{menuBacklogsMinerosBean.contextMenu_verificarSeleccionadosCotizar()}'
+							rendered="#{loginBean.tienePermiso('ESTATUS B2-B1')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Autorizar Backlogs"
+							update="tablaBacklogsMineros growl dialogoB1toER"
+							action='#{menuBacklogsMinerosBean.contextMenu_verificarSeleccionadosAutorizar()}'
+							rendered="#{loginBean.tienePermiso('ESTATUS B1-C')||loginBean.tienePermiso('ESTATUS B1-A')}"
+							icon="fa fa-database" />
+
+						<p:menuitem value="Generar Reporte"
+							update="tablaBacklogsMineros, dialogob1, growl"
+							action="#{menuBacklogsMinerosBean.contextMenu_verificarAutorizadosReporte()}"
+							icon="fa fa-file-excel-o" />
+
+						<p:menuitem value="Generar Excel" icon="fa fa-file-excel-o"
+							update="tablaBacklogsMineros"
+							actionListener="#{menuBacklogsMinerosBean.obtenerRefaccionesAllBacklogs()}"
+							oncomplete="document.getElementById('formListaBacklogs:link').click(); return false;"  />
+
+						<p:menuitem value="Cancelar Backlogs" update="growl"
+							icon="fa fa-ban"
+							action="#{menuBacklogsMinerosBean.abrirDialogoCancelar}" />
+
+					</p:contextMenu>
+
+					<p:dialog header="Refacciones" widgetVar="overlayRefa"
+						showEffect="fade" modal="true" hideEffect="fade"
+						appendTo="@(body)" dynamic="false" resizable="false" width="70%"
+						position="center center" responsive="true">
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-fluid">
+								<p:panelGrid id="panelGridPartesRequeridas" columns="1"
+									layout="grid" columnClasses="ui-grid-col-12"
+									styleClass="ui-panelgrid-blank">
+									<p:dataTable id="partesRequeridas" var="partes"
+										value="#{backlogsStaticsVarBean.backlogsMinerosSeleccionado.listaRefacciones}"
+										emptyMessage="No se han agregado partes requeridas"
+										editable="false" widgetVar="cellPartesRequeridas" rows="10"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										paginatorPosition="bottom"
+										currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+										paginator="true" rowsPerPageTemplate="5,10">
+
+										<p:column headerText="CANTIDAD"
+											style="width:80px;text-align:center;">
+											<h:outputText value="#{partes.cantidad}" />
+										</p:column>
+										<p:column headerText="NÚM. PARTE"
+											style="width:auto;text-align:center;}">
+											<h:outputText value="#{partes.numeroParte}" />
+										</p:column>
+										<p:column headerText="DESCRIPCIÓN" style="width:auto;}">
+											<h:outputText value="#{partes.descripcionMayuscula}" />
+										</p:column>
+										<p:column headerText="OBSERVACIONES" style="width:auto;">
+											<h:outputText value="#{partes.observacionesMayuscula}" />
+										</p:column>
+										<p:column headerText="PRECIO UNITARIO (USD)"
+											style="width:auto;text-align:right">
+											<h:outputText value="#{partes.precioFormateado}" />
+										</p:column>
+										<p:column headerText="SUBTOTAL"
+											style="width:auto;text-align:right">
+											<h:outputText value="#{partes.subTotalFormateado}" />
+										</p:column>
+									</p:dataTable>
+								</p:panelGrid>
+								<div class="ui-g-12">
+									<p:panelGrid id="panelGridCincoXX" columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank"
+										style='text-aling:right;float:right'>
+										<h:outputText for="totalTablaRefaccionesSeleccion"
+											style="font-weight:bold" value="Total:" />
+										<p:inputText id="totalTablaRefaccionesSeleccion"
+											disabled="true" style="font-weight:bold;font-size:14pt;"
+											value="#{genericBacklogBean.getTotalRefaccionBLSeleccionado()}" />
+									</p:panelGrid>
+								</div>
+							</div>
+						</div>
+					</p:dialog>
+				</div>
+			</h:form>
+		</div>
+
+		<!-- COMPLETADOS -->
+		<ui:include src="backlogsDialogs/dialogoAtoB2.xhtml" />
+		<ui:include src="backlogsDialogs/dialogoB2toB1.xhtml" />
+		<ui:include src="backlogsDialogs/dialogoB1toER.xhtml" />
+		<ui:include src="backlogsDialogs/dialogob1.xhtml" />
+		<ui:include src="/revisionBL/dialogoRevisarBLUsuario.xhtml" />
+		<ui:include src="/revisionBL/dialogoRevisarBLAdministrador.xhtml" />
+		<ui:include src="backlogsDialogs/dialogoCancelar.xhtml" />
+
+	</ui:define>
+</ui:composition>
+

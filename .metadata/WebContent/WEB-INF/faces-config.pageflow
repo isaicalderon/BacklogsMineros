@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15605393427470" configfile="/Backlogs/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="6514" id="pf15605393895461" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15605393895473 pf15605393895474 pf15605393895475 pf15605393895476 pf15605393895477 pf15605393895478 pf15605393895479 pf156053938954710 pf156053938954711 pf156053938954712 pf156053938954713 pf156053938954714 pf156053938954715 pf156053938954716 pf156053938954717 pf156053938954718 pf156053938954719 pf15637726327910 pf15637726327911 pf15637726327912 pf15658861422020 pf15658861422021 pf15658861422022 pf15667198975830 pf15667963427010 pf15677860728030 pf15773013258290 pf15773013258291 pf15773013258292 pf15773013258293 pf15773013258294 pf15773013258295 pf15773013258296 pf15773013258297" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="manodeobra/catalogosManoDeObra.xhtml" x="338" y="562" id="pf156053938954822" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf15605393895473" path="/manodeobra/catalogosManoDeObra.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/registroBacklogs.xhtml" x="338" y="946" id="pf156053938954823" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf15605393895474" path="/backlogs/registroBacklogs.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="sistemas/catalogosSistemas.xhtml" x="338" y="1330" id="pf156053938954924" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf15605393895475" path="/sistemas/catalogosSistemas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="codigosSMCS/catalogosCodigosSMCS.xhtml" x="338" y="1714" id="pf156053938954925" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf15605393895476" path="/codigosSMCS/catalogosCodigosSMCS.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="metricas/catalogosMetricas.xhtml" x="338" y="2098" id="pf156053938954926" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf15605393895477" path="/metricas/catalogosMetricas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="otrosTrabajos/catalogosOtrosTrabajos.xhtml" x="338" y="2482" id="pf156053938954927" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf15605393895478" path="/otrosTrabajos/catalogosOtrosTrabajos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="npc/catalogoNPC.xhtml" x="338" y="2866" id="pf156053938954928" referenceLink="//@navigationRule.0/@navigationCase.18/@toViewId|" inlinks="pf15605393895479" path="/npc/catalogoNPC.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="sos/sosResultados.xhtml" x="338" y="3250" id="pf156053938954929" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf156053938954710" path="/sos/sosResultados.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="indicadores/indicadoresTodos.xhtml" x="338" y="3634" id="pf156053938954930" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf156053938954711" path="/indicadores/indicadoresTodos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficadisponibilidad.xhtml" x="338" y="4018" id="pf156053938955031" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf156053938954712" path="/graficas/graficadisponibilidad.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficatotalbl.xhtml" x="338" y="4402" id="pf156053938955032" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf156053938954713" path="/graficas/graficatotalbl.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficabl.xhtml" x="338" y="4786" id="pf156053938955033" referenceLink="//@navigationRule.0/@navigationCase.25/@toViewId|" inlinks="pf156053938954714" path="/graficas/graficabl.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficamodeloblpendientes.xhtml" x="338" y="5170" id="pf156053938955034" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf156053938954715" path="/graficas/graficamodeloblpendientes.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficaestatusbl.xhtml" x="338" y="5554" id="pf156053938955135" referenceLink="//@navigationRule.0/@navigationCase.27/@toViewId|" inlinks="pf156053938954716" path="/graficas/graficaestatusbl.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="graficas/graficaettr.xhtml" x="338" y="5938" id="pf156053938955136" referenceLink="//@navigationRule.0/@navigationCase.28/@toViewId|" inlinks="pf156053938954717" path="/graficas/graficaettr.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="338" y="6322" id="pf156053938955137" referenceLink="//@navigationRule.0/@navigationCase.32/@toViewId|" inlinks="pf156053938954718" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login/login.xhtml" x="338" y="6706" id="pf156053938955138" referenceLink="//@navigationRule.0/@navigationCase.33/@toViewId|" inlinks="pf156053938954719" path="/login/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/editarbacklog.xhtml" x="338" y="7090" id="pf15637726327924" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf15637726327910" path="/backlogs/editarbacklog.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/informacionbacklog.xhtml" x="338" y="7474" id="pf15637726327925" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf15637726327911" path="/backlogs/informacionbacklog.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="catInspect/capturarBL.xhtml" x="338" y="7858" id="pf15637726327926" referenceLink="//@navigationRule.0/@navigationCase.30/@toViewId|" inlinks="pf15637726327912" path="/catInspect/capturarBL.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/backlogEstandar.xhtml" x="122" y="8753" id="pf15637726327927" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" path="/backlogs/backlogsEstandar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/registroBacklogsEstandar.xhtml" x="122" y="10993" id="pf15651437078773" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" path="/backlogs/registroBacklogsEstandar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusCancelado.xhtml" x="338" y="8242" id="pf15658861422063" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15658861422020" path="/backlogs/estatusCancelado.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusEsperaDeRefacciones.xhtml" x="338" y="8626" id="pf15658861422064" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15658861422021" path="/backlogs/estatusEsperaDeRefacciones.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusPospuesto.xhtml" x="338" y="9010" id="pf15658861422065" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf15658861422022" path="/backlogs/estatusPospuesto.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusBacklogs.xhtml" x="338" y="9394" id="pf15667198975851" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf15667198975830" path="/backlogs/estatusBacklogs.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusB2Backlogs.xhtml" x="338" y="9778" id="pf15667963427041" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf15667963427010" path="/backlogs/estatusB2Backlogs.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="catInspect/catInspectMineros.xhtml" x="338" y="10162" id="pf15677860728061" referenceLink="//@navigationRule.0/@navigationCase.29/@toViewId|" inlinks="pf15677860728030" path="/catInspect/catInspectMineros.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/backlogsMineros.xhtml" x="338" y="10546" id="pf15773013258528" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15773013258290 pf15773013258297" path="/backlogs/backlogsMineros.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogsEstandar/backlogsEstandar.xhtml" x="338" y="10930" id="pf15773013258679" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15773013258291" path="/backlogsEstandar/backlogsEstandar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogsEstandar/registroBacklogsEstandar.xhtml" x="338" y="11314" id="pf157730132586710" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15773013258292" path="/backlogsEstandar/registroBacklogsEstandar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="backlogs/estatusCBacklogs.xhtml" x="338" y="11698" id="pf157730132586711" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf15773013258293" path="/backlogs/estatusCBacklogs.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="indicadores/templateGrafica.xhtml" x="338" y="12082" id="pf157730132586712" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf15773013258294" path="/indicadores/templateGrafica.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="indicadores/comentariosIndicadores.xhtml" x="338" y="12466" id="pf157730132586713" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf15773013258295" path="/indicadores/comentariosIndicadores.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="catInspect/registroInspeccion.xhtml" x="338" y="12850" id="pf157730132586714" referenceLink="//@navigationRule.0/@navigationCase.31/@toViewId|" inlinks="pf15773013258296" path="/catInspect/registroInspeccion.xhtml"/>
+  <links id="pf15605393895473" target="pf156053938954822" source="pf15605393895461" outcome="catalogosManoDeObra" redirect="true"/>
+  <links id="pf15605393895474" target="pf156053938954823" source="pf15605393895461" outcome="backlogsRegistro" redirect="true"/>
+  <links id="pf15605393895475" target="pf156053938954924" source="pf15605393895461" outcome="catalogosSistemas" redirect="true"/>
+  <links id="pf15605393895476" target="pf156053938954925" source="pf15605393895461" outcome="catalogosCodigosSMCS" redirect="true"/>
+  <links id="pf15605393895477" target="pf156053938954926" source="pf15605393895461" outcome="catalogosMetricas" redirect="true"/>
+  <links id="pf15605393895478" target="pf156053938954927" source="pf15605393895461" outcome="catalogosOtrosTrabajos" redirect="true"/>
+  <links id="pf15605393895479" target="pf156053938954928" source="pf15605393895461" outcome="catalogosNumParteCliente" redirect="true"/>
+  <links id="pf156053938954710" target="pf156053938954929" source="pf15605393895461" outcome="sosResultados" redirect="true"/>
+  <links id="pf156053938954711" target="pf156053938954930" source="pf15605393895461" outcome="indicadoresTodos" redirect="true"/>
+  <links id="pf156053938954712" target="pf156053938955031" source="pf15605393895461" outcome="indicadoresDisponibilidad" redirect="true"/>
+  <links id="pf156053938954713" target="pf156053938955032" source="pf15605393895461" outcome="indicadoresGraficaTotal" redirect="true"/>
+  <links id="pf156053938954714" target="pf156053938955033" source="pf15605393895461" outcome="indicadoresGraficaBL" redirect="true"/>
+  <links id="pf156053938954715" target="pf156053938955034" source="pf15605393895461" outcome="indicadoresGraficaBLPendientes" redirect="true"/>
+  <links id="pf156053938954716" target="pf156053938955135" source="pf15605393895461" outcome="indicadoresEstatusBL" redirect="true"/>
+  <links id="pf156053938954717" target="pf156053938955136" source="pf15605393895461" outcome="indicadoresGraficaETTR" redirect="true"/>
+  <links id="pf156053938954718" target="pf156053938955137" source="pf15605393895461" outcome="no"/>
+  <links id="pf156053938954719" target="pf156053938955138" source="pf15605393895461" outcome="logout" redirect="true"/>
+  <links id="pf15637726327910" target="pf15637726327924" source="pf15605393895461" outcome="editarbacklog" redirect="true"/>
+  <links id="pf15637726327911" target="pf15637726327925" source="pf15605393895461" outcome="informacionbacklog" redirect="true"/>
+  <links id="pf15637726327912" target="pf15637726327926" source="pf15605393895461" outcome="capturarBL" redirect="true"/>
+  <links id="pf15658861422020" target="pf15658861422063" source="pf15605393895461" outcome="cancelado" redirect="true"/>
+  <links id="pf15658861422021" target="pf15658861422064" source="pf15605393895461" outcome="estatusEsperaDeRefacciones" redirect="true"/>
+  <links id="pf15658861422022" target="pf15658861422065" source="pf15605393895461" outcome="estatusPospuesto" redirect="true"/>
+  <links id="pf15667198975830" target="pf15667198975851" source="pf15605393895461" outcome="estatusCreado" redirect="true"/>
+  <links id="pf15667963427010" target="pf15667963427041" source="pf15605393895461" outcome="estatusB2" redirect="true"/>
+  <links id="pf15677860728030" target="pf15677860728061" source="pf15605393895461" outcome="catInspect" redirect="true"/>
+  <links id="pf15773013258290" target="pf15773013258528" source="pf15605393895461" outcome="menuBacklogs" redirect="true"/>
+  <links id="pf15773013258291" target="pf15773013258679" source="pf15605393895461" outcome="backlogEstandar" redirect="true"/>
+  <links id="pf15773013258292" target="pf157730132586710" source="pf15605393895461" outcome="backlogEstandarRegistro" redirect="true"/>
+  <links id="pf15773013258293" target="pf157730132586711" source="pf15605393895461" outcome="estatusC" redirect="true"/>
+  <links id="pf15773013258294" target="pf157730132586712" source="pf15605393895461" outcome="templateGrafica" redirect="true"/>
+  <links id="pf15773013258295" target="pf157730132586713" source="pf15605393895461" outcome="comentariosGraficas" redirect="true"/>
+  <links id="pf15773013258296" target="pf157730132586714" source="pf15605393895461" outcome="registroInspeccion" redirect="true"/>
+  <links id="pf15773013258297" target="pf15773013258528" source="pf15605393895461" outcome="backlogsLista" redirect="true"/>
+</pageflow:Pageflow>

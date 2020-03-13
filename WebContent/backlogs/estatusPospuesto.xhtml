@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<style>
+.deshabilitado {
+	pointer-events: none; /* No cursor */
+}
+
+.fieldset-auto-width {
+	margin-top: 10px;
+	width: 60%; ! important;
+	max-width: 100%;
+	!
+	important;
+}
+
+.ui-fieldset-legend {
+	padding: 5px 5px !important;
+}
+</style>
+		<div class="Card">
+			<h:form>
+				<p:panel style="border:0px;padding:0px;min-height:400px">
+					<p:breadCrumb>
+						<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+						<p:menuitem value="Backlogs" url="#" />
+						<p:menuitem value="Cambio de estatus" url="#" />
+						<p:menuitem
+							value="Pospuesto"
+							url="#" />
+					</p:breadCrumb>
+
+					<div class="ui-g">
+						<div class="ui-lg-12 ui-md">
+							<div class="ui-g-12 ui-md-12 ui-lg-5 ui-fluid">
+								<p:fieldset legend="Backlog" style="margin-top:10px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Fecha Inicio:" />
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.fechaCreacion}" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Folio de Backlog:" />
+										<p:inputText id="numero" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.folio}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Estatus BL:" />
+										<p:inputText id="estatus" tabindex="-1"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="color:white;width:100%;text-align:center;#{cambioEstatusBacklogsMineros.obtenerColorCelda()}"
+											styleClass="deshabilitado" readonly="true" />
+									</p:panelGrid>
+									
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-3, ui-grid-col-9"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Pospuesto por:" />
+										<p:inputTextarea rows="3" cols="40" styleClass="deshabilitado"
+											value="#{cambioEstatusBacklogsMineros.backlogMineroSeleccionado.comentarioBacklogMinero}"
+											 />
+									</p:panelGrid>
+									
+								</p:fieldset>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-g-12" align="right">
+						<p:commandButton value="Regresar" action="backlogsLista" />
+					</div>
+				</p:panel>
+			</h:form>
+			<ui:include src="dialogs/dialogoCancelar.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

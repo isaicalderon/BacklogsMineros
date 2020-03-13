@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<p:dialog header="Editar Otro Trabajo" widgetVar="modificarOtroTrabajo"
+	id="modificarOtroTrabajo" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	width="550px" closable="false" position="center center" height="auto"
+	onShow="PF('modificarOtroTrabajo').initPosition()" responsive="true">
+
+	<h:form id="formDialogoModificar">
+		<div class="ui-g">
+			<div class="ui-lg-12">
+				<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel for="serie" value="Serie del equipo:" />
+					<h:panelGroup id="panelSerie">
+						<p:autoComplete id="serie" minQueryLength="3" maxResults="10"
+							value="#{administradorOtrosTrabajosBean.numSerie}"
+							completeMethod="#{autoCompleteBean.completeNumeroSerie}"
+							forceSelection="true" size="36" placeholder="Buscar"
+							disabled="#{administradorOtrosTrabajosBean.habilitarSerie}">
+							<p:ajax event="itemSelect" update="panelSerie"
+								listener="#{administradorOtrosTrabajosBean.deshabilitarControlesBusquedaSerie}" />
+						</p:autoComplete>
+						<p:commandButton style="margin-left:1%" id="botonSerie" icon="fa fa-close"
+							process="@this"
+							rendered="#{administradorOtrosTrabajosBean.habilitarSerie}"
+							actionListener="#{administradorOtrosTrabajosBean.habilitarControlesBusquedaSerie}"
+							update="panelSerie" />
+					</h:panelGroup>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridUno" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel for="descripcion" value="Descripción del trabajo:" />
+					<p:inputTextarea maxlength="32700" rows="2" autoResize="true"
+						 cols="36" id="descripcion" 
+						value="#{administradorOtrosTrabajosBean.descripcion}" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridDos" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<p:outputLabel for="responsable" value="Responsable" />
+					<h:panelGroup id="panelTecnico">
+						<p:autoComplete id="responsable" 
+							minQueryLength="4" maxResults="10" size="36" placeholder="Buscar"
+							value="#{administradorOtrosTrabajosBean.tecnicoResponsable}"
+							completeMethod="#{autoCompleteBean.completeTecnico}"
+							converter="tecnicoConverter" forceSelection="true"
+							disabled="#{administradorOtrosTrabajosBean.habilitarTecnico}">
+							<p:ajax event="itemSelect" update="panelTecnico"
+								listener="#{administradorOtrosTrabajosBean.deshabilitarControlesBusquedaTecnico}" />
+						</p:autoComplete>
+						<p:commandButton style="margin-left:1%" id="botonTecnico" icon="fa fa-close"
+							rendered="#{administradorOtrosTrabajosBean.habilitarTecnico}"
+							actionListener="#{administradorOtrosTrabajosBean.habilitarControlesBusquedaTecnico}"
+							update="panelTecnico" />
+					</h:panelGroup>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridTres" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputText for="sistema" value="Sistema:" />
+					<h:panelGroup id="panelSistema">
+						<p:selectOneMenu id="sistema" style="width:70%;"
+							value="#{administradorOtrosTrabajosBean.codigoSistema}">
+							<f:selectItems
+								value="#{administradorOtrosTrabajosBean.codigosSistemasList}"
+								var="sistemas" itemLabel="#{sistemas.codigosSistemasGrid}"
+								itemValue="#{sistemas.codigoSistema}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+				</p:panelGrid>
+
+
+				<div style="width: 100%; margin-top: 10px;">
+					<div style="margin-top: 10px; display: block; text-align: center;">
+						<p:commandButton value="Editar" process="@parent"
+							actionListener="#{administradorOtrosTrabajosBean.modificarOtrosTrabajos}"
+							update="panelTecnico, serie, descripcion :formOtrosTrabajos:tablaOtrosTrabajos growl :formOtrosTrabajos:menuBar" />
+						<p:commandButton value="Cancelar"
+							onclick="PF('modificarOtroTrabajo').hide()">
+						</p:commandButton>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</h:form>
+</p:dialog>
+
+</html>

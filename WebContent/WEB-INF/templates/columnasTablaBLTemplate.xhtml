@@ -1,0 +1,349 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pv="http://primefaces.org/venture">
+
+
+	<p:column id="columnaEstatus" headerText="Estatus BL"
+		sortBy="#{backlogMinero.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+		style="min-width:190px;text-align:center;
+							#{genericBacklogBean.colorCelda(backlogMinero.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode)};
+							#{configuracionColumnasBean.mostrarEstatus}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}">
+		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('tablaBacklogsMineros').filter()"
+				style="width:auto;" var="t" value="#{backlogsStaticsVarBean.estatusFiltro}">
+				<f:selectItem itemLabel="Todos" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems
+					value="#{genericBacklogBean.listarEstatusBacklogsMineros()}"
+					var="estatusBacklogsMineros"
+					itemLabel="#{estatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+					itemValue="#{estatusBacklogsMineros.idEstatusBacklogMineroNoCode}" />
+				<p:column style="width:10%;#{genericBacklogBean.colorCelda(t)}">
+				</p:column>
+				<p:column>
+					<h:outputText value="#{t}" styleClass="formatoCeldas" />
+				</p:column>
+			</p:selectOneMenu>
+		</f:facet>
+
+		<h:outputText id="estatus"
+			value="#{backlogMinero.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}" />
+
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="estatus"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+			
+	</p:column>
+
+	<p:column headerText="Folio BL"
+		sortBy="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+		style="min-width: 140px;#{configuracionColumnasBean.mostrarFolio}"
+		filterBy="#{backlogMinero.backlogsMinerosKey.idBacklogMinero}"
+		filterMatchMode="exact">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.folioFiltro}" style="width:80px;"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="idBacklog"
+			value="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="idBacklog"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Núm. Econ."
+		sortBy="#{backlogMinero.numeroEconomico}"
+		style="width:100px;#{configuracionColumnasBean.mostrarNumEcon}"
+		filterMatchMode="contains" filterBy="#{backlogMinero.numeroEconomico}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.numEconFiltro}"
+				style="width:80px;" onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="numEcono" value="#{backlogMinero.numeroEconomico}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="numEcono"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Serie" sortBy="#{backlogMinero.numeroSerie}"
+		style="width:100px;#{configuracionColumnasBean.mostrarSerie}"
+		filterBy="#{backlogMinero.numeroSerie}" filterMatchMode="contains">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.serieFiltro}" style="width:80px;"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="numSerie" value="#{backlogMinero.numeroSerie}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="numSerie"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+	<p:column headerText="Horómetro" sortBy="#{backlogMinero.horometro}"
+		style="width:100px;#{configuracionColumnasBean.mostrarHorometro}"
+		filterBy="#{backlogMinero.horometro}" filterMatchMode="exact">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.horometroFiltro}"
+				style="width:80px;" onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="horometro" value="#{backlogMinero.horometro}"
+			style="float:right" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="horometro"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Fecha Creación"
+		style="min-width: 140px;text-align:center;#{configuracionColumnasBean.mostrarFechaCreacion}"
+		sortBy="#{backlogMinero.fechaHoraCreacion}" filterMatchMode="contains"
+		filterBy="#{backlogMinero.fechaHoraCreacion}"
+		filterFunction="#{genericBacklogBean.filterByDate}">
+		<f:facet name="filter">
+			<p:calendar pattern="dd/MMM/yyyy" size="12" locale="es"
+				value="#{backlogsStaticsVarBean.fechaCreacionFiltro}">
+				<p:ajax event="dateSelect"
+					oncomplete="PF('tablaBacklogsMineros').filter()" />
+			</p:calendar>
+		</f:facet>
+		<h:outputText id="fecha"
+			value="#{genericBacklogBean.darFormatoFecha(backlogMinero.fechaHoraCreacion)}">
+			<f:convertDateTime pattern="dd/MMM/yyyy" locale="es" />
+		</h:outputText>
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="fecha"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Fecha Cierre"
+		style="min-width: 140px;text-align:center;#{configuracionColumnasBean.mostrarFechaCierre}"
+		sortBy="#{backlogMinero.fechaHoraCerrado}" filterMatchMode="contains"
+		filterBy="#{backlogMinero.fechaHoraCerrado}"
+		filterFunction="#{genericBacklogBean.filterByDate}">
+		<f:facet name="filter">
+			<p:calendar pattern="dd/MMM/yyyy" size="12" locale="es"
+				value="#{backlogsStaticsVarBean.fechaCerradoFiltro}">
+				<p:ajax event="dateSelect"
+					oncomplete="PF('tablaBacklogsMineros').filter()" />
+			</p:calendar>
+		</f:facet>
+		<h:outputText id="fechaCierre"
+			value="#{genericBacklogBean.darFormatoFecha(backlogMinero.fechaHoraCerrado)}">
+			<f:convertDateTime pattern="dd/MMM/yyyy" locale="es" />
+		</h:outputText>
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="fecha"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Días activo"
+		sortBy="#{genericBacklogBean.obtenerDiasActivo(backlogMinero)}"
+		style="width:100px;#{configuracionColumnasBean.mostrarDiasActivo}"
+		filterBy="#{genericBacklogBean.obtenerDiasActivo(backlogMinero)}"
+		filterMatchMode="exact">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.diasFiltro}" style="width:80px;"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="dias"
+			value="#{genericBacklogBean.obtenerDiasActivo(backlogMinero)}"
+			style="float:right" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="dias"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+	
+	<p:column headerText="Orden de Trabajo"
+		sortBy="#{backlogMinero.numeroReserva}"
+		style="width:450px;#{configuracionColumnasBean.mostrarSistema}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.numeroReserva}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.numeroReserva}"
+				style="width:200px;" onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="OT"
+			value="#{backlogMinero.numeroReserva}"
+			style="float:right" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="OT"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Sistema"
+		sortBy="#{backlogMinero.idCodigoSistema.codigoSistema}"
+		style="width:100px;#{configuracionColumnasBean.mostrarSistema}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.idCodigoSistema.codigoSistema}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.sistemaFiltro}"
+				style="width:80px;" onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="sistema"
+			value="#{backlogMinero.idCodigoSistema.codigosSistemasFormateado}"
+			style="float:right" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="sistema"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Código de Trabajo"
+		sortBy="#{backlogMinero.idCodigoSMCS.descripcionSMCS}"
+		style="min-width: 450px;#{configuracionColumnasBean.mostrarDescripcion}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.idCodigoSMCS.idCodigoSMCS}">
+		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('tablaBacklogsMineros').filter()"
+				filter="true" filterMatchMode="contains" autowidth="false"
+				style="width:200px;" value="#{backlogsStaticsVarBean.descripcionFiltro}">
+				<f:selectItem itemLabel="Todos" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{genericBacklogBean.listarCodigosSMCS()}"
+					var="codigosSMCS"
+					itemLabel="#{codigosSMCS.codigosSMCSFormateado} - #{codigosSMCS.descripcionSMCS}"
+					itemValue="#{codigosSMCS.idCodigoSMCS}" />
+			</p:selectOneMenu>
+		</f:facet>
+		<h:outputText id="codigoSMCS"
+			value="#{backlogMinero.idCodigoSMCS.codigoSMCS} - #{backlogMinero.idCodigoSMCS.descripcionSMCS}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="codigoSMCS"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Sintomas"
+		sortBy="#{backlogMinero.sintomasEquipo}" filterMatchMode="contains"
+		filterBy="#{backlogMinero.sintomasEquipo}"
+		style="min-width: 127px;#{configuracionColumnasBean.mostrarSintomas}">
+
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.sintomasFiltro}"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="sintomas" styleClass="formatoCeldas"
+			value="#{backlogMinero.sintomasEquipo}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="sintomas"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+
+	</p:column>
+
+	<p:column headerText="Acción" sortBy="#{backlogMinero.accionEquipo}"
+		filterMatchMode="contains" filterBy="#{backlogMinero.accionEquipo}"
+		style="min-width: 140px;#{configuracionColumnasBean.mostrarAccion}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.accionFiltro}"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="accionE" styleClass="formatoCeldas"
+			value="#{backlogMinero.accionEquipo}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="accionE"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Prioridad"
+		sortBy="#{backlogMinero.idPrioridadBacklog.descripcionPrioridadBacklog}"
+		style="width:127px;#{configuracionColumnasBean.mostrarPrioridad}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.idPrioridadBacklog.idPrioridadBacklogMinero}">
+		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('tablaBacklogsMineros').filter()"
+				autowidth="false" style="width:auto;"
+				value="#{backlogsStaticsVarBean.prioridadFiltro}">
+				<f:selectItem itemLabel="Todos" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems
+					value="#{genericBacklogBean.listarPrioridadesBacklogsMineros()}"
+					var="prioridadesBacklogsMineros"
+					itemLabel="#{prioridadesBacklogsMineros.descripcionPrioridadBacklog}"
+					itemValue="#{prioridadesBacklogsMineros.idPrioridadBacklogMinero}" />
+			</p:selectOneMenu>
+		</f:facet>
+		<h:outputText id="prioridad"
+			value="#{backlogMinero.idPrioridadBacklog.descripcionPrioridadBacklog}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}"
+			for="prioridad"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Notas"
+		sortBy="#{backlogMinero.comentarioBacklogMinero}"
+		filterMatchMode="contains"
+		filterBy="#{backlogMinero.comentarioBacklogMinero}"
+		style="min-width: 140px;#{configuracionColumnasBean.mostrarNotas}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.notasFiltro}"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="notas" styleClass="formatoCeldas"
+			value="#{backlogMinero.comentarioBacklogMinero}" />
+
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="notas"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Origen"
+		sortBy="#{backlogMinero.origenesBacklogsMineros.descripcionOrigen}"
+		style="min-width: 140px;#{configuracionColumnasBean.mostrarOrigen}"
+		filterMatchMode="exact"
+		filterBy="#{backlogMinero.origenesBacklogsMineros.idOrigenBacklogMinero}">
+		<f:facet name="filter">
+			<p:selectOneMenu onchange="PF('tablaBacklogsMineros').filter()"
+				autowidth="false" style="width:auto;"
+				value="#{backlogsStaticsVarBean.origenFiltro}">
+				<f:selectItem itemLabel="Todos" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems
+					value="#{genericBacklogBean.listarOrigenesBacklogsMineros()}"
+					var="origenBacklogsMineros"
+					itemLabel="#{origenBacklogsMineros.descripcionOrigen}"
+					itemValue="#{origenBacklogsMineros.idOrigenBacklogMinero}" />
+			</p:selectOneMenu>
+		</f:facet>
+		<h:outputText id="origen"
+			style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;"
+			value="#{backlogMinero.origenesBacklogsMineros.descripcionOrigen}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="origen"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<p:column headerText="Creado por" sortBy="#{backlogMinero.creadoPor}"
+		filterMatchMode="contains" filterBy="#{backlogMinero.creadoPor}"
+		style="width:200px;#{configuracionColumnasBean.mostrarCreadoPor}">
+		<f:facet name="filter">
+			<p:inputText value="#{backlogsStaticsVarBean.creadoPorFiltro}"
+				onchange="PF('tablaBacklogsMineros').filter()" />
+		</f:facet>
+		<h:outputText id="creado"
+			style="width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: pre;"
+			value="#{backlogMinero.creadoPor}" />
+		<p:tooltip rendered="#{genericBacklogBean.renderTooltip}" for="notas"
+			value="Doble click para redireccionar al estatus correspondiente."
+			position="top" />
+	</p:column>
+
+	<!-- Esta columna de refacciones no se muestra, solo sirve para importar a Excel  -->
+	<p:column headerText="Refacciones" style="width:200px;display:none">
+		<p:inputTextarea id="partes" rows="1" cols="25" disabled="true"
+			style="border:0px;color:black;background-color: transparent;"
+			value="#{genericBacklogBean.obtenerPartes(backlogMinero)}" />
+	</p:column>
+
+
+</ui:composition>

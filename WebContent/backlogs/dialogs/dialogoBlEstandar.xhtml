@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Backlogs Estándars" widgetVar="dialogBlEstandar"
+	id="dialogBlEstandar" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="70%" position="center center"
+	onShow="PF('dialogBlEstandar').initPosition()" responsive="true">
+
+	<h:form id="formDialogsBlEstandar">
+
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+
+			<div class="Card">
+
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+
+					<p:dataTable id='tablaBLEST' var="backlogEstandar"
+						scrollable="true" scrollWidth="100%" widgetVar="widgetTablaBlest"
+						emptyMessage="No se han agregado Backlogs Estándar."
+						selection="#{backlogsStaticsVarBean.backlogEstandarSelected}"
+						selectionMode="single" rowKey="#{backlogEstandar}"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" rowsPerPageTemplate="10,25,50,75"
+						value="#{backlogEstandarBean.backglosEstandarList}">
+						
+						<p:ajax event="rowSelect"
+							listener="#{backlogEstandarBean.onRowSelectBLEST}"
+							update=":formDialogsBlEstandar:btnUsarBLEST" />
+							
+						<!-- 
+						<p:ajax event="rowDblselect" update="growl"
+							listener="#{backlogEstandarBean.usarBacklog}" />
+						
+						<p:column headerText="Usar Backlog" style="width:97px">
+							<p:commandButton value="Usar" icon="fa fa-mail-reply" />
+						</p:column>
+						 -->
+
+						<p:column headerText="Descripción"
+							filterBy="#{backlogEstandar.descripcion}"
+							filterMatchMode="contains" style="width:320px;"
+							sortBy="#{backlogEstandar.descripcion}">
+							
+							<h:outputText value="#{backlogEstandar.descripcion}"
+								style="width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: pre;" />
+								
+						</p:column>
+
+						<p:column headerText="Origen del BL" style="width:180px"
+							filterBy="#{backlogEstandar.origenBlDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.origenBlDescripcion}">
+							<h:outputText value="#{backlogEstandar.origenBlDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Lugar de generación" style="width:200px"
+							filterBy="#{backlogEstandar.lugarOrigenDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.lugarOrigenDescripcion}">
+							<h:outputText value="#{backlogEstandar.lugarOrigenDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Proriedad" style="width:150px"
+							filterBy="#{backlogEstandar.proridadDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.proridadDescripcion}">
+							<h:outputText value="#{backlogEstandar.proridadDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Sistema" style="width:260px"
+							filterBy="#{backlogEstandar.codigosSistemas}" filterMatchMode="contains"
+							sortBy="#{backlogEstandar.codigosSistemas}">
+							<h:outputText value="#{backlogEstandar.codigosSistemas} - #{backlogEstandar.codigoSistemaDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Lado componente" style="width:250px"
+							filterBy="#{backlogEstandar.ladoComponente.codigoLDC}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.ladoComponente.codigoLDC}">
+							<h:outputText
+								value="#{backlogEstandar.ladoComponente.ladoComponenteFormateado}" />
+						</p:column>
+
+						<p:column headerText="Código Sintoma" style="width:250px"
+							filterBy="#{backlogEstandar.sintoma.idCodigoSintoma}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.sintoma.idCodigoSintoma}">
+							<h:outputText
+								value="#{backlogEstandar.sintoma.sintomaFormateado}" />
+						</p:column>
+
+						<p:column headerText="Sintomas" style="width:250px"
+							filterBy="#{backlogEstandar.sintomasEquipo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.sintomasEquipo}">
+							<h:outputText value="#{backlogEstandar.sintomasEquipo}" />
+						</p:column>
+
+						<p:column headerText="Código de trabajo" style="width:300px"
+							filterBy="#{backlogEstandar.codigoTrabajoDescripcion}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.codigoTrabajoDescripcion}">
+							<h:outputText value="#{backlogEstandar.codigoTrabajoDescripcion}" />
+						</p:column>
+
+						<p:column headerText="Acción" style="width:250px"
+							filterBy="#{backlogEstandar.accionEquipo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.accionEquipo}">
+							<h:outputText value="#{backlogEstandar.accionEquipo}" />
+						</p:column>
+
+						<p:column headerText="Horas Máquina" style="width:150px"
+							filterBy="#{backlogEstandar.horasMaquinaEstimadas}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.horasMaquinaEstimadas}">
+							<h:outputText value="#{backlogEstandar.horasMaquinaEstimadas}" />
+						</p:column>
+
+						<p:column headerText="Horas Hombre" style="width:150px"
+							filterBy="#{backlogEstandar.horasHombreEstimadas}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.horasHombreEstimadas}">
+							<h:outputText value="#{backlogEstandar.horasHombreEstimadas}" />
+						</p:column>
+
+						<p:column headerText="Cargo" style="width:300px"
+							filterBy="#{backlogEstandar.cargoTrabajo.idCargoTrabajo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.cargoTrabajo.idCargoTrabajo}">
+							<h:outputText
+								value="#{backlogEstandar.cargoTrabajo.cargoTrabajoFormateado}" />
+						</p:column>
+
+						<p:column headerText="Tipo trabajo" style="width:250px"
+							filterBy="#{backlogEstandar.tipoTrabajo}"
+							filterMatchMode="contains"
+							sortBy="#{backlogEstandar.tipoTrabajo}">
+							<h:outputText value="#{backlogEstandar.tipoTrabajo}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+				<div align="right" class="ui-g-12">
+
+					<p:commandButton value="Cerrar" icon='fa fa-close'
+						onclick="PF('dialogBlEstandar').hide()" />
+
+					<p:commandButton id="btnUsarBLEST" value="Usar seleccionado" icon='fa fa-copy'
+						update="growl"
+						actionListener="#{backlogEstandarBean.usarBacklog}" />
+
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

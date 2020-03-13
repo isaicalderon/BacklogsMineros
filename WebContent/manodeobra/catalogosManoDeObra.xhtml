@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<h:form id="formCargos">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+					<p:menuitem value="Catálogos" url="#" />
+					<p:menuitem value="Mano de obra" url="#" />
+				</p:breadCrumb>
+				
+				<br />
+				
+				<p:remoteCommand name="actualizaCargos"
+					update="formCargos:tablaCargos, formCargos:menuBar, growl" />
+
+				<div class="White PadWithBorder10 Wid30 MarAuto">
+					<p:menubar id="menuBar">
+						<p:submenu label="Opciones"
+							rendered="#{loginBean.tienePermiso('EDIT-CATALOGOS')}">
+							<p:menuitem value="Refrescar" icon="fa fa-refresh"
+								onclick="actualizaCargos();" />
+							<p:menuitem value="Registrar" icon="fa fa-plus-square"
+								onclick="PF('altaCargo').show();" />
+							<p:menuitem value="Editar" icon="fa fa-edit"
+								disabled="#{administradorCargosTrabajoBean.habilitaModificar}"
+								onclick="PF('modificarCargo').show();" />
+						</p:submenu>
+						<p:menuitem value="Limpiar filtros" icon="fa fa-eraser"
+							onclick="PF('tablaCargos').clearFilters()" />
+					</p:menubar>
+
+
+					<p:dataTable id="tablaCargos" var="cargos" styleClass="myTable"
+						selection="#{administradorCargosTrabajoBean.cargosTrabajoSeleccionado}"
+						value="#{administradorCargosTrabajoBean.cargosTrabajoList}"
+						filteredValue="#{backlogsStaticsVarBean.cargosTrabajoListFiltrado}"
+						selectionMode="single" height="400" filterDelay="1000"
+						rowKey="#{cargos.idCargoTrabajo}" widgetVar="tablaCargos"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10" sortMode="multiple"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" emptyMessage="No se encontraron cargos trabajo"
+						style="margin-bottom:20px;" rowsPerPageTemplate="5,10,15">
+
+						<p:ajax event="rowSelect"
+							listener="#{administradorCargosTrabajoBean.onRowSelect}"
+							update="formCargos:tablaCargos, formCargos:menuBar, :formDialogoModificar:cargo" />
+
+						<p:column headerText="Cargo&lt;br/&gt;"
+							sortBy="#{cargos.descripcionCargoTrabajo}"
+							style="width:90px;text-align:center" filterMatchMode="contains"
+							filterStyle="width:90%;"
+							filterBy="#{cargos.descripcionCargoTrabajo}">
+							<h:outputText value="#{cargos.descripcionCargoTrabajo}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+
+			</h:form>
+			<ui:include src="dialogoagregar.xhtml" />
+			<ui:include src="dialogoeditar.xhtml" />
+		</div>
+
+	</ui:define>
+</ui:composition>

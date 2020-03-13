@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<h:form id="formCodigosSMCS">
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+					<p:menuitem value="Catálogos" url="#" />
+					<p:menuitem value="Códigos SMCS" url="#" />
+				</p:breadCrumb>
+				<br />
+
+				<p:remoteCommand name="actualizaCodigos"
+					update="formCodigosSMCS:tablaCodigosSMCS, formCodigosSMCS:menuBar, growl" />
+				<div class="White PadWithBorder10 Wid50 MarAuto">
+					<p:menubar id="menuBar">
+						<p:submenu label="Opciones"
+							rendered="#{loginBean.tienePermiso('EDIT-CATALOGOS')}">
+							<p:menuitem value="Refrescar" icon="fa fa-refresh"
+								onclick="actualizaCodigos();" />
+							<p:menuitem value="Registrar" icon="fa fa-plus-square"
+								onclick="PF('altaCodigo').show();" />
+							<p:menuitem value="Editar" icon="fa fa-edit"
+								disabled="#{administradorCodigosSMCSBean.habilitaModificar}"
+								onclick="PF('modificarCodigo').show();" />
+						</p:submenu>
+						<p:menuitem value="Limpiar filtros" icon="fa fa-eraser"
+							onclick="PF('tablaCodigosSMCS').clearFilters()" />
+					</p:menubar>
+
+
+					<p:dataTable id="tablaCodigosSMCS" var="codigosSMCS"
+						selection="#{administradorCodigosSMCSBean.codigosSMCSSeleccionado}"
+						value="#{administradorCodigosSMCSBean.codigosSMCSList}"
+						filteredValue="#{backlogsStaticsVarBean.codigosSMCSListFiltrado}"
+						selectionMode="single" height="400" filterDelay="1000"
+						rowKey="#{codigosSMCS.codigosSMCSGrid}"
+						widgetVar="tablaCodigosSMCS"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10" sortMode="multiple"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" emptyMessage="No se encontraron códigos SMCS"
+						style="margin-bottom:20px;" rowsPerPageTemplate="5,10,15">
+
+						<p:ajax event="rowSelect"
+							listener="#{administradorCodigosSMCSBean.seleccionarCodigoSMCS}"
+							update="formCodigosSMCS:tablaCodigosSMCS, formCodigosSMCS:menuBar, :formDialogoModificar:codigoSMCS, :formDialogoModificar:descripcion,:formDialogoModificar:horasTrabajo" />
+
+						<p:column headerText="Código&lt;br/&gt;"
+							sortBy="#{codigosSMCS.codigosSMCSFormateado}"
+							style="width:50px;text-align:center" filterMatchMode="contains"
+							filterStyle="width:90%;"
+							filterBy="#{codigosSMCS.codigosSMCSFormateado}">
+							<h:outputText value="#{codigosSMCS.codigosSMCSFormateado}" />
+						</p:column>
+
+						<p:column headerText="Descripción&lt;br/&gt;"
+							sortBy="#{codigosSMCS.descripcionSMCS}" style="width:220px"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{codigosSMCS.descripcionSMCS}">
+							<h:outputText value="#{codigosSMCS.descripcionSMCS}" />
+						</p:column>
+
+						<p:column headerText="Horas de trabajo&lt;br/&gt;"
+							sortBy="#{codigosSMCS.horasHombreGrid}" style="width:60px;"
+							filterMatchMode="contains" filterStyle="width:90%;"
+							filterBy="#{codigosSMCS.horasHombreGrid}">
+							<div align="right">
+								<h:outputText value="#{codigosSMCS.horasHombreGrid}">
+									<f:convertNumber pattern="#0.0" />
+								</h:outputText>
+							</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+
+			</h:form>
+			<ui:include src="dialogoagregar.xhtml" />
+			<ui:include src="dialogoeditar.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>

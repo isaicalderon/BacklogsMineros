@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Backlog" widgetVar="dialogBLRepetido"
+	id="dialogBLRepetido" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	height="auto" width="40%" position="center center"
+	onShow="PF('dialogBLRepetido').initPosition()" responsive="true">
+
+	<h:form id="formBlRepetidos">
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+			<div class="Card">
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+					<p:messages id="msgs" showDetail="true" autoUpdate="true"
+						closable="true" />
+					<div class='ui-g'>
+						<div class="ui-lg-12 ui-md">
+							<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid">
+								
+								<p:fieldset legend="Estatus" style="margin-top:0px">
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Estatus BL: "/>
+										<p:inputText id="estatus" tabindex="-1" disabled="true"
+											value="#{agregarBacklogsMinerosBean.backlogRepetido.idEstatusBacklogsMineros.idEstatusBacklogMineroNoCode}"
+											style="width:100%;text-align:center;#{agregarBacklogsMinerosBean.obtenerColorCelda()}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Folio de Backlog: "/>
+										<p:inputText id="numero" tabindex="-1" disabled="true"
+											value="#{agregarBacklogsMinerosBean.backlogRepetido.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
+											styleClass="deshabilitado" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-grid-col-4, ui-grid-col-4"
+										styleClass="ui-panelgrid-blank">
+										<p:outputLabel value="Fecha Inicio: "/>
+										<p:calendar id="fecha" pattern="dd/MMM/yyyy" locale="es"
+											styleClass="deshabilitado" tabindex="-1" disabled="true"
+											value="#{agregarBacklogsMinerosBean.backlogRepetido.fechaHoraCreacion}" />
+									</p:panelGrid>
+
+								</p:fieldset>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div align="right" class="ui-g-12">
+				
+					<p:commandButton value="Cerrar" icon='fa fa-close'
+						actionListener="#{agregarBacklogsMinerosBean.limpiarBLRepetido}"
+						onclick="PF('dialogBLRepetido').hide()" />
+						
+					<p:commandButton value="Editar" icon='fa fa-save'
+						disabled="#{not loginBean.tienePermiso('REGISTROBACKLOGS')}"
+						action="#{agregarBacklogsMinerosBean.editarBLRepeat()}" />
+										
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+
+</html>

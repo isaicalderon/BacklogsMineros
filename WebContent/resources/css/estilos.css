@@ -1,0 +1,167 @@
+.cuadroAlertaColorRojo {
+	width: 100%; 
+	height:20px; 
+	background-color: #f44336;
+	border-radius: 3px;
+}
+
+.cuadroAlertaColorAmarillo {
+	width: 100%; 
+	height:20px; 
+	background-color: #ffeb3b;
+	border-radius: 3px;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item{
+	border:1px solid transparent !important;
+}
+
+.ui-columntoggler{
+	/*Oculta scroll horizontal*/
+	overflow-x: hidden !important;
+}
+
+.fc-time { 
+	display: none !important; 
+}
+
+.ui-fluid .ui-button{
+	/*width: auto;	*/
+}
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container{
+	width: 100%;
+}
+
+.actividad-terminada{
+	background-color: #ACACAC !important;
+}
+
+.actividad-visita-vigente{
+	background-color: #fff7c9 !important;
+	border: none !important;
+	color: black !important;
+}
+
+.actividad-tarea-vigente{
+	background-color: #9fc6ce !important;
+	border: none !important;
+	color: black !important;
+}
+
+.boton-menu-container{
+	display: flex;
+	margin-bottom: 5px;
+	
+}
+.boton-menu-container > div{
+	margin: 2.5px 0;
+}
+
+.boton-menu{
+	background-color: #FFCC00;
+	width: auto;
+	/*max-width: 125px;*/
+	height: 100%;
+	padding: 5px;
+	margin: 0 auto;
+	border-radius:5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	text-decoration: none;
+	color:white;
+}
+
+.caja-envio-correos ul{
+	height: 120px!important;
+}
+
+
+.boton-menu-inicio{
+	background-color: #FFCC00;
+	width: auto;
+	height: 100%;
+	padding: 5px;
+	margin: 0 auto;
+	border-radius:5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	text-decoration: none;
+	color:white;
+}
+
+.boton-menu-inicio > span, .boton-menu > span  {
+	font-size: 70px;
+	color: white;
+}
+
+.boton-menu:hover, .boton-menu-inicio:hover{
+	background-color: #FFBB00;
+}
+
+.flex-c{
+	display: flex;
+	align-items: center;
+}
+
+.flex-cc{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ui-g-12,
+.ui-g-11,.ui-g-10,.ui-g-9,.ui-g-8,.ui-g-7,.ui-g-6,.ui-g-5,.ui-g-4,.ui-g-3,
+.ui-g-2,.ui-g-1{
+/*	padding: 0px;
+	margin: 2px 0px;*/
+}
+
+
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 1200px)
+.container {
+    max-width: 1140px;
+}
+
+@media (min-width: 992px)
+.container {
+    max-width: 960px;
+}
+@media (min-width: 768px)
+.container {
+    max-width: 720px;
+}
+@media (min-width: 576px)
+.container {
+    max-width: 540px;
+}
+
+
+/*     IPAD      */
+@media only screen and (max-width: 767px) {
+	.hide-ipad{
+		display:none !important;
+	}
+}
+
+/*    IPHONE     */
+@media only screen and (max-width: 414px) {
+	.hide-mobile{
+		display:none !important;
+	}
+	.ui-fluid .ui-button{
+	width: 100% !important;
+}
+}

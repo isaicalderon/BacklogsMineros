@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<style>
+.ui-fileupload-filename {
+	
+}
+
+.ui-fileupload-files {
+	
+}
+
+.ui-fileupload-buttonbar {
+	
+}
+
+.ui-fileupload-content {
+	
+}
+</style>
+
+<style type="text/css">
+/*demo*/
+.ui-dataview-list .ui-dataview-row {
+	border-bottom: 1px solid #A8A8A8;
+	padding: 25px 10px;
+}
+
+.logo {
+	width: 5%;
+}
+
+.detail {
+	width: 85%;
+	padding-left: 25px;
+}
+</style>
+<p:dialog header="IMAGENES BACKLOGS MINEROS"
+	widgetVar="dialogoSubirImagenes" id="dialogoSubirImagenes"
+	appendTo="@(body)" dynamic="false" resizable="true" modal="true"
+	showEffect="fade" hideEffect="fade" height="300px" width="920px"
+	closable="false">
+	<h:form id="formDialogoSubirImagenes">
+		<p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+
+
+			<p:fileUpload 
+				fileUploadListener="#{agregarBacklogsMinerosBean.upload}"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/" skinSimple="true"
+				update="imagenes" sequential="true" multiple="true" label="Buscar"
+				uploadLabel="Subir" cancelLabel="Cancelar" sizeLimit="100000000"
+				dragDropSupport="true" />
+
+			<p:dataGrid var="imagen" id="imagenes" columns="1"
+				value="#{agregarBacklogsMinerosBean.imagenesBacklog}">
+				<p:panel header="#{imagen}" style="text-align:center">
+					<p:graphicImage value="#{productController.content}" width="80px"
+						height="80px">
+						<f:param name="filename" value="#{imagen.imagenesBacklogsMinerosKey.imagenBacklog}" />
+					</p:graphicImage>
+				</p:panel>
+			</p:dataGrid>
+		</p:panelGrid>
+		<div
+			style="margin-top: 5px; display: block; text-align: center; margin-bottom: 5px;">
+			<p:commandButton value="Cerrar" process="@parent"
+				
+				actionListener="#{agregarBacklogsMinerosBean.cerrarDialogoImagenes}"
+				onclick="PF('dialogoSubirImagenes').hide()" />
+		</div>
+	</h:form>
+</p:dialog>
+
+</html>

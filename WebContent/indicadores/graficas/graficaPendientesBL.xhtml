@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<!-- ID: 4 -->
+	<h:form id='formPendientesBL'>
+		<div class='ui-g'>
+			<div class='ui-g-12 ui-lg-12'>
+				<p:accordionPanel style='margin-bottom: 10px'
+					widgetVar="pendientesBL">
+					<p:tab title='Opciones'>
+						<div class='ui-g'>
+							<div class='ui-g-12 ui-lg-8'>
+								<!-- Inputs de las opciones -->
+								<ui:include src="../inputsOpciones.xhtml" />
+
+								<div class='ui-g'>
+									<div class='ui-g-6 ui-lg-4'>
+										<p:commandButton value="Aceptar" icon='fa fa-search'
+											actionListener="#{graficaBacklogsPendientesBean.buscar}"
+											update="growl, :formPendientesBL:graficaPendientes"
+											onclick="PF('pendientesBL').unselect(0);"
+											style='margin-top:10px' />
+									</div>
+									<div class='ui-g-6 ui-lg-4'>
+										<p:commandButton value="Agregar comentario"
+											disabled="#{not loginBean.tienePermiso('COMENTARIOS-IND')}"
+											actionListener="#{genericGraficBean.seleccionarGrafica(4)}"
+											icon='fa fa-comment' onclick="PF('graficComment').show();"
+											style='margin-top:10px' />
+									</div>
+									<div class='ui-g-12 ui-lg-4'>
+										<p:commandButton value="Limpiar filtros" icon='fa fa-remove'
+											actionListener='#{genericGraficBean.limpiarFiltros}'
+											update='formOpciones:modelo, formOpciones:numEcono, formOpciones:numSerie'
+											style='margin-top:10px' />
+									</div>
+								</div>
+							</div>
+							<div class='ui-g-12 ui-lg-4'></div>
+						</div>
+
+					</p:tab>
+				</p:accordionPanel>
+
+				<p:chart type="bar"
+					model="#{graficaBacklogsPendientesBean.barChartModel}"
+					style="height:400px;width:100%;" responsive="true"
+					id="graficaPendientes" />
+			</div>
+		</div>
+
+	</h:form>
+
+</ui:composition>

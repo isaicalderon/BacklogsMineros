@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="304,2369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#login#login.xhtml" PATH="/login/login.xhtml"
+  SHAPE="304,2481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#codigosSMCS#catalogosCodigosSMCS.xhtml"
+  PATH="/codigosSMCS/catalogosCodigosSMCS.xhtml" SHAPE="304,993,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#otrosTrabajos#catalogosOtrosTrabajos.xhtml"
+  PATH="/otrosTrabajos/catalogosOtrosTrabajos.xhtml"
+  SHAPE="304,1217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#manodeobra#catalogosManoDeObra.xhtml"
+  PATH="/manodeobra/catalogosManoDeObra.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#registroBacklogs.xhtml"
+  PATH="/backlogs/registroBacklogs.xhtml" SHAPE="304,769,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#indicadores#indicadoresTodos.xhtml"
+  PATH="/indicadores/indicadoresTodos.xhtml" SHAPE="304,1441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#sistemas#catalogosSistemas.xhtml"
+  PATH="/sistemas/catalogosSistemas.xhtml" SHAPE="304,881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#metricas#catalogosMetricas.xhtml"
+  PATH="/metricas/catalogosMetricas.xhtml" SHAPE="304,1105,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#sos#sosResultados.xhtml"
+  PATH="/sos/sosResultados.xhtml" SHAPE="304,1329,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#npc#catalogoNPC.xhtml"
+  PATH="/npc/catalogoNPC.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficatotalbl.xhtml"
+  PATH="/graficas/graficatotalbl.xhtml" SHAPE="304,769,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficabl.xhtml"
+  PATH="/graficas/graficabl.xhtml" SHAPE="304,881,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficadisponibilidad.xhtml"
+  PATH="/graficas/graficadisponibilidad.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficamodeloblpendientes.xhtml"
+  PATH="/graficas/graficamodeloblpendientes.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficaestatusbl.xhtml"
+  PATH="/graficas/graficaestatusbl.xhtml" SHAPE="304,657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#graficas#graficaettr.xhtml"
+  PATH="/graficas/graficaettr.xhtml" SHAPE="304,689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,2369,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="menuBacklogs::#backlogs#backlogsMineros.xhtml" NAME="output"
+    PATH="/backlogs/backlogsMineros.xhtml"
+    TARGET="rules:#backlogs#backlogsMineros.xhtml" TITLE="menuBacklogs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="backlogsLista::#backlogs#backlogsMineros.xhtml" NAME="output1"
+    PATH="/backlogs/backlogsMineros.xhtml"
+    TARGET="rules:#backlogs#backlogsMineros.xhtml" TITLE="backlogsLista" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="backlogEstandar::#backlogsEstandar#backlogsEstandar.xhtml"
+    NAME="output3" PATH="/backlogsEstandar/backlogsEstandar.xhtml"
+    TARGET="rules:#backlogsEstandar#backlogsEstandar.xhtml"
+    TITLE="backlogEstandar" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="backlogEstandarRegistro::#backlogsEstandar#registroBacklogsEstandar.xhtml"
+    NAME="output4"
+    PATH="/backlogsEstandar/registroBacklogsEstandar.xhtml"
+    TARGET="rules:#backlogsEstandar#registroBacklogsEstandar.xhtml"
+    TITLE="backlogEstandarRegistro" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancelado::#backlogs#estatusCancelado.xhtml"
+    NAME="output5" PATH="/backlogs/estatusCancelado.xhtml"
+    TARGET="rules:#backlogs#estatusCancelado.xhtml" TITLE="cancelado" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="estatusEsperaDeRefacciones::#backlogs#estatusEsperaDeRefacciones.xhtml"
+    NAME="output6" PATH="/backlogs/estatusEsperaDeRefacciones.xhtml"
+    TARGET="rules:#backlogs#estatusEsperaDeRefacciones.xhtml"
+    TITLE="estatusEsperaDeRefacciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="estatusPospuesto::#backlogs#estatusPospuesto.xhtml"
+    NAME="output2" PATH="/backlogs/estatusPospuesto.xhtml"
+    TARGET="rules:#backlogs#estatusPospuesto.xhtml"
+    TITLE="estatusPospuesto" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="estatusCreado::#backlogs#estatusBacklogs.xhtml" NAME="output7"
+    PATH="/backlogs/estatusBacklogs.xhtml"
+    TARGET="rules:#backlogs#estatusBacklogs.xhtml" TITLE="estatusCreado" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="estatusB2::#backlogs#estatusB2Backlogs.xhtml" NAME="output8"
+    PATH="/backlogs/estatusB2Backlogs.xhtml"
+    TARGET="rules:#backlogs#estatusB2Backlogs.xhtml" TITLE="estatusB2" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="estatusC::#backlogs#estatusCBacklogs.xhtml"
+    NAME="output9" PATH="/backlogs/estatusCBacklogs.xhtml"
+    TARGET="rules:#backlogs#estatusCBacklogs.xhtml" TITLE="estatusC" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosManoDeObra::#manodeobra#catalogosManoDeObra.xhtml"
+    NAME="output10" PATH="/manodeobra/catalogosManoDeObra.xhtml"
+    TARGET="rules:#manodeobra#catalogosManoDeObra.xhtml"
+    TITLE="catalogosManoDeObra" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="editarbacklog::#backlogs#editarbacklog.xhtml" NAME="output11"
+    PATH="/backlogs/editarbacklog.xhtml"
+    TARGET="rules:#backlogs#editarbacklog.xhtml" TITLE="editarbacklog" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="informacionbacklog::#backlogs#informacionbacklog.xhtml"
+    NAME="output12" PATH="/backlogs/informacionbacklog.xhtml"
+    TARGET="rules:#backlogs#informacionbacklog.xhtml"
+    TITLE="informacionbacklog" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosSistemas::#sistemas#catalogosSistemas.xhtml"
+    NAME="output13" PATH="/sistemas/catalogosSistemas.xhtml"
+    TARGET="rules:#sistemas#catalogosSistemas.xhtml"
+    TITLE="catalogosSistemas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosCodigosSMCS::#codigosSMCS#catalogosCodigosSMCS.xhtml"
+    NAME="output14" PATH="/codigosSMCS/catalogosCodigosSMCS.xhtml"
+    TARGET="rules:#codigosSMCS#catalogosCodigosSMCS.xhtml"
+    TITLE="catalogosCodigosSMCS" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosMetricas::#metricas#catalogosMetricas.xhtml"
+    NAME="output15" PATH="/metricas/catalogosMetricas.xhtml"
+    TARGET="rules:#metricas#catalogosMetricas.xhtml"
+    TITLE="catalogosMetricas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosOtrosTrabajos::#otrosTrabajos#catalogosOtrosTrabajos.xhtml"
+    NAME="output16" PATH="/otrosTrabajos/catalogosOtrosTrabajos.xhtml"
+    TARGET="rules:#otrosTrabajos#catalogosOtrosTrabajos.xhtml"
+    TITLE="catalogosOtrosTrabajos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catalogosNumParteCliente::#npc#catalogoNPC.xhtml"
+    NAME="output17" PATH="/npc/catalogoNPC.xhtml"
+    TARGET="rules:#npc#catalogoNPC.xhtml"
+    TITLE="catalogosNumParteCliente" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="sosResultados::#sos#sosResultados.xhtml"
+    NAME="output18" PATH="/sos/sosResultados.xhtml"
+    TARGET="rules:#sos#sosResultados.xhtml" TITLE="sosResultados" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresTodos::#indicadores#indicadoresTodos.xhtml"
+    NAME="output19" PATH="/indicadores/indicadoresTodos.xhtml"
+    TARGET="rules:#indicadores#indicadoresTodos.xhtml"
+    TITLE="indicadoresTodos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="comentariosGraficas::#indicadores#comentariosIndicadores.xhtml"
+    NAME="output20" PATH="/indicadores/comentariosIndicadores.xhtml"
+    TARGET="rules:#indicadores#comentariosIndicadores.xhtml"
+    TITLE="comentariosGraficas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresDisponibilidad::#graficas#graficadisponibilidad.xhtml"
+    NAME="output21" PATH="/graficas/graficadisponibilidad.xhtml"
+    TARGET="rules:#graficas#graficadisponibilidad.xhtml"
+    TITLE="indicadoresDisponibilidad" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresGraficaTotal::#graficas#graficatotalbl.xhtml"
+    NAME="output22" PATH="/graficas/graficatotalbl.xhtml"
+    TARGET="rules:#graficas#graficatotalbl.xhtml"
+    TITLE="indicadoresGraficaTotal" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresGraficaBL::#graficas#graficabl.xhtml" NAME="output23"
+    PATH="/graficas/graficabl.xhtml"
+    TARGET="rules:#graficas#graficabl.xhtml"
+    TITLE="indicadoresGraficaBL" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresGraficaBLPendientes::#graficas#graficamodeloblpendientes.xhtml"
+    NAME="output24" PATH="/graficas/graficamodeloblpendientes.xhtml"
+    TARGET="rules:#graficas#graficamodeloblpendientes.xhtml"
+    TITLE="indicadoresGraficaBLPendientes" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresEstatusBL::#graficas#graficaestatusbl.xhtml"
+    NAME="output25" PATH="/graficas/graficaestatusbl.xhtml"
+    TARGET="rules:#graficas#graficaestatusbl.xhtml"
+    TITLE="indicadoresEstatusBL" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="indicadoresGraficaETTR::#graficas#graficaettr.xhtml"
+    NAME="output26" PATH="/graficas/graficaettr.xhtml"
+    TARGET="rules:#graficas#graficaettr.xhtml"
+    TITLE="indicadoresGraficaETTR" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="catInspect::#catInspect#catInspectMineros.xhtml" NAME="output27"
+    PATH="/catInspect/catInspectMineros.xhtml"
+    TARGET="rules:#catInspect#catInspectMineros.xhtml"
+    TITLE="catInspect" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="capturarBL::#catInspect#capturarBL.xhtml"
+    NAME="output28" PATH="/catInspect/capturarBL.xhtml"
+    TARGET="rules:#catInspect#capturarBL.xhtml" TITLE="capturarBL" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="registroInspeccion::#catInspect#registroInspeccion.xhtml"
+    NAME="output29" PATH="/catInspect/registroInspeccion.xhtml"
+    TARGET="rules:#catInspect#registroInspeccion.xhtml"
+    TITLE="registroInspeccion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="reporteAutorizacion::localhost:8085#BacklogsMinerosReportes#servlet#BacklogsMineroServlet"
+    NAME="output30"
+    PATH="localhost:8085/BacklogsMinerosReportes/servlet/BacklogsMineroServlet"
+    TARGET="rules:localhost:8085#BacklogsMinerosReportes#servlet#BacklogsMineroServlet"
+    TITLE="reporteAutorizacion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="logout::#login#login.xhtml" NAME="output31"
+    PATH="/login/login.xhtml" TARGET="rules:#login#login.xhtml"
+    TITLE="logout" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#catInspect#capturarBL.xhtml"
+  PATH="/catInspect/capturarBL.xhtml" SHAPE="304,3217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#editarbacklog.xhtml"
+  PATH="/backlogs/editarbacklog.xhtml" SHAPE="304,3217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#informacionbacklog.xhtml"
+  PATH="/backlogs/informacionbacklog.xhtml" SHAPE="304,3217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusBacklogs.xhtml"
+  PATH="/backlogs/estatusBacklogs.xhtml" SHAPE="304,2049,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusEsperaDeRefacciones.xhtml"
+  PATH="/backlogs/estatusEsperaDeRefacciones.xhtml" SHAPE="304,2161,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusB2Backlogs.xhtml"
+  PATH="/backlogs/estatusB2Backlogs.xhtml" SHAPE="304,3441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusCancelado.xhtml"
+  PATH="/backlogs/estatusCancelado.xhtml" SHAPE="304,3217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusPospuesto.xhtml"
+  PATH="/backlogs/estatusPospuesto.xhtml" SHAPE="304,3329,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#catInspect#catInspectMineros.xhtml"
+  PATH="/catInspect/catInspectMineros.xhtml" SHAPE="304,3553,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#catInspect#registroInspeccion.xhtml"
+  PATH="/catInspect/registroInspeccion.xhtml" SHAPE="304,3217,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#estatusCBacklogs.xhtml"
+  PATH="/backlogs/estatusCBacklogs.xhtml" SHAPE="304,3441,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogsEstandar#backlogsEstandar.xhtml"
+  PATH="/backlogsEstandar/backlogsEstandar.xhtml" SHAPE="304,2273,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#backlogsEstandar#registroBacklogsEstandar.xhtml"
+  PATH="/backlogsEstandar/registroBacklogsEstandar.xhtml"
+  SHAPE="304,3473,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backlogs#backlogsMineros.xhtml"
+  PATH="/backlogs/backlogsMineros.xhtml" SHAPE="304,3473,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#indicadores#templateGrafica.xhtml"
+  PATH="/indicadores/templateGrafica.xhtml" SHAPE="304,3473,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#indicadores#comentariosIndicadores.xhtml"
+  PATH="/indicadores/comentariosIndicadores.xhtml" SHAPE="304,3473,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:localhost:8085#BacklogsMinerosReportes#servlet#BacklogsMineroServlet"
+  PATH="localhost" SHAPE="304,3601,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

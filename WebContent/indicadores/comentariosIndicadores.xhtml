@@ -1,0 +1,249 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layoutnormal.xhtml">
+
+	<ui:define name="cuerpo">
+		<div class="Card">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/backlogs/listaBacklogs.xhtml" />
+				<p:menuitem value="Indicadores" url="#" />
+			</p:breadCrumb>
+
+			<h:form id='formExport'>
+				<div style="display: none">
+					<h:commandLink value="Descargar Tabla2" id="link2">
+						<p:dataExporter type="xlsx" target="dtExport"
+							fileName="grafica_export" pageOnly="false"
+							postProcessor="#{genericGraficBean.postProcessXLS}" />
+					</h:commandLink>
+				</div>
+
+				<div class='White PadWithBorder10 Wid100 ui-fluid'
+					style="margin: auto">
+
+					<!-- Tabla de comentarios -->
+					<p:dataTable id="dtComentarios" height="400" filterDelay="1000"
+						emptyMessage="No se encontraron comentarios." var="comentarios"
+						widgetVar="dtComentarios"
+						value="#{genericGraficBean.obtenerComentariosGrafica()}"
+						selection=""
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						paginatorPosition="bottom" rows="10"
+						currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+						paginator="true" rowsPerPageTemplate="10,25,50,75"
+						style='margin-top:10px'>
+
+						<p:column headerText="Ver gráfica" style="width:60px;">
+							<div align="center">
+								<p:commandButton icon="fa fa-bar-chart-o"
+									update="growl, formVerGrafica, formVerGrafica:btnExport"
+									action="#{genericGraficBean.crearImagen()}">
+									<f:setPropertyActionListener value="#{comentarios}"
+										target="#{genericGraficBean.comentarioSeleccionado}" />
+								</p:commandButton>
+							</div>
+						</p:column>
+
+						<p:column headerText="Tipo Gráfica" style="width:300px;"
+							filterBy="#{genericBacklogBean.obtenerNombreGrafica(comentarios.idGrafica)}"
+							filterMatchMode="contains" sortBy="#{genericBacklogBean.obtenerNombreGrafica(comentarios.idGrafica)}">
+
+							<h:outputText
+								value="#{genericBacklogBean.obtenerNombreGrafica(comentarios.idGrafica)}" />
+						</p:column>
+
+						<p:column headerText="Comentario" style="width:300px;"
+							filterBy="#{comentarios.comentario}" filterMatchMode="contains"
+							sortBy="#{comentarios.comentario}">
+							<h:outputText value="#{comentarios.comentario}" />
+						</p:column>
+
+						<p:column headerText="Número Serie" style="width:100px"
+							filterBy="#{comentarios.numSerie}" filterMatchMode="contains"
+							sortBy="#{comentarios.numSerie}">
+							<h:outputText value="#{comentarios.numSerie}" />
+						</p:column>
+
+						<p:column headerText="Número Económico" style="width:120px"
+							filterBy="#{comentarios.numEcono}" filterMatchMode="contains"
+							sortBy="#{comentarios.numEcono}">
+							<h:outputText value="#{comentarios.numEcono}" />
+						</p:column>
+
+						<p:column headerText="Modelo" style='width:100px'
+							filterBy="#{comentarios.modelo}" filterMatchMode="contains"
+							sortBy="#{comentarios.modelo}">
+							<h:outputText value="#{comentarios.modelo}" />
+						</p:column>
+						
+						<p:column headerText="Fecha inicial"
+							style="width:100px;text-align:center;"
+							sortBy="#{comentarios.fechaInicial}">
+							<h:outputText value="#{comentarios.fechaInicial}">
+								<f:convertDateTime pattern="MMM/yyyy" locale="es" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fecha final"
+							style="width:100px;text-align:center;"
+							sortBy="#{comentarios.fechaFinal}">
+							<h:outputText value="#{comentarios.fechaFinal}">
+								<f:convertDateTime pattern="MMM/yyyy" locale="es" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+
+					<!-- Tabla para exportar un comentario NO BORRAR -->
+					<p:dataTable id="dtExport" height="400" filterDelay="1000"
+						var="comentarios" widgetVar="dtExport" rendered="false"
+						value="#{genericGraficBean.listaExport}" style='margin-top:10px'>
+
+						<p:column headerText="Tipo Gráfica" style="width:300px;"
+							sortBy="#{genericBacklogBean.obtenerNombreGrafica(comentarios.idGrafica)}">
+							<h:outputText
+								value="#{genericBacklogBean.obtenerNombreGrafica(comentarios.idGrafica)}" />
+						</p:column>
+
+						<p:column headerText="Comentario" style="width:300px;"
+							sortBy="#{comentarios.comentario}">
+							<h:outputText value="#{comentarios.comentario}" />
+						</p:column>
+
+						<p:column headerText="Fecha inicial" style="text-align:center"
+							sortBy="#{comentarios.fechaInicial}">
+							<h:outputText value="#{comentarios.fechaInicial}" />
+						</p:column>
+
+						<p:column headerText="Fecha final" style="text-align:center"
+							sortBy="#{comentarios.fechaFinal}">
+							<h:outputText value="#{comentarios.fechaFinal}" />
+						</p:column>
+
+						<p:column headerText="Número Serie"
+							sortBy="#{comentarios.numSerie}">
+							<h:outputText value="#{comentarios.numSerie}" />
+						</p:column>
+
+						<p:column headerText="Número Económico"
+							sortBy="#{comentarios.numEcono}">
+							<h:outputText value="#{comentarios.numEcono}" />
+						</p:column>
+
+						<p:column headerText="Modelo" sortBy="#{comentarios.modelo}">
+							<h:outputText value="#{comentarios.modelo}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+			</h:form>
+
+			<h:form id="formVerGrafica">
+				<div class='ui-g' style="margin-top: 15px">
+					<div class='ui-g-12'>
+						<div id='contenido' style="background: white">
+							<p:chart id="graficaTotal" type="line" widgetVar="graficaTotal"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 1}"
+								model="#{graficaTotalBacklogsBean.lineChartModel}"
+								style="height:400px;" responsive="true" />
+
+							<p:chart id='graficaEstatus' type="bar"
+								widgetVar="graficaEstatus"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 2}"
+								model="#{graficaEstatusBLBean.barChartModel}"
+								style="height:400px" />
+
+							<p:chart id="graficaW30" type="line" widgetVar="graficaW30"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 3}"
+								model="#{graficaMayor30Bean.lineChartModel}"
+								style="height:400px;" responsive="true" />
+
+							<p:chart id="graficaPendientes" type="bar"
+								widgetVar="graficaPendientes"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 4}"
+								model="#{graficaBacklogsPendientesBean.barChartModel}"
+								style="height:400px;width:100%;" responsive="true" />
+
+							<p:chart id="graficaPorcentaje" type="bar"
+								widgetVar="graficaPorcentaje"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 5}"
+								model="#{graficaPorcentajeEstatusBean.barChartModel}"
+								style="height:400px;" responsive="true" />
+
+							<p:chart id="graficaHoras" type="line" widgetVar="graficaHoras"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 6}"
+								model="#{graficaHorasBean.lineChartModel}" style="height:400px;"
+								responsive="true" />
+
+							<p:chart id="graficaHorasHombres" type="line"
+								widgetVar="graficaHorasHombres"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 7}"
+								model="#{graficaLaborEstimadoBean.lineChartModel}"
+								style="height:400px;" responsive="true" />
+
+							<p:chart id="graficaGenArea" type="bar"
+								widgetVar="graficaGenArea"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 8}"
+								model="#{graficaBLGeneradoAreaBean.barChartModel}"
+								style="height:400px;" responsive="true" />
+
+							<p:chart id="graficaGenSMCS" type="bar"
+								widgetVar="graficaGenSMCS"
+								rendered="#{backlogsStaticsVarBean.auxiliarGrafica == 9}"
+								model="#{graficaBLGeneradoSMCS.barChartModel}"
+								style="height:400px;" responsive="true" />
+						</div>
+					</div>
+				</div>
+
+				<div style="text-align: right">
+					<p:commandButton id='btnExport' value="Exportar gráfica" class='exportBtn'
+						rendered="#{genericGraficBean.renderBtnExport}"
+						update="growl" icon="fa fa-file-excel-o"
+						onclick="obtenerImagen(); return false;" />
+
+					<p:remoteCommand name="guardarBase64" update="growl"
+						actionListener="#{genericGraficBean.guardarBase64}" />
+				</div>
+
+			</h:form>
+
+			<script>
+				function chartExtender() {
+					this.cfg.seriesDefaults = {
+						renderer : $.jqplot.BarRenderer,
+						rendererOptions : {
+							seriesColors : [ '#00B050', '#00B050',
+									'#00B050', '#FFFF00', '#D30000',
+									'#D30000', '#D30000', '#D30000',
+									'#D30000', '#D30000', '#D30000',
+									'#D30000', '#D30000', '#D30000' ],
+							varyBarColor : true
+						}
+					}
+				}
+			</script>
+
+			<script type="text/javascript">
+			   //<![CDATA[
+				function obtenerImagen(){
+				 	var base64 = "";
+					html2canvas($("#contenido"), {
+		                onrendered: function(canvas) {
+		                    base64 = canvas.toDataURL('image/png');
+		                    console.log("base: "+base64);
+		                    guardarBase64([{name:'base64Img', value: base64}]);
+		                }
+		            });
+				}
+				//]]>
+			</script>
+
+		</div>
+
+	</ui:define>
+</ui:composition>

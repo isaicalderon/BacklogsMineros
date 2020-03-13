@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Editar Código Trabajo" widgetVar="modificarCodigo"
+	id="modificarCodigo" appendTo="@(body)" dynamic="false"
+	resizable="false" modal="true" showEffect="fade" hideEffect="fade"
+	position="center center" height="auto" width="450px" closable="false"
+	onShow="PF('modificarCodigo').initPosition()" responsive="true">
+
+	<h:form id="formDialogoModificar">
+		<div class="ui-g">
+			<div class="ui-lg-12">
+				<p:panelGrid id="panelGridCero" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Código:" for="codigoSMCS" />
+					<p:inputNumber id="codigoSMCS" size="5"
+						value="#{administradorCodigosSMCSBean.codigo}" disabled="true"
+						maxValue="9999" decimalPlaces="0" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridDos" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Horas de trabajo:" for="horasTrabajo" />
+					<p:inputNumber id="horasTrabajo" size="5"
+						value="#{administradorCodigosSMCSBean.horasHombre}"
+						maxValue="9999.9" decimalPlaces="1" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelGridUno" columns="2" layout="grid"
+					columnClasses="ui-grid-col-4,ui-grid-col-8"
+					styleClass="ui-panelgrid-blank">
+					<h:outputLabel value="Descripción:" for="descripcion" />
+					<p:inputTextarea id="descripcion" maxlength="32700" rows="1"
+						autoResize="true" cols="25"
+						value="#{administradorCodigosSMCSBean.descripcion}" />
+				</p:panelGrid>
+
+				<div style="margin-top: 10px; display: block; text-align: center;">
+					<p:commandButton value="Editar" process="@parent"
+						actionListener="#{administradorCodigosSMCSBean.modificarCodigosSMCS}"
+						update="horasTrabajo, codigoSMCS, descripcion, formCodigosSMCS:tablaCodigosSMCS, formCodigosSMCS:menuBar, growl" />
+					<p:commandButton value="Cancelar"
+						onclick="PF('modificarCodigo').hide()" resetValues="true" />
+				</div>
+			</div>
+		</div>
+
+
+	</h:form>
+</p:dialog>
+
+</html>

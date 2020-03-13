@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- LAYOUT TOPBAR MENU -->
+	<ul id="layout-topbar-menu-cover">
+		<li>
+			<a id="" class="topbar-link Animated03 Fright">
+			<i class="icon-user" style="color: #efefef;"></i><span>Usuario</span></a>
+			<ul>
+				<li>
+					<a href="#" class="menulink TexAlCenter Fs14"> 
+						<i class="icon-user CaterpillarCorporateYellow Fs30 Wid100 Fnone DispBlock MarBot10"></i>
+							#{loginBean.nombreUsuario} <br /> #{loginBean.rolOracion}
+					</a>
+				</li>
+				<li>
+					<p:commandLink action="#{loginBean.logout}"
+						styleClass="menulink TexAlCenter Fs14"
+						style="text-decoration:none;color:rgba(52, 61, 66, 0.9)!important;">
+						<i class="icon-power CaterpillarCorporateYellow Fs30 Wid100 Fnone DispBlock MarBot10"></i>
+						Cerrar Sesión
+					</p:commandLink>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</ui:composition>

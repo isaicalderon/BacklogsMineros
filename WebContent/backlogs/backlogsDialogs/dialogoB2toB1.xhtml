@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:dialog header="Cotizar Backlogs" widgetVar="dialogoB2toB1"
+	id="dialogoB2toB1" appendTo="@(body)" dynamic="false" resizable="false"
+	modal="true" showEffect="fade" hideEffect="fade" height="auto"
+	width="70%" closable="false" position="center center"
+	onShow="PF('dialogoB2toB1').initPosition()" responsive="true">
+
+	<h:form id="formDialogoCotizar">
+
+		<p:panel style="border:0px;padding:0px;min-height:200px">
+			<div class="Card">
+				<div class="White PadWithBorder10 Wid100 MarAuto">
+
+					<p:tabView id='tabView1' scrollable="true"
+						value="#{menuBacklogsMinerosBean.backlogsSeleccionadosTrabajo}"
+						var="backlog">
+
+						<p:tab
+							title="#{backlog.backlogsMinerosKey.backlogMineroAlmacenFormateado}">
+							<div class='ui-g'>
+								<div class='ui-g-12'>
+									<p:dataTable
+										id="TB-#{backlog.backlogsMinerosKey.idBacklogMinero}"
+										var="partes" value="#{backlog.listaRefacciones}"
+										emptyMessage="No se han agregado partes requeridas"
+										editable="false" rows="5"
+										widgetVar="A#{backlog.backlogsMinerosKey.idBacklogMinero}"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										paginatorPosition="bottom"
+										currentPageReportTemplate="Página:  {currentPage} de {totalPages}"
+										paginator="true" rowsPerPageTemplate="5,10">
+
+										<p:column headerText="CANTIDAD*"
+											style="width:80px;text-align:center;}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.cantidad}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputNumber value="#{partes.cantidad}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="NÚM. PARTE*"
+											style="width:auto;text-align:center;}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.numeroParte}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.numeroParte}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="DESCRIPCIÓN*" style="width:auto;}">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.descripcionMayuscula}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.descripcionParte}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="OBSERVACIONES" style="width:auto;">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.observacionesMayuscula}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputText value="#{partes.observaciones}" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="PRECIO UNITARIO (USD)"
+											style="width:auto;text-align:right">
+											<p:cellEditor>
+												<f:facet name="output">
+													<h:outputText value="#{partes.precioFormateado}" />
+												</f:facet>
+												<f:facet name="input">
+													<p:inputNumber value="#{partes.precio}" decimalPlaces="2"
+														minValue="0" />
+												</f:facet>
+											</p:cellEditor>
+										</p:column>
+
+										<p:column headerText="SUBTOTAL"
+											style="width:auto;text-align:right">
+											<h:outputText value="#{partes.subTotalFormateado}" />
+										</p:column>
+
+										<p:columnGroup type="footer">
+											<p:row>
+												<p:column colspan="5"
+													style="font-weight:bold;text-align:right"
+													footerText="Total:" />
+												<p:column colspan="1" id='totalRefa'
+													style="font-weight:bold;text-align:right"
+													footerText="\$#{genericBacklogBean.generarTotalRefacciones(backlog.listaRefacciones)}" />
+											</p:row>
+										</p:columnGroup>
+									</p:dataTable>
+
+									<div class='ui-g' style="margin-top: 10px">
+										<div class='ui-g-12 ui-lg-6'>
+											<h:outputText value="Número cotización: "
+												style="margin-right: 10px;" />
+
+											<p:inputMask id="numeroCotizacion"
+												style="margin-right: 10px;"
+												value="#{menuBacklogsMinerosBean.numeroCotizacion}"
+												mask="#{genericBacklogBean.getMascaraCotizacion()}">
+												<p:ajax event="blur" update="numeroCotizacion"
+													listener="#{menuBacklogsMinerosBean.formatearCotizacion}" />
+											</p:inputMask>
+
+											<p:commandButton value="Cotizar"
+												actionListener="#{menuBacklogsMinerosBean.dialogoB2toB1_cotizarBacklog(backlog)}"
+												update=":formListaBacklogs:menuBar, growl, tabView1, :formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</p:tab>
+					</p:tabView>
+					
+					<p:commandButton value="Salir" icon="fa fa-fw fa-close"
+						style='margin-top:10px; float:right'
+						update=":formListaBacklogs:tablaBacklogsMineros, :formListaBacklogs:tablaBacklogsMineros:checkbox"
+						action="menuBacklogs" />
+				</div>
+			</div>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>
