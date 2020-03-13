@@ -300,7 +300,7 @@
 						filteredValue="#{filtrosBean.backlogsMinerosListFiltrado}"
 						selection="#{backlogsStaticsVarBean.backlogsMinerosSeleccionado}"
 						selectionMode="single" height="400" filterDelay="1000"
-						rowIndexVar="#{backlogsStaticsVarBean.indexTablaBlm}"
+						rowIndexVar="indexTablaBlm"
 						rowKey="#{backlogMinero.backlogsMinerosKey.backlogMineroAlmacenFormateado}"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						paginatorPosition="bottom" rows="10" sortMode="multiple"
@@ -314,7 +314,7 @@
 							listener="#{menuBacklogsMinerosBean.seleccionarBacklog}" />
 
 						<p:ajax event="rowSelect"
-							listener="#{menuBacklogsMinerosBean.onRowSelect}" />
+							listener="#{menuBacklogsMinerosBean.onRowSelect(indexTablaBlm)}" />
 
 						<f:facet name="header">
 							<p:outputPanel

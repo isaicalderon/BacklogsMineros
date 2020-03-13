@@ -181,10 +181,11 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter();");
 	}
 	
-	public void onRowSelect(SelectEvent event) {
+	public void onRowSelect(int index) {
 		
-		System.out.println(seleccionBean.getIndexTablaBlm());
-		
+		System.out.println(index);
+		//System.out.println(seleccionBean.getIndexTablaBlm());
+	
 	}
 
 	/**
