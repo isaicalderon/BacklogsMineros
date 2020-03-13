@@ -316,9 +316,7 @@
 						<p:ajax event="rowDblselect" update="tablaBacklogsMineros, growl"
 							listener="#{menuBacklogsMinerosBean.seleccionarBacklog}" />
 
-						<p:ajax event="rowSelect" 
-							oncomplete="displayIndex([{name:'index', value:jQuery('tr[data-rk=' + dtVar.selection + ']').attr('data-ri')}])" process="@this" />
-
+					
 						<f:facet name="header">
 							<p:outputPanel
 								style="float: left;width: 65%;text-align: left;padding: 2px 7px;">
