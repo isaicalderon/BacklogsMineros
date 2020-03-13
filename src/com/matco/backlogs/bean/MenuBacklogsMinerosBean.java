@@ -13,6 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
@@ -133,12 +134,15 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 
 		obtenerCantidadBLRevisados();
 		mostrarMensajesGrid();
-
+		
+		/*
 		if (backlogsMinerosListFiltrada != null) {
 			if (!backlogsMinerosListFiltrada.isEmpty()) {
 				obtenerBacklogs();
 			}
 		}
+		*/
+		
 	}
 
 	@OnClose
@@ -175,6 +179,10 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		}
 
 		PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter();");
+	}
+	
+	public void onRowSelect(SelectEvent event) {
+		System.out.println(event.getObject());
 	}
 
 	/**

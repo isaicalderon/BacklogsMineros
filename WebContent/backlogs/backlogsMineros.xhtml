@@ -312,6 +312,9 @@
 						<p:ajax event="rowDblselect" update="tablaBacklogsMineros, growl"
 							listener="#{menuBacklogsMinerosBean.seleccionarBacklog}" />
 
+						<p:ajax event="rowSelect"
+							listener="#{menuBacklogsMinerosBean.onRowSelect}" />
+
 						<f:facet name="header">
 							<p:outputPanel
 								style="float: left;width: 65%;text-align: left;padding: 2px 7px;">
@@ -438,7 +441,7 @@
 						<p:menuitem value="Generar Excel" icon="fa fa-file-excel-o"
 							update="tablaBacklogsMineros"
 							actionListener="#{menuBacklogsMinerosBean.obtenerRefaccionesAllBacklogs()}"
-							oncomplete="document.getElementById('formListaBacklogs:link').click(); return false;"  />
+							oncomplete="document.getElementById('formListaBacklogs:link').click(); return false;" />
 
 						<p:menuitem value="Cancelar Backlogs" update="growl"
 							icon="fa fa-ban"
