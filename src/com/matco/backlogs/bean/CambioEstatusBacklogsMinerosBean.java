@@ -580,6 +580,13 @@ public class CambioEstatusBacklogsMinerosBean extends GenericBacklogBean impleme
 		}
 		return "";
 	}
+	
+	
+	public void analizarCambioEstado() {
+		
+		
+		
+	}
 
 	public void mandarParaCotizacion() {
 		BacklogsMinerosBitacoraEstatusFacade backlogsMinerosBitacoraEstatusFacade = new BacklogsMinerosBitacoraEstatusFacade(
