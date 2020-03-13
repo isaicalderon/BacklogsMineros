@@ -203,9 +203,9 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 
 				String numSerie = seleccionBean.getNumeroSerie();
 				String modelo = seleccionBean.getModelo();
-
+				sucursal = seleccionBean.getSucursalFiltro().intValue();
+				
 				// obtenemos los los estados seleccionados
-
 				if (estadosPickList.getTarget().size() == 0) {
 					agregarMensaje(summary, "No hay estados seleccionados", "warn", true);
 					return;
@@ -213,43 +213,18 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 				
 				String estatusKey = "";
 				
-				
 				for (EstatusBacklogsMineros estatus : estadosPickList.getTarget()) {
 					estatusKey += estatus.getIdEstatusBacklogMinero()+",";
 				}
 				
-				int diffLent =  estadosPickList.getTarget().size() - 10;
+				int diffLent = 10 - estadosPickList.getTarget().size();
 				for(int i = 0; i < diffLent; i++) {
 					estatusKey+="x,";
 				}
 				
-				sucursal = seleccionBean.getSucursalFiltro().intValue();
-				
 				backlogsMinerosListFiltrada = backlogsMinerosFacade.obtenerBacklogsEntreFechasFiltros(fechaBL1,
 						fechaBL2, numSerie, modelo, sucursal, estatusKey);
 				
-				
-				/*
-				if (!backlogsMinerosListTemp.isEmpty()) {
-					backlogsMinerosListFiltrada.addAll(backlogsMinerosListTemp);
-					backlogsMinerosListTemp.clear();
-				}
-				
-				for (EstatusBacklogsMineros estatus : estadosPickList.getTarget()) {
-					String estatusKey = estatus.getIdEstatusBacklogMinero();
-					log.info("Buscando backlogs con el estado: " + estatusKey);
-					sucursal = seleccionBean.getSucursalFiltro().intValue();
-					
-					backlogsMinerosListTemp = backlogsMinerosFacade.obtenerBacklogsEntreFechasFiltros(fechaBL1,
-							fechaBL2, numSerie, modelo, sucursal, estatusKey);
-
-					if (!backlogsMinerosListTemp.isEmpty()) {
-						backlogsMinerosListFiltrada.addAll(backlogsMinerosListTemp);
-						backlogsMinerosListTemp.clear();
-					}
-					
-				}
-				*/
 				if (backlogsMinerosListFiltrada.isEmpty()) {
 					agregarMensaje(summary, "No se encontraron Backlogs.", "warn", true);
 					seleccionBean.setBacklogsFiltradosList(backlogsMinerosListFiltrada);
