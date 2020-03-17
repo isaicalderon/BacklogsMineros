@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -15,7 +14,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
@@ -144,9 +142,6 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		}
 		
 		mostrarMensajesGrid();
-		
-		
-		
 	}
 
 	@OnClose
@@ -203,7 +198,7 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 	public void obtenerBacklogs() {
 		try {
 			// filtroEstados = new ArrayList<>();
-			List<BacklogsMineros> backlogsMinerosListTemp = new ArrayList<>();
+			//List<BacklogsMineros> backlogsMinerosListTemp = new ArrayList<>();
 			backlogsMinerosListFiltrada = new ArrayList<>();
 
 			Date fechaBL1 = seleccionBean.getFechaBL1();
@@ -998,7 +993,7 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		seleccionBean.setNumeroSerie(numSerie);
 		seleccionBean.setModelo(modelo);
 
-		buscarCliente(numSerie);
+		buscarCliente(seleccionBean.getMaquinariaDtoList(), numSerie);
 	}
 
 	/**
@@ -1020,7 +1015,7 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		seleccionBean.setNumeroEconomico(numEcon);
 		seleccionBean.setModelo(modelo);
 
-		buscarCliente(numSerie);
+		buscarCliente(seleccionBean.getMaquinariaDtoList(), numSerie);
 	}
 
 	public void seleccionModelo() {

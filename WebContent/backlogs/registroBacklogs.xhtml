@@ -112,7 +112,7 @@
 											<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
 												noSelectionOption="true" />
 											<f:selectItems
-												value="#{agregarBacklogsMinerosBean.maquinariaDtoList}"
+												value="#{backlogsStaticsVarBean.maquinariaDtoList}"
 												var="maquinaria" itemLabel="#{maquinaria.serie}"
 												itemValue="#{maquinaria.serie}" />
 											<p:ajax event="itemSelect" update="formRegistroBacklogs"
@@ -127,7 +127,7 @@
 											<f:selectItem itemLabel="Seleccione uno" itemValue="#{null}"
 												noSelectionOption="true" />
 											<f:selectItems
-												value="#{agregarBacklogsMinerosBean.numeroEconomicoList}"
+												value="#{backlogsStaticsVarBean.numeroEconomicoList}"
 												var="maquinaria" itemLabel="#{maquinaria}"
 												itemValue="#{maquinaria}" />
 											<p:ajax event="itemSelect" update="formRegistroBacklogs"

@@ -104,9 +104,9 @@ public class FiltroSeguridad implements Filter {
 			} catch (Exception_Exception e) {
 				log.error(e);
 			}
+			
 			// TODO: Cambiar esta parte - Se pone comentario al siguiente for para su
 			// funcionamiento fuera de la empresa
-
 			for (String rol : rolesPermitidos) {
 				if (rolUsuario.equals(rol)) {
 					esRolValido = true;
@@ -164,7 +164,8 @@ public class FiltroSeguridad implements Filter {
 	 * @return Instancia del ManagedBean recuperada o creada
 	 */
 
-	@SuppressWarnings("unchecked")
+	
+	@SuppressWarnings({"unchecked" })
 	protected <T> T obtenerBean(String beanName) {
 		FacesContext context = getFacesContext();
 		String expression = "#{" + beanName + "}";

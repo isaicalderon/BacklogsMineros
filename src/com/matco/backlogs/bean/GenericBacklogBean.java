@@ -75,12 +75,18 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-
-		if (seleccionBean == null) {
-			redireccionar("login");
+		
+		/*
+		LoginBean loginBean = obtenerBean("loginBean");
+		String rol = loginBean.getRol();
+		
+		if (rol == null) {
+			//redireccionar("login");
+			redireccionarVista("../login/login.xhtml");
 			return;
 		}
-
+		 */
+		
 		usuario = this.loginBean.getUsuario() != null ? this.loginBean.getUsuario().getUsuario() : "DESARROLLO";
 		estatusBacklogsFacade = new EstatusBacklogsMinerosFacade(RUTA_PROPERTIES_AMCE3);
 		revisionSeleccionada = new RevisionKardexEntity();
@@ -143,18 +149,15 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 	 * 
 	 * @param idCliente
 	 */
-	public void buscarCliente(String numSerie) {
-		List<MaquinariaDto> maquinaria = seleccionBean.getMaquinariaDtoList();
+	public void buscarCliente(List<MaquinariaDto> maquinaria, String numSerie) {
+		seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
+		//List<MaquinariaDto> maquinaria = seleccionBean.getMaquinariaDtoList();
 		for (MaquinariaDto maquinariaDto : maquinaria) {
 			if (maquinariaDto.getSerie().equals(numSerie)) {
 				seleccionBean.setIdClienteMatco(maquinariaDto.getIdCliente().getCliente());
-				log.info("Cliente encontrado: " + maquinariaDto.getIdCliente().getCliente());
-				System.out.println("Cliente econtrado: " + maquinariaDto.getIdCliente().getCliente());
 				break;
 			}
 		}
-
-		// log.warn("No se encontró un ID Cliente");
 	}
 
 	public String obtenerNombreGrafica(int idGrafica) {

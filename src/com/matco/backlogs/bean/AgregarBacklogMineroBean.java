@@ -102,8 +102,10 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 	private List<RiesgosTrabajo> riesgosTabajosList = new ArrayList<>();
 	private String[] idCodigoRiesgoList;
 	private List<CargosTrabajo> cargosTrabajosList = new ArrayList<>();
+	
 	private List<MaquinariaDto> maquinariaDtoList = new ArrayList<>();
 	private List<String> numeroEconomicoList = new ArrayList<>();
+	
 	private List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList = new ArrayList<>();
 	private List<String> tipoArchivo = new ArrayList<>();
 	private List<BacklogsMinerosDetalleRefa> partesSeleccionadas = new ArrayList<>();
@@ -161,18 +163,15 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 	
 	@PostConstruct
 	public void init() {
+		
 		this.seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-
 		revisionSeleccionada = seleccionBean.getRevisionSeleccionada();
-
 		usuario = this.loginBean.getUsuario() != null ? this.loginBean.getUsuario().getUsuario() : "DESARROLLO";
-
 		rutaImagenesTemporales = System.getProperty("jboss.server.temp.dir") + File.separator;
 
-		// idSucursal = obtenerSucursal();
-		//backlogMineroSeleccionado = seleccionBean.getBacklogsMinerosSeleccionado();
-		maquinariaDtoList = listarMaquinariaDtoBacklogsMineros();
-		numeroEconomicoList = createNumEconomicoList(maquinariaDtoList);
+		maquinariaDtoList = seleccionBean.getMaquinariaDtoList();
+		numeroEconomicoList = seleccionBean.getNumeroEconomicoList();
+		
 		origenesBacklogsMinerosList = listarOrigenesBacklogsMineros();
 		lugaresOrigenBacklogsMinerosList = listarLugaresOrigenesBacklogsMineros();
 		prioridadesBacklogsMinerosList = listarPrioridadesBacklogsMineros();
@@ -838,7 +837,7 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 		}
 		maquinaria = obtenerMaquinariaPorNumEconomico(maquinariaDtoList, numEconomico);
 		habilitarControlesCampos();
-		buscarCliente(maquinaria);
+		buscarCliente(maquinariaDtoList, maquinaria);
 	}
 
 	/**
@@ -853,7 +852,7 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 		
 		habilitarControlesCampos();
 		
-		buscarCliente(maquinaria);
+		buscarCliente(maquinariaDtoList, maquinaria);
 		
 	}
 
@@ -1245,7 +1244,7 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 				}
 				
 				if (seleccionBean.getIdClienteMatco() == null) {
-					buscarCliente(maquinaria);
+					buscarCliente(maquinariaDtoList, maquinaria);
 				}
 
 				boolean existe = analizarNumeroPMatco(refaccion.getNumeroParte());
@@ -1826,7 +1825,7 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 			String numParteMatco = refaccion.getNumeroParte();
 			
 			if (seleccionBean.getIdClienteMatco() == null) {
-				buscarCliente(maquinaria);
+				buscarCliente(maquinariaDtoList, maquinaria);
 			}
 
 			boolean existe = analizarNumeroPMatco(numParteMatco);
