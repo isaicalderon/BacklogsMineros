@@ -27,8 +27,8 @@ public class MuestrasSOSBean extends GenericBacklogBean implements Serializable 
 	private static final long serialVersionUID = -3737304142415346658L;
 	private static final Logger log = Logger.getLogger(MuestrasSOSBean.class);
 	private BacklogsStaticsVarBean seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-	private List<GetMueSosDto> muestrasSOSList;
-	private List<String> descripcionesAnormalidades;
+	private List<GetMueSosDto> muestrasSOSList = new ArrayList<GetMueSosDto>(0);
+	private List<String> descripcionesAnormalidades = new ArrayList<>();
 
 	private String error;
 	private String summary = "Muestras SOS";
@@ -36,28 +36,11 @@ public class MuestrasSOSBean extends GenericBacklogBean implements Serializable 
 	@PostConstruct
 	public void init() {
 		seleccionBean.getMuestrasSeleccionadas().clear();
-
-		obtenerMuestras();
+		Short sucursal = obtenerSucursalCorrespondiente();
+		muestrasSOSList = listarMuestrasSOS(sucursal.intValue());
 		descripcionesAnormalidades = anormalidadesList();
 	}
 
-	public void obtenerMuestras() {
-		Short sucursal = obtenerSucursalFiltro();
-		muestrasSOSList = new ArrayList<GetMueSosDto>(0);
-		List<GetMueSosDto> muestrasSOSList6;
-		List<GetMueSosDto> muestrasSOSList13;
-
-		// Se consultan las muestras en base a Cananea
-		// Lugar de trabajo 6 es de Cananea
-		if (sucursal == 6) {
-			Integer idLugarTrabajo = 6;
-			muestrasSOSList6 = listarMuestrasSOS(idLugarTrabajo);
-			muestrasSOSList.addAll(muestrasSOSList6);
-		} else if (sucursal == 13) {
-			muestrasSOSList13 = listarMuestrasSOS(13);
-			muestrasSOSList.addAll(muestrasSOSList13);
-		}
-	}
 
 	private List<GetMueSosDto> listarMuestrasSOS(Integer idLugarTrabajo) {
 		MuestrasFacade muestrasFacade = new MuestrasFacade(RUTA_PROPERTIES_AMCE3);

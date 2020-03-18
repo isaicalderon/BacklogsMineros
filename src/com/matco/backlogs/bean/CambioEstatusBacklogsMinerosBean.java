@@ -97,7 +97,7 @@ public class CambioEstatusBacklogsMinerosBean extends GenericBacklogBean impleme
 	@PostConstruct
 	public void init() {
 		seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-		// Por si se meten directamente sin seleccionar a un backlog minero en el grid
+		
 		backlogMineroSeleccionado = seleccionBean.getBacklogsMinerosSeleccionado();
 
 		if (backlogMineroSeleccionado == null) {
@@ -106,15 +106,14 @@ public class CambioEstatusBacklogsMinerosBean extends GenericBacklogBean impleme
 		}
 
 		usuario = this.loginBean.getUsuario() != null ? this.loginBean.getUsuario().getUsuario() : "DESARROLLO";
-		// tecnicoEjecutor = this.seleccionBean.getTecnico();
+		
 		int idBacklog = backlogMineroSeleccionado.getBacklogsMinerosKey().getIdBacklogMinero();
 		int almacen = backlogMineroSeleccionado.getBacklogsMinerosKey().getIdAlmacen().getAlmacen().intValue();
-		//String serverLocal = "localhost:8085";
-		//String serverTEST = "10.10.10.98:9090";
+		
 		urlReporte = "http://" + serverUrlServices + "/BacklogsMinerosReportes/servlet/BacklogsMineroServlet?PIDBACKLOGMINERO="
 				+ idBacklog + "&PIDALMACEN=" + almacen;
+		
 		sintomasObject = backlogMineroSeleccionado.getSintoma();
-
 		if (sintomasObject.getIdCodigoSintoma() == null) {
 			sintomasObject.setDescripcionSintoma("");
 			sintomasObject.setIdCodigoSintoma("");
@@ -160,7 +159,6 @@ public class CambioEstatusBacklogsMinerosBean extends GenericBacklogBean impleme
 		}
 		
 		totalRefacciones = calcularTotalRefacciones();
-
 		revisionBacklog = obtenerRevisionBacklogActual();
 
 		if (revisionBacklog.getIdBacklogMinero() > 0) {
@@ -367,15 +365,6 @@ public class CambioEstatusBacklogsMinerosBean extends GenericBacklogBean impleme
 			log.error(e2);
 		}
 		return riesgosTabajosList;
-	}
-
-	/**
-	 * Genera subtotal de refaccionesList
-	 */
-	public void generarSubtotalRefacciones(List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
-		for (BacklogsMinerosDetalleRefa refaccion : backlogsMinerosDetalleRefaList) {
-			refaccion.setSubTotal(refaccion.getCantidad() * refaccion.getPrecio());
-		}
 	}
 
 	/**

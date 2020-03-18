@@ -266,15 +266,6 @@ public class InformacionBacklogMineroBean extends GenericBacklogBean implements 
 	}
 
 	/**
-	 * Genera subtotal de refaccionesList
-	 */
-	public void generarSubtotalRefacciones(List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
-		for (BacklogsMinerosDetalleRefa refaccion : backlogsMinerosDetalleRefaList) {
-			refaccion.setSubTotal(refaccion.getCantidad() * refaccion.getPrecio());
-		}
-	}
-
-	/**
 	 * Obtiene el subtotal de todas las refacciones y las guarda en una variable
 	 * llamada total
 	 * 

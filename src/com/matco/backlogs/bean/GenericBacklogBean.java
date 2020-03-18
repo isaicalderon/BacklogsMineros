@@ -75,18 +75,15 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-		
+
 		/*
-		LoginBean loginBean = obtenerBean("loginBean");
-		String rol = loginBean.getRol();
-		
-		if (rol == null) {
-			//redireccionar("login");
-			redireccionarVista("../login/login.xhtml");
-			return;
-		}
+		 * LoginBean loginBean = obtenerBean("loginBean"); String rol =
+		 * loginBean.getRol();
+		 * 
+		 * if (rol == null) { //redireccionar("login");
+		 * redireccionarVista("../login/login.xhtml"); return; }
 		 */
-		
+
 		usuario = this.loginBean.getUsuario() != null ? this.loginBean.getUsuario().getUsuario() : "DESARROLLO";
 		estatusBacklogsFacade = new EstatusBacklogsMinerosFacade(RUTA_PROPERTIES_AMCE3);
 		revisionSeleccionada = new RevisionKardexEntity();
@@ -151,7 +148,7 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 	 */
 	public void buscarCliente(List<MaquinariaDto> maquinaria, String numSerie) {
 		seleccionBean = this.obtenerBean("backlogsStaticsVarBean");
-		//List<MaquinariaDto> maquinaria = seleccionBean.getMaquinariaDtoList();
+		// List<MaquinariaDto> maquinaria = seleccionBean.getMaquinariaDtoList();
 		for (MaquinariaDto maquinariaDto : maquinaria) {
 			if (maquinariaDto.getSerie().equals(numSerie)) {
 				seleccionBean.setIdClienteMatco(maquinariaDto.getIdCliente().getCliente());
@@ -367,6 +364,19 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 			return falta;
 		}
 		return false;
+	}
+
+	/***
+	 * Rellena el numero parte matco con ceros hasta que tenga 7 caracteres
+	 * 
+	 * @param numeroParteMatco numero parte a rellenar
+	 * @return numero parte matco formateado
+	 */
+	public String rellenarNumeroParteMatco(String numeroParteMatco) {
+		while (numeroParteMatco.length() < 7) {
+			numeroParteMatco = "0" + numeroParteMatco;
+		}
+		return numeroParteMatco;
 	}
 
 	/***
@@ -648,7 +658,7 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 		List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList = backlog.getListaRefacciones();
 		int i = 0;
 		int listSize = backlogsMinerosDetalleRefaList.size();
-		
+
 		for (BacklogsMinerosDetalleRefa refa : backlogsMinerosDetalleRefaList) {
 			String numeroParte = refa.getNumeroParte();
 			int cantidad = refa.getCantidad();
@@ -662,8 +672,7 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 
 			i++;
 		}
-		
-		
+
 		return partes;
 	}
 
@@ -685,11 +694,11 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 			List<BacklogsMinerosDetalleRefa> refacciones = seleccionBean.getBacklogsMinerosSeleccionado()
 					.getListaRefacciones();
 			Double total = 0.0;
-
+			
 			for (BacklogsMinerosDetalleRefa refTemp : refacciones) {
 				total += refTemp.getSubTotal();
 			}
-			
+
 			String totalRecibido = "";
 			totalRecibido = getTotalFormateadoDouble(total);
 			return totalRecibido;
@@ -701,10 +710,14 @@ public class GenericBacklogBean extends GenericBean implements Serializable {
 	/**
 	 * Genera subtotal de refaccionesList
 	 */
-	public void generarSubtotalRefacciones(List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
+	public List<BacklogsMinerosDetalleRefa> generarSubtotalRefacciones(
+			List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
+		
 		for (BacklogsMinerosDetalleRefa refaccion : backlogsMinerosDetalleRefaList) {
 			refaccion.setSubTotal(refaccion.getCantidad() * refaccion.getPrecio());
 		}
+
+		return backlogsMinerosDetalleRefaList;
 	}
 
 	/**

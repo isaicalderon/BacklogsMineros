@@ -192,7 +192,7 @@ public class GraficaLaborEstimadoBean extends GraficInterfaz implements Serializ
 
 		Axis yAxis = lineChartModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Horas");
-		yAxis.setMax(getMaximo());
+		//yAxis.setMax(getMaximo());
 		yAxis.setTickInterval("5");
 	}
 

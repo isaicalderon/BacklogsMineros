@@ -332,11 +332,12 @@
 								</p:selectCheckboxMenu>
 							</p:outputPanel>
 							<p:outputPanel>
-								<p:inputText style="width:150px" placeholder="N. parte MATCO..."
+								<p:inputText id='npmTabla'
+									style="width:150px" placeholder="N. parte MATCO..."
 									value="#{menuBacklogsMinerosBean.numeroMatco}">
 									<p:ajax event="blur"
 										listener="#{menuBacklogsMinerosBean.filtrarPorNPM}"
-										update="tablaBacklogsMineros, growl" />
+										update="tablaBacklogsMineros, growl, npmTabla" />
 								</p:inputText>
 								<p:inputText id="globalFilter"
 									onblur="PF('tablaBacklogsMineros').filter()"

@@ -512,15 +512,6 @@ public class AgregarCatInspeccionBean extends GenericBacklogBean implements Seri
 		return total;
 	}
 	
-	/**
-	 * Genera subtotal de refaccionesList
-	 */
-	public void generarSubtotalRefacciones(List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
-		for (BacklogsMinerosDetalleRefa refaccion : backlogsMinerosDetalleRefaList) {
-			refaccion.setSubTotal(refaccion.getCantidad() * refaccion.getPrecio());
-		}
-	}
-
 	/***
 	 * acutaliza la lista de partes selecciondas para borrar en editar backlog
 	 * 

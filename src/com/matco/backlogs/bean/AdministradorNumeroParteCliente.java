@@ -274,19 +274,6 @@ public class AdministradorNumeroParteCliente extends GenericBacklogBean implemen
 		}
 	}
 
-	/***
-	 * Rellena el numero parte matco con ceros hasta que tenga 7 caracteres
-	 * 
-	 * @param numeroParteMatco numero parte a rellenar
-	 * @return numero parte matco formateado
-	 */
-	public String rellenarNumeroParteMatco(String numeroParteMatco) {
-		while (numeroParteMatco.length() < 7) {
-			numeroParteMatco = "0" + numeroParteMatco;
-		}
-		return numeroParteMatco;
-	}
-
 	public void seleccionarNPC() {
 		habilitarModificar = false;
 		idCliente = numeroParteClientesSeleccionado.getNumeroParteClientesKey().getIdCliente();

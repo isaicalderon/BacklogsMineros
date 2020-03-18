@@ -125,15 +125,12 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		estadosPickList = new DualListModel<EstatusBacklogsMineros>(estatusBacklogsMinerosList,
 				estatusBacklogsMinerosListTarget);
 
-		//PrimeFaces.current().executeScript("PF('tablaBacklogsMineros').filter()");
-
 		backlogsSeleccionados = new ArrayList<>();
 		backlogsNoAutorizados = new ArrayList<>();
 		backlogsAutorizados = new ArrayList<>();
 		backlogsCotizados = new ArrayList<>();
 
 		obtenerCantidadBLRevisados();
-		
 		
 		if (backlogsMinerosListFiltrada != null) {
 			if (!backlogsMinerosListFiltrada.isEmpty()) {
@@ -166,6 +163,8 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 			}
 			return;
 		}
+		
+		numeroMatco = rellenarNumeroParteMatco(numeroMatco);
 
 		backlogsMinerosListFiltrada.clear();
 		for (BacklogsMineros blm : backlogsMinerosListFiltradaTemp) {
@@ -268,13 +267,14 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 		if (seleccionBean.getBacklogsMinerosSeleccionado() != null) {
 
 			try {
-
+				
 				if (seleccionBean.getBacklogsMinerosSeleccionado().getListaRefacciones().isEmpty()) {
 					BacklogsMinerosKey blmKey = seleccionBean.getBacklogsMinerosSeleccionado().getBacklogsMinerosKey();
 					List<BacklogsMinerosDetalleRefa> lista = blmRefaFacade.obtenerBacklogMineroDetalleRefaPorId(blmKey);
+					lista = generarSubtotalRefacciones(lista);
 					seleccionBean.getBacklogsMinerosSeleccionado().setListaRefacciones(lista);
 				}
-
+				
 				PrimeFaces.current().ajax().update(
 						":formListaBacklogs:partesRequeridas :formListaBacklogs:totalTablaRefaccionesSeleccion");
 
@@ -375,6 +375,7 @@ public class MenuBacklogsMinerosBean extends GenericBacklogBean implements Seria
 	 * @param backlog backlog cuya casilla se seleccionó/deseleccionó
 	 */
 	public void actualizarSeleccion(BacklogsMineros backlog) {
+		
 		if (backlogsSeleccionados.contains(backlog)) {
 			backlog.setCheckSeleccionado(false);
 			backlogsSeleccionados.remove(backlog);

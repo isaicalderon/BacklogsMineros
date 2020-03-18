@@ -1789,16 +1789,7 @@ public class AgregarBacklogMineroBean extends GenericBacklogBean implements Seri
 		}
 		return tmp;
 	}
-
-	/**
-	 * Genera subtotal de refaccionesList
-	 */
-	public void generarSubtotalRefacciones(List<BacklogsMinerosDetalleRefa> backlogsMinerosDetalleRefaList) {
-		for (BacklogsMinerosDetalleRefa refaccion : backlogsMinerosDetalleRefaList) {
-			refaccion.setSubTotal(refaccion.getCantidad() * refaccion.getPrecio());
-		}
-	}
-
+	
 	/**
 	 * Se ejecuta este metodo cuando se edita una celda de la tabla refacciones Aqui
 	 * se calcula el subtotal de la celda y el total de toda la tabla

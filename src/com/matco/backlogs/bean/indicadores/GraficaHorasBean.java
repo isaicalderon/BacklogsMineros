@@ -193,7 +193,7 @@ public class GraficaHorasBean extends GraficInterfaz implements Serializable {
 
 		Axis yAxis = lineChartModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Horas");
-		yAxis.setMax(getMaximo());
+		//yAxis.setMax(getMaximo());
 		yAxis.setTickInterval("5");
 	}
 
